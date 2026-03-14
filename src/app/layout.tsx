@@ -1,12 +1,17 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Geist_Mono, Source_Serif_4 } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
+import { PersonJsonLd } from "@/components/structured-data";
+import { BackToTop } from "@/components/back-to-top";
+import { ScrollProgress } from "@/components/scroll-progress";
+import { CursorGlow } from "@/components/interactive/cursor-glow";
+import { KonamiConfetti } from "@/components/interactive/konami-confetti";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -15,10 +20,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const playfair = Playfair_Display({
+const sourceSerif = Source_Serif_4({
   variable: "--font-serif",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: {
@@ -29,15 +40,22 @@ export const metadata: Metadata = {
     "PhD Student in Computer Science at UC Santa Cruz, researching human-centered security and privacy. Exploring cybercrime ecosystems, Android malware, and security education.",
   keywords: [
     "Mohamed Dawoud",
+    "Mohamed Moustafa Dawoud",
     "Security Research",
     "Privacy",
     "PhD Student",
     "UC Santa Cruz",
     "Cybersecurity",
     "Computer Science",
+    "Human-Centered Security",
+    "AI Governance",
   ],
-  authors: [{ name: "Mohamed Dawoud" }],
-  creator: "Mohamed Dawoud",
+  authors: [{ name: "Mohamed Moustafa Dawoud" }],
+  creator: "Mohamed Moustafa Dawoud",
+  metadataBase: new URL("https://momodawoud.github.io"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -46,6 +64,14 @@ export const metadata: Metadata = {
     description:
       "PhD Student in Computer Science at UC Santa Cruz, researching human-centered security and privacy.",
     siteName: "Mohamed Dawoud",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Mohamed Dawoud - Security & Privacy Researcher at UC Santa Cruz",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -53,6 +79,7 @@ export const metadata: Metadata = {
     description:
       "PhD Student in Computer Science at UC Santa Cruz, researching human-centered security and privacy.",
     creator: "@mohameddawoud",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -75,19 +102,31 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} font-sans antialiased`}
+        className={`${inter.variable} ${geistMono.variable} ${sourceSerif.variable} font-sans antialiased`}
       >
+        <PersonJsonLd />
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
         >
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:text-sm focus:font-medium"
+          >
+            Skip to main content
+          </a>
+          <ScrollProgress />
+          <CursorGlow />
+          <KonamiConfetti />
           <div className="relative min-h-screen flex flex-col">
             <Navigation />
-            <main className="flex-1">{children}</main>
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
             <Footer />
           </div>
+          <BackToTop />
         </ThemeProvider>
       </body>
     </html>

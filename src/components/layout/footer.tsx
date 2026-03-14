@@ -1,90 +1,56 @@
-"use client";
-
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Mail, GraduationCap } from "lucide-react";
+import { siteConfig } from "@/data/site-config";
 
 const socialLinks = [
-  { name: "Email", href: "mailto:mdawoud@ucsc.edu", icon: Mail },
-  { name: "GitHub", href: "https://github.com/MoMoDawoud", icon: Github },
-  { name: "LinkedIn", href: "https://linkedin.com/in/mohameddawoud", icon: Linkedin },
-  { name: "Twitter", href: "https://twitter.com/mohameddawoud", icon: Twitter },
-  { name: "Google Scholar", href: "https://scholar.google.com/citations?user=YOUR_ID", icon: GraduationCap },
+  { name: "Scholar", href: siteConfig.social.googleScholar },
+  { name: "GitHub", href: siteConfig.social.github },
+  { name: "LinkedIn", href: siteConfig.social.linkedin },
+  { name: "Email", href: `mailto:${siteConfig.email}` },
 ];
 
 export function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="border-t border-border bg-background/50 backdrop-blur-sm">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <Link href="/" className="inline-block">
-              <span className="text-2xl font-bold gradient-text">Mohamed Dawoud</span>
-            </Link>
-            <p className="text-muted-foreground text-sm max-w-xs">
-              PhD Student in Computer Science at UC Santa Cruz, researching security and privacy.
-            </p>
-          </div>
+    <footer className="bg-background print:hidden" role="contentinfo">
+      {/* Gradient separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              Quick Links
-            </h3>
-            <nav className="flex flex-col space-y-2">
-              {[
-                { name: "Publications", href: "/publications" },
-                { name: "Research", href: "/research" },
-                { name: "Teaching", href: "/teaching" },
-                { name: "My Journey", href: "/journey" },
-                { name: "CV", href: "/cv" },
-              ].map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-sm text-muted-foreground hover:text-accent transition-colors"
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          {/* Social */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              Connect
-            </h3>
-            <div className="flex space-x-3">
-              {socialLinks.map((social) => (
-                <motion.a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -3, scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-2 rounded-full bg-muted hover:bg-accent hover:text-accent-foreground transition-colors"
-                  aria-label={social.name}
-                >
-                  <social.icon className="h-5 w-5" />
-                </motion.a>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom */}
-        <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Mohamed Dawoud. All rights reserved.
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex flex-col items-center gap-5 text-center">
+          {/* Collaboration CTA */}
+          <p className="text-sm text-foreground-secondary">
+            Open to collaboration.{" "}
+            <a href={`mailto:${siteConfig.email}`} className="gradient-link">
+              Get in touch
+            </a>
+            .
           </p>
-          <p className="text-sm text-muted-foreground">
-            Built with{" "}
-            <span className="text-accent">Next.js</span>,{" "}
-            <span className="text-accent">Three.js</span>, and{" "}
-            <span className="text-accent">Framer Motion</span>
+
+          {/* Social links — text only */}
+          <nav
+            className="flex flex-wrap justify-center gap-x-3 gap-y-2 font-mono text-xs"
+            aria-label="Social links"
+          >
+            {socialLinks.map((link, i) => (
+              <span key={link.name} className="flex items-center gap-3">
+                <a
+                  href={link.href}
+                  target={link.name === "Email" ? undefined : "_blank"}
+                  rel={link.name === "Email" ? undefined : "noopener noreferrer"}
+                  className="text-foreground-tertiary hover:text-accent transition-colors duration-150 min-h-[44px] flex items-center"
+                >
+                  {link.name}
+                </a>
+                {i < socialLinks.length - 1 && (
+                  <span className="text-foreground-quaternary" aria-hidden>·</span>
+                )}
+              </span>
+            ))}
+          </nav>
+
+          {/* Identity line */}
+          <p className="font-mono text-[0.65rem] text-foreground-quaternary tracking-wider uppercase">
+            Mohamed Dawoud · UC Santa Cruz · {year}
           </p>
         </div>
       </div>

@@ -1,12 +1,24 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { PublicationsContent } from "./publications-content";
+import { PublicationsJsonLd } from "@/components/structured-data";
 
 export const metadata: Metadata = {
   title: "Publications",
   description:
-    "Academic publications by Mohamed Dawoud in security, privacy, and cybercrime research.",
+    "Peer-reviewed publications by Mohamed Dawoud on security, privacy, cybercrime, and AI governance.",
+  alternates: { canonical: "/publications" },
+  openGraph: {
+    title: "Publications | Mohamed Dawoud",
+    description: "Peer-reviewed publications by Mohamed Dawoud on security, privacy, cybercrime, and AI governance.",
+    url: "/publications",
+  },
 };
 
 export default function PublicationsPage() {
-  return <PublicationsContent />;
+  return (
+    <>
+      <PublicationsJsonLd />
+      <PublicationsContent />
+    </>
+  );
 }

@@ -1,5 +1,7 @@
 import { HomeContent } from "@/components/sections/home-content";
+import { getAllPosts } from "@/lib/blog";
 
 export default function Home() {
-  return <HomeContent />;
+  const recentPosts = getAllPosts().slice(0, 2);
+  return <HomeContent recentPosts={recentPosts} />;
 }

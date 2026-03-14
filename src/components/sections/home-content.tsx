@@ -1,500 +1,465 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Mail,
-  Github,
-  Linkedin,
-  GraduationCap,
-  ExternalLink,
-  FileText,
-  MapPin,
-  Award,
-  Newspaper,
-  Mic,
-  BookOpen,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { siteConfig } from "@/data/site-config";
+import { FadeIn } from "@/components/animations/fade-in";
+import { motion, useReducedMotion } from "framer-motion";
+import { TiltCard } from "@/components/interactive/tilt-card";
 
-// Venue colors for publications
-const venueColors: Record<string, string> = {
-  "USENIX Security": "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
-  "Computers in Human Behavior": "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-  "USEC": "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20",
-  "CHI": "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
-  "IEEE S&P": "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20",
-  "CCS": "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20",
-  "NDSS": "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20",
-};
-
-// News type icons
-const newsIcons: Record<string, typeof Award> = {
-  publication: BookOpen,
-  award: Award,
-  talk: Mic,
-  media: Newspaper,
-  milestone: GraduationCap,
-};
+/* ─────────────────────────────────────────
+   DATA
+   ───────────────────────────────────────── */
 
 const news = [
-  { date: "Jun 2025", text: "Joined UC Santa Cruz as a PhD student, advised by Prof. Ram Sundara Raman", type: "milestone", highlight: true },
-  { date: "2026", text: "Paper on AI abuse services on Fiverr accepted at USEC 2026 (co-located with NDSS)", type: "publication" },
-  { date: "Apr 2025", text: "Featured in Guarini School Student Spotlight after attending AAAS CASE 2025 in Washington, D.C.", type: "media" },
-  { date: "Feb 2025", text: "Attended NDSS 2025 in San Diego and the USEC workshop on human factors of security", type: "talk" },
-  { date: "2025", text: "Paper on Ransomware-as-a-Service marketing published in Computers in Human Behavior", type: "publication" },
+  { date: "Mar 2026", text: "Completed my Master of Science in Computer Science & Engineering at UC Santa Cruz, en route to the PhD" },
+  { date: "Mar 2026", text: "Attended the 4th Annual Bay Area HCI Gathering at Santa Clara University, connecting with ~150 researchers" },
+  { date: "Mar 2026", text: "Now recruiting for the AI Privacy & Regulation Study with UC Santa Cruz and Stanford University — interviewing practitioners on privacy under emerging AI regulations" },
+  { date: "Feb 2026", text: "Presented at USEC 2026 (co-located with NDSS) in San Diego — our paper on AI-enabled NSFW deepfakes on Fiverr" },
+  { date: "Feb 2026", text: "Paper on AI-enabled deepfakes accepted at USEC 2026, co-located with NDSS (~32% acceptance rate)" },
+  { date: "Feb 2026", text: "Launched Egyptians in CS Research with Badr AlKhamissi — 262 researchers across 16 tracks worldwide" },
+  { date: "Dec 2025", text: "Released PaperClerk AI — a local, privacy-preserving assistant for managing research paper libraries" },
+  { date: "Jun 2025", text: "Joined UC Santa Cruz as a PhD student, advised by Prof. Ram Sundara Raman" },
+  { date: "Apr 2025", text: "Featured in Dartmouth Guarini School Student Spotlight — profiled on research, the journey from Zefta to Dartmouth, and STEM advocacy" },
+  { date: "Feb 2025", text: "Selected as AAAS CASE Workshop Delegate — representing Dartmouth in Washington, D.C." },
+  { date: "Feb 2025", text: "Attended NDSS 2025 and the USEC workshop on human factors of security in San Diego" },
+  { date: "Jan 2025", text: "RaaS paper published in Computers in Human Behavior — analyzing vendor communication themes in darknet ransomware advertisements" },
+  { date: "Jan 2025", text: "Started as Lead Graduate Teaching Assistant at Dartmouth for COSC 55: Security & Privacy" },
+  { date: "Sep 2024", text: "Joined MBZUAI as Research Associate — research on combating deepfakes and responsible AI" },
+  { date: "Aug 2024", text: "DVa paper published at the 33rd USENIX Security Symposium" },
 ];
 
 const publications = [
   {
-    title: "The Rise of NSFW Generative AI Services on Mainstream Marketplaces: A Case Study of Fiverr",
-    authors: ["Mohamed Moustafa Dawoud", "Alejandro Cuevas", "Ramakrishnan (Ram) Sundara Raman"],
-    venue: "USEC",
-    year: "2026",
-    abstract: "A mixed-methods empirical study analyzing how the mainstream gig platform Fiverr enables AI-driven abuse and NCII-related services. First systematic measurement of AI abuse-as-a-service on a commercial gig marketplace.",
-    link: "#",
-    tags: ["AI Abuse", "Platform Safety", "NCII"],
+    year: 2026,
+    title: "From Underground to Mainstream Marketplaces: Measuring AI-Enabled NSFW Deepfakes on Fiverr",
+    authors: "Mohamed Moustafa Dawoud, Alejandro Cuevas, Ram Sundara Raman",
+    venue: "USEC 2026, co-located with NDSS",
+    description: "We investigate whether AI-enabled NSFW services have moved into mainstream gig marketplaces. Through keyword searches, sitemap analysis, and snowball sampling, we identify 593 AI-enabled NSFW gigs on Fiverr — 82.8% expose deepfake-enabling features, 74.9% of sellers joined in 2025, and sellers disproportionately target platforms like OnlyFans and Instagram.",
+    link: "https://www.ndss-symposium.org/ndss-paper/from-underground-to-mainstream-marketplaces-measuring-ai-enabled-nsfw-deepfakes-on-fiverr/",
+    image: "/publications/fiverr-deepfakes.png",
   },
   {
-    title: "Vendor communication themes in darknet Ransomware-as-a-Service (RaaS) advertisements",
-    authors: ["Taylor Fisher", "Zacharias Pieri", "C. Jordan Howell", "Roberta O'Malley", "Lauren Tremblay", "Mohamed Dawoud"],
+    year: 2025,
+    title: "Vendor Communication Themes in Darknet Ransomware-as-a-Service (RaaS) Advertisements",
+    authors: "Taylor Fisher, Zacharias Pieri, C. Jordan Howell, Roberta O'Malley, Lauren Tremblay, Mohamed Dawoud",
     venue: "Computers in Human Behavior",
-    year: "2025",
-    abstract: "This study analyzes how Ransomware-as-a-Service (RaaS) is marketed on darknet marketplaces. We examine vendor communication themes, seller strategies, pricing models, and customer engagement tactics.",
+    description: "A thematic analysis of RaaS advertisements on darknet markets. The most common theme was victimization, appearing in 70% of the dataset, revealing the strategic mechanisms vendors employ to attract both novice and experienced cybercriminals through the commodification of ransomware.",
     link: "https://www.sciencedirect.com/science/article/abs/pii/S0747563225000184",
-    tags: ["Cybercrime", "Dark Web", "RaaS"],
+    image: "/publications/raas-darknet.png",
+  },
+  {
+    year: 2024,
+    title: "DVa: Extracting Victims and Abuse Vectors from Android Accessibility Malware",
+    authors: "Haichuan Xu, Mingxuan Yao, Runze Zhang, Mohamed Moustafa Dawoud, Jeman Park, Brendan Saltaformaggio",
+    venue: "USENIX Security 2024",
+    description: "We developed DVa, a malware analysis pipeline using dynamic victim-guided execution and symbolic analysis, to uncover accessibility malware's targeted victims and abuse vectors. Deployed on 9,850 a11y malware samples, DVa uncovered 215 unique victims targeted with an average of 13.9 abuse routines.",
+    link: "https://www.usenix.org/conference/usenixsecurity24/presentation/xu-haichuan",
+    image: "/publications/dva-malware.png",
+  },
+  {
+    year: 2022,
+    title: "Social Engineering and Technical Security Fusion",
+    authors: "Wassim Alexan, Eyad Mamdouh, Mohamed ElBeltagy, Ahmed Ashraf, Mohamed Moustafa, Hashem Al-Qurashi",
+    venue: "ITC-Egypt 2022",
+    description: "A message security scheme fusing traditional cryptographic algorithms and LSB steganography with ideas from social engineering. The scheme ensures secure transmission of sensitive messages over unsecured networks, defending against advances in cryptanalysis and growing computing power.",
+    link: "https://ieeexplore.ieee.org/document/9855761",
+    image: "/publications/social-engineering.png",
+  },
+  {
+    year: 2022,
+    title: "Image Encryption Through Rössler System, PRNG S-Box and Recamán's Sequence",
+    authors: "Mohamed ElBeltagy, Wassim Alexan, Abdelrahman Elkhamry, Mohamed Moustafa, Hisham H. Hussein",
+    venue: "IEEE CCWC 2022",
+    description: "A lightweight three-stage image encryption scheme using the Rössler chaotic attractor, a PRNG-based S-Box, and Recamán's sequence. Performance metrics show comparable security to existing schemes at very low processing cost, making it suitable for real-time image security applications.",
+    link: "https://ieeexplore.ieee.org/abstract/document/9720905",
+    image: "/publications/rossler-encryption.png",
+  },
+  {
+    year: 2021,
+    title: "IoMT Security: SHA3-512, AES-256, RSA and LSB Steganography",
+    authors: "Wassim Alexan, Ahmed Ashraf, Eyad Mamdouh, Sarah Mohamed, Mohamed Moustafa",
+    venue: "NICS 2021",
+    description: "An information security scheme for the Internet of Medical Things utilizing AES-256, RSA, SHA3-512, and LSB embedding in medical scans. The scheme guarantees secure transmission of medical data while satisfying user authentication and confidentiality requirements.",
+    link: "https://ieeexplore.ieee.org/abstract/document/9701567",
+    image: "/publications/iomt-security.png",
   },
 ];
 
-const affiliations = [
-  { name: "UC Santa Cruz", role: "PhD Student, advised by Prof. Ram Sundara Raman", period: "Jun 2025 - Present", location: "Santa Cruz, CA", current: true },
-  { name: "Dartmouth College", role: "Lead Graduate Teaching Assistant", period: "Jan - Jun 2025", location: "Hanover, NH" },
-  { name: "MBZUAI", role: "Research Associate", period: "Sep - Dec 2024", location: "Abu Dhabi, UAE" },
-  { name: "Georgia Tech", role: "Research Intern", period: "Oct 2023 - Feb 2024", location: "Atlanta, GA" },
-  { name: "University of South Florida", role: "Undergraduate Research Assistant", period: "Jan - Aug 2023", location: "Remote" },
-  { name: "German International University", role: "B.Sc. Informatics & CS (Merit Scholar)", period: "2021 - 2024", location: "Cairo, Egypt" },
+const ongoingProjects = [
+  {
+    title: "AI Privacy & Regulation Study",
+    collaborators: ["RANDLab (UCSC)", "Stanford University"],
+    summary: "How do practitioners navigate privacy when building AI products under emerging regulations?",
+    highlights: [
+      "Confidential one-hour interviews with industry professionals",
+      "Covering the EU AI Act, CCPA, GDPR, and evolving US state laws",
+      "Participants span privacy, compliance, engineering, and risk roles",
+      "Centering practitioner experience to inform policy recommendations",
+    ],
+    status: "Recruiting Participants",
+    tags: ["AI Governance", "Privacy", "Regulation", "Practitioner Study"],
+    link: "https://randlab.engineering.ucsc.edu/aigov-study/",
+    irb: "UC Santa Cruz IRB HS-FY2026-108",
+  },
 ];
 
-export function HomeContent() {
-  const [expandedPub, setExpandedPub] = useState<string | null>(null);
+/* ─────────────────────────────────────────
+   HELPERS
+   ───────────────────────────────────────── */
+
+function highlightName(authors: string) {
+  return authors.split(/(Mohamed\s+(?:Moustafa\s+)?(?:Dawoud)?)/i).map((part, i) =>
+    /mohamed/i.test(part) ? (
+      <span key={i} className="font-semibold">{part}</span>
+    ) : (
+      <span key={i}>{part}</span>
+    )
+  );
+}
+
+
+/* ─────────────────────────────────────────
+   SECTION HEADING WITH "VIEW ALL" LINK
+   ───────────────────────────────────────── */
+
+function SectionHeading({ title, href, id }: { title: string; href?: string; id?: string }) {
+  return (
+    <div className="flex items-baseline justify-between mb-6">
+      <h2 id={id} className="text-xl font-bold tracking-tight">{title}</h2>
+      {href && (
+        <Link
+          href={href}
+          className="text-xs font-mono text-foreground-tertiary hover:text-accent transition-colors duration-150 flex items-center gap-1"
+        >
+          View all <ArrowRight className="h-3 w-3" />
+        </Link>
+      )}
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────
+   MAIN
+   ───────────────────────────────────────── */
+
+interface RecentPost {
+  slug: string;
+  title: string;
+  date: string;
+  description: string;
+  readingTime: number;
+}
+
+export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }) {
+  const [showAllNews, setShowAllNews] = useState(false);
+  const visibleNews = showAllNews ? news : news.slice(0, 4);
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+    <div className="min-h-screen pt-16 pb-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* ==================== PROFILE SECTION ==================== */}
-        <section className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Header with Photo and Basic Info */}
-            <div className="flex flex-col sm:flex-row gap-6 items-start mb-6">
-              {/* Profile Image */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="relative w-40 h-40 sm:w-44 sm:h-44 rounded-xl overflow-hidden border-2 border-border shadow-lg flex-shrink-0"
-              >
+        {/* ═══════════════════════════════════════
+            PROFILE
+            ═══════════════════════════════════════ */}
+        <FadeIn direction="none">
+          <section className="pb-12 flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+            {/* Profile photo with 3D tilt */}
+            <TiltCard className="flex-shrink-0" maxTilt={8}>
+              <div className="w-52 h-52 sm:w-72 sm:h-72 rounded-2xl overflow-hidden border-2 border-border">
                 <Image
-                  src="/profile.jpg"
+                  src="/profile_pic.jpeg"
                   alt={siteConfig.name}
-                  fill
-                  className="object-cover"
+                  width={288}
+                  height={288}
+                  className="object-cover w-full h-full"
                   priority
                 />
-              </motion.div>
-
-              {/* Name, Title, Contact */}
-              <div className="flex-1">
-                <h1 className="font-serif text-3xl sm:text-4xl font-bold mb-1">{siteConfig.name}</h1>
-                <p className="text-lg text-accent font-medium mb-1">
-                  PhD Student in Computer Science & Engineering
-                </p>
-                <p className="text-muted-foreground mb-4">
-                  <a href="https://www.ucsc.edu" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">
-                    University of California, Santa Cruz
-                  </a>
-                </p>
-
-                {/* Location & Contact Row */}
-                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">
-                  <span className="flex items-center gap-1.5">
-                    <MapPin className="h-4 w-4 text-accent" />
-                    Santa Cruz, CA
-                  </span>
-                  <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-1.5 hover:text-accent transition-colors">
-                    <Mail className="h-4 w-4" />
-                    {siteConfig.email}
-                  </a>
-                </div>
-
-                {/* Social Links */}
-                <div className="flex gap-2">
-                  {[
-                    { icon: Github, href: siteConfig.social.github, label: "GitHub" },
-                    { icon: Linkedin, href: siteConfig.social.linkedin, label: "LinkedIn" },
-                    { icon: GraduationCap, href: siteConfig.social.googleScholar, label: "Google Scholar" },
-                  ].map((social) => (
-                    <motion.a
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ y: -2 }}
-                      className="p-2 rounded-lg bg-muted hover:bg-accent hover:text-accent-foreground transition-colors"
-                      aria-label={social.label}
-                    >
-                      <social.icon className="h-4 w-4" />
-                    </motion.a>
-                  ))}
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                    <Link
-                      href="/cv"
-                      className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg bg-accent text-accent-foreground hover:bg-accent/90 transition-colors"
-                    >
-                      <FileText className="h-4 w-4" />
-                      CV
-                    </Link>
-                  </motion.div>
-                </div>
               </div>
-            </div>
+            </TiltCard>
 
             {/* Bio */}
-            <div className="space-y-4 text-[15px] leading-relaxed">
-              <p>
-                I am a PhD student advised by{" "}
-                <a href="https://ramakrishnansr.com" className="text-accent hover:underline font-medium" target="_blank" rel="noopener noreferrer">
-                  Prof. Ram Sundara Raman
+            <div className="text-center sm:text-left">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1">
+                {siteConfig.name}
+              </h1>
+
+              {/* Affiliation badge */}
+              <p className="font-mono text-xs text-foreground-quaternary tracking-wide mb-2">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mr-1.5 align-middle" />
+                PhD Student · UC Santa Cruz
+              </p>
+
+
+              <div className="space-y-3 text-base text-foreground-secondary leading-relaxed">
+                <p>
+                  I am a PhD student in Computer Science & Engineering at{" "}
+                  <a href="https://www.ucsc.edu" target="_blank" rel="noopener noreferrer" className="gradient-link">
+                    UC Santa Cruz
+                  </a>
+                  , working with{" "}
+                  <a href={siteConfig.advisor.url} target="_blank" rel="noopener noreferrer" className="gradient-link">
+                    Prof. Ram Sundara Raman
+                  </a>
+                  . I study the sociotechnical dimensions of AI-enabled privacy risks and abuse, and how they impact people and society. I am particularly interested in how AI facilitates new forms of harm — such as non-consensual deepfakes, synthetic media generation, and the commodification of abuse services — and in how the stakeholders affected by these threats understand, misinterpret, and struggle to keep pace with them: how everyday users form mental models of digital protections, how engineers and practitioners weigh privacy trade-offs under regulatory pressure, and how policymakers interpret ambiguous or conflicting frameworks. I use large-scale internet measurements, qualitative interviews, and controlled experiments to surface these misalignments. I am equally driven by the complementary question: can AI itself be turned into a tool for defense? I explore how the same technology that enables harm can also empower users to recognize and resist threats, help practitioners build safer systems under regulatory uncertainty, and provide policymakers with the empirical grounding they need to act.
+                </p>
+              </div>
+
+              {/* Social links — moved up into bio */}
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-4 text-sm justify-center sm:justify-start">
+                <a href={siteConfig.social.googleScholar} target="_blank" rel="noopener noreferrer" className="gradient-link text-foreground-tertiary">
+                  Scholar
                 </a>
-                . My research lies at the intersection of <strong>privacy, AI, and human-centered security</strong>. It is motivated by a simple conviction: the Internet threat landscape is evolving faster than ever in the age of AI, and protecting users now requires treating security and privacy as deeply socio-technical problems.
-              </p>
-
-              <p className="text-muted-foreground">
-                Technical defenses alone are insufficient. We must understand how AI is deployed, interpreted, and misused across the systems and institutions that shape everyday digital life. My work aims to illuminate these dynamics through empirical, human-centered investigation.
-              </p>
-
-              <p className="text-muted-foreground">
-                My current projects include studying <strong className="text-foreground">AI governance frameworks</strong> in collaboration with Stanford, measuring <strong className="text-foreground">AI-abuse services</strong> on mainstream platforms with Princeton CITP, and auditing <strong className="text-foreground">privacy law compliance</strong> (CCPA) through combined LLM policy analysis and tracking measurements.
-              </p>
-
-              <p className="text-muted-foreground">
-                Before starting my PhD, I worked as a research associate at <strong className="text-foreground">MBZUAI</strong>, a research intern at <strong className="text-foreground">Georgia Tech</strong>, and collaborated with researchers at <strong className="text-foreground">USF</strong>. I earned my B.Sc. from the German International University in Cairo as a merit scholar after ranking 18th nationally in Egypt&apos;s mathematics exam.
-              </p>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ==================== WHAT I WORK ON ==================== */}
-        <section className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-          >
-            <h2 className="font-serif text-2xl font-semibold mb-6 pb-2 border-b border-border">What I Work On</h2>
-
-            <div className="grid gap-4">
-              {/* Research Theme 1 */}
-              <motion.div
-                whileHover={{ x: 4 }}
-                className="group flex gap-4 p-4 rounded-xl border border-border hover:border-accent/30 bg-card transition-all"
-              >
-                <div className="flex-shrink-0 w-1 rounded-full bg-purple-500" />
-                <div>
-                  <h3 className="font-medium mb-1 group-hover:text-accent transition-colors">
-                    Human-Centered Security & Privacy
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    How do users, engineers, and policymakers understand security and privacy? I use surveys, interviews, and behavioral experiments to uncover where mental models diverge—and where those gaps create real-world vulnerabilities.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Research Theme 2 */}
-              <motion.div
-                whileHover={{ x: 4 }}
-                className="group flex gap-4 p-4 rounded-xl border border-border hover:border-accent/30 bg-card transition-all"
-              >
-                <div className="flex-shrink-0 w-1 rounded-full bg-blue-500" />
-                <div>
-                  <h3 className="font-medium mb-1 group-hover:text-accent transition-colors">
-                    AI Governance & Accountable Deployment
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    How do organizations govern AI responsibly under emerging regulations? I study how engineers interpret ambiguous rules, how organizations deploy generative models, and where governance intentions diverge from implementation realities.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Research Theme 3 */}
-              <motion.div
-                whileHover={{ x: 4 }}
-                className="group flex gap-4 p-4 rounded-xl border border-border hover:border-accent/30 bg-card transition-all"
-              >
-                <div className="flex-shrink-0 w-1 rounded-full bg-emerald-500" />
-                <div>
-                  <h3 className="font-medium mb-1 group-hover:text-accent transition-colors">
-                    Human-AI Interaction, Trust & Misuse
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    I study how AI-abuse services emerge on mainstream platforms—from deepfake production to synthetic identities—and how users form trust judgments when interacting with AI-generated content.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Research Theme 4 */}
-              <motion.div
-                whileHover={{ x: 4 }}
-                className="group flex gap-4 p-4 rounded-xl border border-border hover:border-accent/30 bg-card transition-all"
-              >
-                <div className="flex-shrink-0 w-1 rounded-full bg-orange-500" />
-                <div>
-                  <h3 className="font-medium mb-1 group-hover:text-accent transition-colors">
-                    Empirical & Data-Driven Auditing
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    I combine Internet-scale measurement, LLM-based policy analysis, and tracking measurements to audit privacy law compliance and uncover misalignments between user expectations, platform behavior, and regulatory intent.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-
-            <Link href="/research" className="inline-flex items-center gap-1 mt-6 text-sm text-accent hover:underline font-medium">
-              Explore my research →
-            </Link>
-          </motion.div>
-        </section>
-
-        {/* ==================== NEWS ==================== */}
-        <section className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h2 className="font-serif text-2xl font-semibold mb-4 pb-2 border-b border-border">News</h2>
-            <ul className="space-y-3">
-              {news.map((item, i) => {
-                const Icon = newsIcons[item.type] || Newspaper;
-                return (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.25 + i * 0.05 }}
-                    className={`flex gap-4 text-sm p-3 rounded-lg transition-colors ${
-                      item.highlight
-                        ? 'bg-accent/5 border border-accent/20'
-                        : 'hover:bg-muted/50'
-                    }`}
-                  >
-                    <Icon className={`h-4 w-4 flex-shrink-0 mt-0.5 ${item.highlight ? 'text-accent' : 'text-muted-foreground'}`} />
-                    <span className="text-muted-foreground w-20 flex-shrink-0 font-medium">{item.date}</span>
-                    <span className={item.highlight ? 'text-foreground font-medium' : ''}>{item.text}</span>
-                  </motion.li>
-                );
-              })}
-            </ul>
-            <Link href="/journey" className="inline-flex items-center gap-1 mt-4 text-sm text-accent hover:underline font-medium">
-              Full timeline →
-            </Link>
-          </motion.div>
-        </section>
-
-        {/* ==================== SELECTED PUBLICATIONS ==================== */}
-        <section className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-          >
-            <h2 className="font-serif text-2xl font-semibold mb-4 pb-2 border-b border-border">Selected Publications</h2>
-            <div className="space-y-4">
-              {publications.map((pub) => {
-                const isExpanded = expandedPub === pub.title;
-                const venueColor = venueColors[pub.venue] || "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/20";
-
-                return (
-                  <motion.div
-                    key={pub.title}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="group p-4 rounded-xl border border-border hover:border-accent/30 hover:shadow-md transition-all bg-card"
-                  >
-                    {/* Venue Badge */}
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <span className={`px-2.5 py-0.5 text-xs font-medium rounded-full border ${venueColor}`}>
-                        {pub.venue}
-                      </span>
-                      <span className="text-xs text-muted-foreground">{pub.year}</span>
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="font-semibold mb-2 group-hover:text-accent transition-colors">
-                      <a
-                        href={pub.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-start gap-1"
-                      >
-                        {pub.title}
-                        <ExternalLink className="h-3.5 w-3.5 flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </a>
-                    </h3>
-
-                    {/* Authors */}
-                    <p className="text-sm text-muted-foreground mb-3">
-                      {pub.authors.map((author, i) => (
-                        <span key={author}>
-                          <span className={author.toLowerCase().includes("mohamed") && (author.toLowerCase().includes("dawoud") || author.toLowerCase().includes("moustafa")) ? "text-foreground font-medium" : ""}>
-                            {author}
-                          </span>
-                          {i < pub.authors.length - 1 && ", "}
-                        </span>
-                      ))}
-                    </p>
-
-                    {/* Expandable Abstract */}
-                    <button
-                      onClick={() => setExpandedPub(isExpanded ? null : pub.title)}
-                      className="flex items-center gap-1 text-xs text-accent hover:underline mb-2"
-                    >
-                      {isExpanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
-                      {isExpanded ? "Hide abstract" : "Show abstract"}
-                    </button>
-
-                    <AnimatePresence>
-                      {isExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden"
-                        >
-                          <p className="text-sm text-muted-foreground mb-3 p-3 bg-muted/50 rounded-lg">
-                            {pub.abstract}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-1.5">
-                      {pub.tags.map((tag) => (
-                        <span key={tag} className="px-2 py-0.5 text-xs bg-muted rounded text-muted-foreground">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-            <Link href="/publications" className="inline-flex items-center gap-1 mt-6 text-sm text-accent hover:underline font-medium">
-              All publications →
-            </Link>
-          </motion.div>
-        </section>
-
-        {/* ==================== AFFILIATIONS TIMELINE ==================== */}
-        <section className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <h2 className="font-serif text-2xl font-semibold mb-6 pb-2 border-b border-border">Academic Journey</h2>
-
-            <div className="relative">
-              {/* Timeline line */}
-              <div className="absolute left-[7px] top-3 bottom-3 w-0.5 bg-gradient-to-b from-accent via-purple-500 to-muted" />
-
-              <div className="space-y-0">
-                {affiliations.map((aff, i) => (
-                  <motion.div
-                    key={aff.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.35 + i * 0.08 }}
-                    className="relative flex gap-4 pb-6 last:pb-0"
-                  >
-                    {/* Timeline dot */}
-                    <div className={`relative z-10 flex-shrink-0 w-4 h-4 rounded-full border-2 mt-1 ${
-                      aff.current
-                        ? 'bg-accent border-accent shadow-[0_0_8px_rgba(99,102,241,0.5)]'
-                        : 'bg-background border-muted-foreground/40'
-                    }`}>
-                      {aff.current && (
-                        <span className="absolute inset-0 rounded-full bg-accent animate-ping opacity-20" />
-                      )}
-                    </div>
-
-                    {/* Content */}
-                    <div className={`flex-1 -mt-0.5 pb-4 ${i !== affiliations.length - 1 ? 'border-b border-border/50' : ''}`}>
-                      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1">
-                        <h3 className={`font-medium ${aff.current ? 'text-accent' : ''}`}>{aff.name}</h3>
-                        <span className="text-xs text-muted-foreground">{aff.period}</span>
-                        {aff.current && (
-                          <span className="px-1.5 py-0.5 text-[10px] font-medium rounded bg-accent/10 text-accent">
-                            Current
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-muted-foreground">{aff.role}</p>
-                      {aff.location && (
-                        <p className="text-xs text-muted-foreground/70 mt-1 flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          {aff.location}
-                        </p>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
+                <span className="text-foreground-quaternary">&middot;</span>
+                <a href={siteConfig.social.github} target="_blank" rel="noopener noreferrer" className="gradient-link text-foreground-tertiary">
+                  GitHub
+                </a>
+                <span className="text-foreground-quaternary">&middot;</span>
+                <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="gradient-link text-foreground-tertiary">
+                  LinkedIn
+                </a>
+                <span className="text-foreground-quaternary">&middot;</span>
+                <a href={`mailto:${siteConfig.email}`} className="gradient-link text-foreground-tertiary">
+                  Email
+                </a>
               </div>
             </div>
-          </motion.div>
+          </section>
+        </FadeIn>
+
+
+        {/* ═══════════════════════════════════════
+            NEWS
+            ═══════════════════════════════════════ */}
+        <FadeIn direction="none" delay={0.05}>
+          <section className="mb-16" aria-labelledby="section-news">
+            <SectionHeading title="News" href="/news" id="section-news" />
+            <div className="space-y-1">
+              {visibleNews.map((item, i) => (
+                <div
+                  key={i}
+                  className="flex gap-3 text-sm leading-relaxed -mx-3 px-3 py-2 rounded-lg hover:bg-accent-subtle transition-colors duration-150"
+                >
+                  <span className="flex items-center gap-2 text-foreground-quaternary flex-shrink-0 w-24">
+                    <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                      item.text.toLowerCase().includes("paper") || item.text.toLowerCase().includes("accepted") || item.text.toLowerCase().includes("published")
+                        ? "bg-accent"
+                        : item.text.toLowerCase().includes("talk") || item.text.toLowerCase().includes("attended") || item.text.toLowerCase().includes("gathering")
+                          ? "bg-foreground"
+                          : "bg-foreground-tertiary"
+                    }`} />
+                    <span className="font-mono text-xs tabular-nums">{item.date}</span>
+                  </span>
+                  <span className="text-foreground-secondary">
+                    {item.text}
+                  </span>
+                </div>
+              ))}
+            </div>
+            {news.length > 4 && (
+              <button
+                onClick={() => setShowAllNews(!showAllNews)}
+                className="mt-3 text-sm gradient-link font-medium"
+                aria-expanded={showAllNews}
+                aria-label={showAllNews ? "Show fewer news items" : "Show all news items"}
+              >
+                {showAllNews ? "Show Less" : "See More"}
+              </button>
+            )}
+          </section>
+        </FadeIn>
+
+        {/* ── divider ── */}
+        <hr className="border-border mb-16" />
+
+        {/* ═══════════════════════════════════════
+            ONGOING PROJECTS
+            ═══════════════════════════════════════ */}
+        <FadeIn direction="none" delay={0.08}>
+          <section className="mb-16" aria-labelledby="section-projects">
+            <SectionHeading title="Ongoing Projects" id="section-projects" />
+
+            <div className="space-y-6">
+              {ongoingProjects.map((project) => (
+                <a
+                  key={project.title}
+                  href={project.link || "#"}
+                  target={project.link ? "_blank" : undefined}
+                  rel={project.link ? "noopener noreferrer" : undefined}
+                  className="group card-hover block rounded-xl border border-border hover:border-accent/30 hover:bg-accent-subtle overflow-hidden"
+                >
+                  {/* Header bar */}
+                  <div className="px-5 py-4 border-b border-border bg-muted/30">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-2 h-2 rounded-full bg-accent animate-pulse flex-shrink-0" />
+                        <h3 className="text-base font-semibold tracking-tight group-hover:text-accent transition-colors duration-150">
+                          {project.title}
+                        </h3>
+                      </div>
+                      <span className="font-mono text-xs text-accent font-medium tracking-wide uppercase">
+                        {project.status}
+                      </span>
+                    </div>
+                    <p className="text-sm text-foreground-secondary mt-2 leading-relaxed">
+                      {project.summary}
+                    </p>
+                  </div>
+
+                  {/* Body */}
+                  <div className="px-5 py-4 space-y-4">
+                    {/* Highlights */}
+                    <ul className="space-y-2">
+                      {project.highlights.map((h, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-sm text-foreground-secondary">
+                          <span className="w-1 h-1 rounded-full bg-foreground-quaternary mt-2 flex-shrink-0" />
+                          {h}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Footer: collaborators + tags */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-border">
+                      <div className="flex flex-wrap items-center gap-2">
+                        {project.collaborators.map((c, i) => (
+                          <span key={i} className="inline-flex items-center px-2 py-0.5 rounded-md bg-muted text-xs font-mono text-foreground-tertiary">
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.tags.map((tag) => (
+                          <span key={tag} className="text-xs text-foreground-quaternary">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        </FadeIn>
+
+        {/* ── divider ── */}
+        <hr className="border-border mb-16" />
+
+        {/* ═══════════════════════════════════════
+            PUBLICATIONS
+            ═══════════════════════════════════════ */}
+        <section className="mb-16" aria-labelledby="section-publications">
+          <SectionHeading title="Publications" href="/publications" id="section-publications" />
+
+          <div className="space-y-4">
+            {publications.map((pub) => (
+              <FadeIn key={pub.title} direction="none" delay={0.02}>
+                <a
+                  href={pub.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group card-hover flex flex-col sm:flex-row gap-5 p-4 rounded-xl border border-border hover:border-accent/30 hover:bg-accent-subtle"
+                >
+                  {/* Thumbnail */}
+                  <div className="relative w-full sm:w-56 sm:flex-shrink-0 aspect-[16/10] rounded-lg overflow-hidden bg-muted border border-border">
+                    <Image
+                      src={pub.image}
+                      alt={pub.title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, 224px"
+                    />
+                  </div>
+
+                  {/* Text content */}
+                  <div className="flex-1 min-w-0">
+                    <span className="font-mono text-xs text-foreground-quaternary tabular-nums">
+                      {pub.year}
+                    </span>
+                    <h3 className="text-base font-semibold leading-snug mb-1 group-hover:text-accent transition-colors duration-150">
+                      {pub.title}
+                    </h3>
+                    <p className="text-xs text-foreground-tertiary leading-relaxed mb-1">
+                      {highlightName(pub.authors)}
+                    </p>
+                    <p className="text-xs italic text-foreground-quaternary mb-2">
+                      {pub.venue}
+                    </p>
+                    <p className="text-xs text-foreground-secondary leading-relaxed mb-2">
+                      {pub.description}
+                    </p>
+                    <span className="text-xs font-mono gradient-link">
+                      [PDF]
+                    </span>
+                  </div>
+                </a>
+              </FadeIn>
+            ))}
+          </div>
         </section>
 
-        {/* ==================== CONTACT FOOTER ==================== */}
-        <section className="pt-8 border-t border-border">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
-            className="text-center"
-          >
-            <h2 className="font-serif text-xl font-semibold mb-3">Let&apos;s Connect</h2>
-            <p className="text-muted-foreground mb-4 max-w-lg mx-auto">
-              Interested in collaborating or discussing research? I&apos;m always happy to connect with fellow researchers and practitioners in security and privacy.
-            </p>
-            <div className="flex justify-center gap-3">
-              <motion.a
-                href={`mailto:${siteConfig.email}`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg bg-accent text-accent-foreground hover:bg-accent/90 transition-colors"
-              >
-                <Mail className="h-4 w-4" />
-                Get in Touch
-              </motion.a>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        {/* ── divider ── */}
+        <hr className="border-border mb-16" />
+
+        {/* ═══════════════════════════════════════
+            RECENT POSTS
+            ═══════════════════════════════════════ */}
+        <FadeIn direction="none" delay={0.09}>
+          <section className="mb-16" aria-labelledby="section-posts">
+            <SectionHeading title="Recent Posts" href="/blog" id="section-posts" />
+            <div className="space-y-2">
+              {recentPosts.map((post) => (
                 <Link
-                  href="/journey"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg border border-border hover:bg-muted transition-colors"
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group block -mx-3 px-3 py-3 rounded-lg hover:bg-accent-subtle transition-colors duration-150"
                 >
-                  Read My Story
+                  <div className="flex items-center gap-3 mb-1">
+                    <span className="font-mono text-xs text-foreground-quaternary tabular-nums">
+                      {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                    </span>
+                    <span className="text-foreground-quaternary">·</span>
+                    <span className="font-mono text-xs text-foreground-quaternary">
+                      {post.readingTime} min read
+                    </span>
+                  </div>
+                  <h3 className="text-sm font-semibold leading-snug group-hover:text-accent transition-colors duration-150">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs text-foreground-tertiary leading-relaxed mt-1">
+                    {post.description}
+                  </p>
                 </Link>
-              </motion.div>
+              ))}
             </div>
-          </motion.div>
-        </section>
+          </section>
+        </FadeIn>
+
+        {/* ── divider ── */}
+        <hr className="border-border mb-16" />
+
+        {/* ═══════════════════════════════════════
+            LET'S COLLABORATE
+            ═══════════════════════════════════════ */}
+        <FadeIn direction="none" delay={0.1}>
+          <section className="mb-16" aria-labelledby="section-collaborate">
+            <h2 id="section-collaborate" className="text-xl font-bold tracking-tight mb-3">
+              Let&apos;s Collaborate
+            </h2>
+            <p className="text-sm text-foreground-secondary leading-relaxed mb-5 max-w-xl">
+              I&apos;m always open to collaborations on security, privacy, and AI research.
+              If you have an idea, a dataset, or just want to chat — reach out.
+            </p>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:border-accent/30 text-sm font-medium transition-colors duration-150 hover:bg-accent-subtle"
+            >
+              Get in touch <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          </section>
+        </FadeIn>
 
       </div>
     </div>

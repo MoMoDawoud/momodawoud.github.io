@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://momodawoud.github.io/sitemap.xml

@@ -1,387 +1,374 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Search,
-  FileText,
-  ExternalLink,
-  Code,
-  Video,
-  Presentation,
-  Copy,
-  Check,
-  Filter,
-  Star,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FadeIn, StaggerChildren, StaggerItem } from "@/components/animations/fade-in";
+import Image from "next/image";
+import { Search, ChevronDown, ChevronUp } from "lucide-react";
+import { PageHeader } from "@/components/page-header";
+import { FadeIn } from "@/components/animations/fade-in";
 import {
   publications,
   publicationYears,
-  allTags,
-  publicationTypes,
   type Publication,
 } from "@/data/publications";
-import Fuse from "fuse.js";
 
-const fuse = new Fuse(publications, {
-  keys: ["title", "authors", "venue", "abstract", "tags"],
-  threshold: 0.3,
-});
+/* ─────────────────────────────────────────
+   PUBLICATION ROW
+   ───────────────────────────────────────── */
 
-function PublicationCard({ publication }: { publication: Publication }) {
-  const [copiedBibtex, setCopiedBibtex] = useState(false);
+function PublicationRow({ publication }: { publication: Publication }) {
+  const [showAbstract, setShowAbstract] = useState(false);
 
-  const copyBibtex = () => {
-    if (publication.bibtex) {
-      navigator.clipboard.writeText(publication.bibtex);
-      setCopiedBibtex(true);
-      setTimeout(() => setCopiedBibtex(false), 2000);
-    }
-  };
+  const typeBadgeColor = {
+    conference: "bg-foreground/10 text-foreground",
+    journal: "bg-accent/15 text-accent",
+    workshop: "bg-accent/10 text-foreground-secondary",
+    preprint: "bg-muted text-foreground-tertiary",
+  }[publication.type];
 
   return (
-    <motion.article
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      whileHover={{ y: -2 }}
-      className="group relative p-6 rounded-2xl bg-card border border-border hover:border-accent/50 transition-all duration-300"
-    >
-      {/* Selected badge */}
-      {publication.selected && (
-        <div className="absolute -top-2 -right-2">
-          <Badge className="bg-accent text-accent-foreground">
-            <Star className="h-3 w-3 mr-1 fill-current" />
-            Featured
-          </Badge>
-        </div>
-      )}
+    <article className="py-4 px-3 -mx-3 rounded-lg hover:bg-muted/50 transition-colors duration-150">
+      <div className="flex flex-col sm:flex-row sm:gap-6">
+        {/* Left: image thumbnail */}
+        {publication.image && (
+          <div className="w-full sm:w-36 flex-shrink-0 mb-3 sm:mb-0">
+            <div className="relative w-full sm:w-36 h-24 rounded-lg border border-border overflow-hidden bg-muted group/thumb">
+              <Image
+                src={publication.image}
+                alt={`Figure from ${publication.title}`}
+                fill
+                className="object-cover transition-transform duration-300 group-hover/thumb:scale-105"
+                sizes="(max-width: 640px) 100vw, 144px"
+              />
+            </div>
+          </div>
+        )}
 
-      <div className="space-y-4">
-        {/* Type & Year */}
-        <div className="flex items-center gap-2 text-sm">
-          <Badge variant="secondary" className="capitalize">
-            {publication.type}
-          </Badge>
-          <span className="text-muted-foreground">{publication.year}</span>
-        </div>
-
-        {/* Title */}
-        <h3 className="text-xl font-semibold group-hover:text-accent transition-colors">
-          {publication.title}
-        </h3>
-
-        {/* Authors */}
-        <p className="text-muted-foreground">
-          {publication.authors.map((author, i) => (
-            <span key={author}>
-              <span
-                className={
-                  author.toLowerCase().includes("mohamed") && (author.toLowerCase().includes("dawoud") || author.toLowerCase().includes("moustafa"))
-                    ? "font-medium text-foreground"
-                    : ""
-                }
-              >
-                {author}
-              </span>
-              {i < publication.authors.length - 1 && ", "}
-            </span>
-          ))}
-        </p>
-
-        {/* Venue */}
-        <p className="text-accent font-medium">{publication.venue}</p>
-
-        {/* Abstract */}
-        <p className="text-sm text-muted-foreground line-clamp-3">
-          {publication.abstract}
-        </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2">
-          {publication.tags.map((tag) => (
-            <Badge key={tag} variant="outline" className="text-xs">
-              {tag}
-            </Badge>
-          ))}
-        </div>
-
-        {/* Links */}
-        <div className="flex flex-wrap gap-2 pt-2">
-          {publication.links.paper && (
-            <Button variant="outline" size="sm" className="rounded-full" asChild>
+        {/* Middle: title + authors + links */}
+        <div className="flex-1 min-w-0">
+          <h3 className="font-serif text-base font-medium leading-snug mb-1.5">
+            {publication.links.paper && publication.links.paper !== "#" ? (
               <a
                 href={publication.links.paper}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="link-subtle"
               >
-                <FileText className="mr-2 h-4 w-4" />
-                Paper
-                <ExternalLink className="ml-2 h-3 w-3" />
+                {publication.title}
               </a>
-            </Button>
-          )}
-          {publication.links.pdf && (
-            <Button variant="outline" size="sm" className="rounded-full" asChild>
+            ) : (
+              publication.title
+            )}
+          </h3>
+
+          {/* Authors */}
+          <p className="font-mono text-xs text-foreground-tertiary mb-2">
+            {publication.authors.map((author, i) => (
+              <span key={author}>
+                <span
+                  className={
+                    author.toLowerCase().includes("mohamed") &&
+                    (author.toLowerCase().includes("dawoud") ||
+                      author.toLowerCase().includes("moustafa"))
+                      ? "text-foreground font-medium"
+                      : ""
+                  }
+                >
+                  {author}
+                </span>
+                {i < publication.authors.length - 1 && ", "}
+              </span>
+            ))}
+          </p>
+
+          {/* Links row */}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.7rem]">
+            {publication.links.paper && publication.links.paper !== "#" && (
+              <a
+                href={publication.links.paper}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-accent"
+              >
+                [Paper]
+              </a>
+            )}
+            {publication.links.pdf && (
               <a
                 href={publication.links.pdf}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="link-accent"
               >
-                <FileText className="mr-2 h-4 w-4" />
-                PDF
+                [PDF]
               </a>
-            </Button>
-          )}
-          {publication.links.code && (
-            <Button variant="outline" size="sm" className="rounded-full" asChild>
+            )}
+            {publication.links.code && (
               <a
                 href={publication.links.code}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="link-accent"
               >
-                <Code className="mr-2 h-4 w-4" />
-                Code
+                [Code]
               </a>
-            </Button>
-          )}
-          {publication.links.slides && (
-            <Button variant="outline" size="sm" className="rounded-full" asChild>
+            )}
+            {publication.links.slides && (
               <a
                 href={publication.links.slides}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="link-accent"
               >
-                <Presentation className="mr-2 h-4 w-4" />
-                Slides
+                [Slides]
               </a>
-            </Button>
-          )}
-          {publication.links.video && (
-            <Button variant="outline" size="sm" className="rounded-full" asChild>
+            )}
+            {publication.links.video && (
               <a
                 href={publication.links.video}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="link-accent"
               >
-                <Video className="mr-2 h-4 w-4" />
-                Video
+                [Video]
               </a>
-            </Button>
-          )}
-          {publication.bibtex && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full"
-              onClick={copyBibtex}
+            )}
+            {publication.links.doi && (
+              <a
+                href={`https://doi.org/${publication.links.doi}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-accent"
+              >
+                [DOI]
+              </a>
+            )}
+            <button
+              onClick={() => setShowAbstract(!showAbstract)}
+              className="text-foreground-quaternary hover:text-foreground transition-colors duration-150 inline-flex items-center gap-0.5"
+              aria-expanded={showAbstract}
             >
-              {copiedBibtex ? (
-                <>
-                  <Check className="mr-2 h-4 w-4 text-green-500" />
-                  Copied!
-                </>
+              {showAbstract ? (
+                <ChevronUp className="h-3 w-3" />
               ) : (
-                <>
-                  <Copy className="mr-2 h-4 w-4" />
-                  BibTeX
-                </>
+                <ChevronDown className="h-3 w-3" />
               )}
-            </Button>
-          )}
+              Abstract
+            </button>
+          </div>
+        </div>
+
+        {/* Right: venue + type badge */}
+        <div className="flex sm:flex-col items-start sm:items-end gap-2 sm:gap-1.5 mt-2 sm:mt-0 sm:w-44 flex-shrink-0">
+          <span className="text-xs text-foreground-tertiary">
+            {publication.venue}
+          </span>
+          <div className="flex items-center gap-1.5 flex-wrap sm:justify-end">
+            <span className={`inline-block px-1.5 py-0.5 rounded text-[0.6rem] font-mono font-medium uppercase tracking-wider ${typeBadgeColor}`}>
+              {publication.type}
+            </span>
+            <span className="font-mono text-[0.65rem] text-foreground-quaternary">
+              {publication.year}
+            </span>
+            {publication.citations != null && publication.citations > 0 && (
+              <span className="font-mono text-[0.6rem] text-foreground-tertiary bg-muted px-1.5 py-0.5 rounded">
+                {publication.citations} cited
+              </span>
+            )}
+          </div>
         </div>
       </div>
-    </motion.article>
+
+      {/* Abstract expand */}
+      {showAbstract && (
+        <p className="text-sm text-foreground-secondary mt-3 pl-4 border-l-2 border-accent max-w-prose leading-relaxed">
+          {publication.abstract}
+        </p>
+      )}
+    </article>
   );
 }
+
+/* ─────────────────────────────────────────
+   MAIN
+   ───────────────────────────────────────── */
 
 export function PublicationsContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState("all");
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [showSelected, setShowSelected] = useState(false);
 
   const filteredPublications = useMemo(() => {
     let results = publications;
-
-    // Search
+    if (showSelected) results = results.filter((pub) => pub.selected);
     if (searchQuery) {
-      results = fuse.search(searchQuery).map((r) => r.item);
+      const query = searchQuery.toLowerCase();
+      results = results.filter(
+        (pub) =>
+          pub.title.toLowerCase().includes(query) ||
+          pub.authors.some((a) => a.toLowerCase().includes(query)) ||
+          pub.venue.toLowerCase().includes(query) ||
+          pub.abstract.toLowerCase().includes(query) ||
+          pub.tags.some((t) => t.toLowerCase().includes(query))
+      );
     }
-
-    // Type filter
-    if (selectedType !== "all") {
+    if (selectedType !== "all")
       results = results.filter((pub) => pub.type === selectedType);
-    }
-
-    // Year filter
-    if (selectedYear) {
-      results = results.filter((pub) => pub.year.toString() === selectedYear);
-    }
-
-    // Tag filter
-    if (selectedTag) {
-      results = results.filter((pub) => pub.tags.includes(selectedTag));
-    }
-
+    if (selectedYear)
+      results = results.filter(
+        (pub) => pub.year.toString() === selectedYear
+      );
     return results;
-  }, [searchQuery, selectedType, selectedYear, selectedTag]);
+  }, [searchQuery, selectedType, selectedYear, showSelected]);
+
+  const groupedByYear = useMemo(() => {
+    const groups: Record<string, Publication[]> = {};
+    for (const pub of filteredPublications) {
+      const year = pub.year.toString();
+      if (!groups[year]) groups[year] = [];
+      groups[year].push(pub);
+    }
+    return Object.entries(groups).sort(([a], [b]) => Number(b) - Number(a));
+  }, [filteredPublications]);
 
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedType("all");
     setSelectedYear(null);
-    setSelectedTag(null);
+    setShowSelected(false);
   };
-
   const hasFilters =
-    searchQuery || selectedType !== "all" || selectedYear || selectedTag;
+    searchQuery ||
+    selectedType !== "all" ||
+    selectedYear ||
+    showSelected;
 
   return (
-    <div className="pt-24 pb-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-12">
-          <FadeIn>
-            <Badge className="mb-4">Research Output</Badge>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">Publications</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl">
-              My research spans security, privacy, and cybercrime. Below you&apos;ll
-              find my peer-reviewed publications with links to papers, code, and
-              presentation materials.
+    <div className="pt-20 pb-16">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <PageHeader
+          title="Publications"
+        />
+
+        {/* Toggle + count */}
+        <FadeIn direction="none">
+          <div className="flex items-center justify-between mb-8">
+            <p className="font-mono text-xs text-foreground-tertiary" aria-live="polite">
+              {filteredPublications.length} of {publications.length} publications
+              <span className="text-foreground-quaternary">
+                {" "}
+                &middot; 2021&ndash;2026
+              </span>
             </p>
-          </FadeIn>
-        </div>
-
-        {/* Search & Filters */}
-        <FadeIn delay={0.1}>
-          <div className="space-y-4 mb-8">
-            {/* Search */}
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search publications by title, author, or keyword..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 h-12 rounded-full"
-              />
-            </div>
-
-            {/* Filter Row */}
-            <div className="flex flex-wrap items-center gap-4">
-              {/* Type Filter */}
-              <Tabs
-                value={selectedType}
-                onValueChange={setSelectedType}
-                className="w-auto"
+            <div className="flex gap-1 font-mono text-xs">
+              <button
+                onClick={() => setShowSelected(false)}
+                className={`px-3 py-1.5 min-h-[36px] rounded transition-colors duration-150 ${
+                  !showSelected
+                    ? "text-foreground bg-muted"
+                    : "text-foreground-quaternary hover:text-foreground"
+                }`}
               >
-                <TabsList className="rounded-full">
-                  {publicationTypes.map((type) => (
-                    <TabsTrigger
-                      key={type.value}
-                      value={type.value}
-                      className="rounded-full"
-                    >
-                      {type.label}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </Tabs>
-
-              {/* Year Filter */}
-              <div className="flex items-center gap-2">
-                <Filter className="h-4 w-4 text-muted-foreground" />
-                <select
-                  value={selectedYear || ""}
-                  onChange={(e) => setSelectedYear(e.target.value || null)}
-                  className="px-3 py-2 rounded-full bg-muted border-0 text-sm focus:ring-2 focus:ring-accent"
-                >
-                  <option value="">All Years</option>
-                  {publicationYears.map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Clear Filters */}
-              {hasFilters && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={clearFilters}
-                  className="rounded-full"
-                >
-                  Clear Filters
-                </Button>
-              )}
-            </div>
-
-            {/* Tag Pills */}
-            <div className="flex flex-wrap gap-2">
-              {allTags.map((tag) => (
-                <motion.button
-                  key={tag}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() =>
-                    setSelectedTag(selectedTag === tag ? null : tag)
-                  }
-                  className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                    selectedTag === tag
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-muted hover:bg-muted/80"
-                  }`}
-                >
-                  {tag}
-                </motion.button>
-              ))}
+                All
+              </button>
+              <button
+                onClick={() => setShowSelected(true)}
+                className={`px-3 py-1.5 min-h-[36px] rounded transition-colors duration-150 ${
+                  showSelected
+                    ? "text-foreground bg-muted"
+                    : "text-foreground-quaternary hover:text-foreground"
+                }`}
+              >
+                Selected
+              </button>
             </div>
           </div>
         </FadeIn>
 
-        {/* Results Count */}
-        <FadeIn delay={0.2}>
-          <p className="text-sm text-muted-foreground mb-6">
-            Showing {filteredPublications.length} of {publications.length}{" "}
-            publications
-          </p>
+        {/* Filters */}
+        <FadeIn direction="none" delay={0.05}>
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            {/* Search */}
+            <div className="relative flex-1 min-w-[200px]">
+              <Search className="absolute left-0 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-foreground-quaternary" />
+              <input
+                type="search"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-6 pr-2 py-1.5 text-sm bg-transparent border-b border-border focus:border-accent outline-none font-mono placeholder:text-foreground-quaternary transition-colors"
+                aria-label="Search publications"
+              />
+            </div>
+
+            {/* Year */}
+            <select
+              value={selectedYear || ""}
+              onChange={(e) => setSelectedYear(e.target.value || null)}
+              className="px-2 py-1.5 text-xs font-mono bg-transparent border border-border rounded text-foreground-secondary focus:ring-1 focus:ring-accent outline-none"
+              aria-label="Filter by year"
+            >
+              <option value="">Year</option>
+              {publicationYears.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+
+            {/* Type */}
+            <select
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="px-2 py-1.5 text-xs font-mono bg-transparent border border-border rounded text-foreground-secondary focus:ring-1 focus:ring-accent outline-none"
+              aria-label="Filter by type"
+            >
+              <option value="all">Type</option>
+              <option value="journal">Journal</option>
+              <option value="conference">Conference</option>
+              <option value="workshop">Workshop</option>
+              <option value="preprint">Preprint</option>
+            </select>
+
+            {hasFilters && (
+              <button
+                onClick={clearFilters}
+                className="text-xs text-foreground-quaternary hover:text-foreground transition-colors font-mono"
+              >
+                Clear
+              </button>
+            )}
+          </div>
         </FadeIn>
 
-        {/* Publications List */}
-        <div className="space-y-6">
-          <AnimatePresence mode="popLayout">
-            {filteredPublications.length > 0 ? (
-              filteredPublications.map((pub) => (
-                <PublicationCard key={pub.id} publication={pub} />
-              ))
-            ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-center py-12"
+        {/* Publications list */}
+        <div>
+          {groupedByYear.length > 0 ? (
+            groupedByYear.map(([year, pubs]) => (
+              <div key={year} className="mb-10">
+                <h2 className="font-serif text-2xl font-light text-foreground-quaternary tracking-tight mb-1">
+                  {year}
+                </h2>
+                <div className="divide-y divide-border">
+                  {pubs.map((pub) => (
+                    <PublicationRow key={pub.id} publication={pub} />
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-foreground-tertiary text-sm">
+                No publications found matching your criteria.
+              </p>
+              <button
+                onClick={clearFilters}
+                className="mt-2 text-sm text-accent hover:underline"
               >
-                <p className="text-muted-foreground">
-                  No publications found matching your criteria.
-                </p>
-                <Button
-                  variant="link"
-                  onClick={clearFilters}
-                  className="mt-2"
-                >
-                  Clear all filters
-                </Button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                Clear all filters
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
