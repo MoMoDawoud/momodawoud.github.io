@@ -139,14 +139,14 @@ export function ServiceContent() {
             </h2>
             <div className="space-y-4 text-sm text-foreground-secondary leading-relaxed max-w-prose">
               <p>
-                Each application cycle, I mentor a select cohort of prospective PhD applicants in
-                Computer Science. I provide personalized feedback on statements of purpose, research
-                statements, CVs, research positioning, program selection, and overall application
-                strategy. I also guide undergraduates exploring research directions in security and
-                privacy.
+                I enjoy mentoring students at different stages of their academic journey. Each
+                application cycle, I work with prospective graduate applicants on statements of
+                purpose, research statements, CVs, program selection, and overall application
+                strategy. I also advise undergraduates exploring research for the first time and
+                students navigating career decisions in academia and beyond.
               </p>
               <p className="text-foreground-tertiary text-xs">
-                If you&apos;re applying to PhD programs and think I can help, feel free to{" "}
+                If you think I can help, feel free to{" "}
                 <a href="mailto:mdawoud@ucsc.edu" className="link-accent">
                   reach out
                 </a>
