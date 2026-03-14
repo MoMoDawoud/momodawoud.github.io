@@ -107,7 +107,7 @@ export default function RootLayout({
         <PersonJsonLd />
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
         >
           <a
