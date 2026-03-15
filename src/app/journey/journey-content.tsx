@@ -123,10 +123,10 @@ const timelineItems = [
   },
   {
     date: "2026",
-    title: "Leading AI Privacy Study with Stanford",
+    title: "Leading AI Privacy Study with UCSC and Stanford",
     description:
-      "Leading the AI Privacy & Regulation Study in collaboration with Stanford University, examining how practitioners navigate privacy challenges and emerging regulations like the EU AI Act, CCPA, and GDPR when building AI products.",
-    children: <BadgeRow badges={["RANDLab", "Stanford"]} />,
+      "Leading the AI Privacy & Regulation Study in collaboration with UC Santa Cruz and Stanford University, examining how practitioners navigate privacy challenges and emerging regulations like the EU AI Act, CCPA, and GDPR when building AI products.",
+    children: <BadgeRow badges={["RANDLab", "UCSC", "Stanford"]} />,
   },
   {
     date: "2026",
@@ -150,7 +150,7 @@ export function JourneyContent() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <PageHeader
           title="My Journey"
-          description="From a small city in Egypt that once declared independence, to pursuing research that fights for people's freedom and dignity in the digital age."
+          description=""
         />
 
         {/* Timeline */}
