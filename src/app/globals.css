@@ -53,7 +53,7 @@
 }
 
 /* ═══════════════════════════════════════════
-   LIGHT MODE — Pure white canvas + hot coral
+   LIGHT MODE — Pure white canvas + deep navy
    ═══════════════════════════════════════════ */
 :root {
   --radius: 0.625rem;
@@ -79,22 +79,22 @@
   --secondary-foreground: #0A0A0B;
   --muted-foreground: #3F3F46;
 
-  /* Accent — hot coral */
-  --accent: #E04108;
+  /* Accent — deep navy */
+  --accent: #1E3A5F;
   --accent-foreground: #FFFFFF;
-  --accent-subtle: #E041080F;
+  --accent-subtle: #1E3A5F0A;
 
   /* Utility */
   --destructive: #DC2626;
   --border: #E4E4E7;
   --input: #E4E4E7;
-  --ring: #E04108;
+  --ring: #1E3A5F;
 
-  /* Charts — sunset progression */
-  --chart-1: #E04108;
-  --chart-2: #F06530;
-  --chart-3: #F7934C;
-  --chart-4: #FBBD74;
+  /* Charts — navy progression */
+  --chart-1: #1E3A5F;
+  --chart-2: #2B5282;
+  --chart-3: #3B6FA0;
+  --chart-4: #5B8DB8;
   --chart-5: #DC2626;
 
   /* Sidebar */
@@ -105,58 +105,58 @@
   --sidebar-accent: #F4F4F5;
   --sidebar-accent-foreground: #0A0A0B;
   --sidebar-border: #E4E4E7;
-  --sidebar-ring: #E04108;
+  --sidebar-ring: #1E3A5F;
 }
 
 /* ═══════════════════════════════════════════
-   DARK MODE — True black + bright tangerine
+   DARK MODE — True black + sky blue
    ═══════════════════════════════════════════ */
 .dark {
   /* True black backgrounds */
-  --background: #0A0A0A;
-  --card: #121110;
-  --popover: #121110;
-  --muted: #1C1918;
+  --background: #0A0A0B;
+  --card: #111113;
+  --popover: #111113;
+  --muted: #1A1A1E;
 
-  /* Warm white foregrounds */
-  --foreground: #F0EDEB;
-  --foreground-secondary: #BDB5B0;
-  --foreground-tertiary: #8A8078;
-  --foreground-quaternary: #564E48;
+  /* Cool white foregrounds */
+  --foreground: #EDEDEF;
+  --foreground-secondary: #B0B0B8;
+  --foreground-tertiary: #7A7A85;
+  --foreground-quaternary: #4A4A54;
 
-  --card-foreground: #F0EDEB;
-  --popover-foreground: #F0EDEB;
-  --primary: #F0EDEB;
-  --primary-foreground: #0A0A0A;
-  --secondary: #1C1918;
-  --secondary-foreground: #F0EDEB;
-  --muted-foreground: #BDB5B0;
+  --card-foreground: #EDEDEF;
+  --popover-foreground: #EDEDEF;
+  --primary: #EDEDEF;
+  --primary-foreground: #0A0A0B;
+  --secondary: #1A1A1E;
+  --secondary-foreground: #EDEDEF;
+  --muted-foreground: #B0B0B8;
 
-  /* Accent — bright tangerine */
-  --accent: #FF6B35;
-  --accent-foreground: #1A0C04;
-  --accent-subtle: #FF6B3518;
+  /* Accent — sky blue */
+  --accent: #5B9BD5;
+  --accent-foreground: #0A0A0B;
+  --accent-subtle: #5B9BD518;
 
   --destructive: #F87171;
-  --border: #1C1918;
-  --input: #1C1918;
-  --ring: #FF6B35;
+  --border: #1A1A1E;
+  --input: #1A1A1E;
+  --ring: #5B9BD5;
 
-  /* Charts — ember progression */
-  --chart-1: #FF6B35;
-  --chart-2: #F06530;
-  --chart-3: #E04108;
-  --chart-4: #C23606;
+  /* Charts — blue progression */
+  --chart-1: #5B9BD5;
+  --chart-2: #3B6FA0;
+  --chart-3: #2B5282;
+  --chart-4: #1E3A5F;
   --chart-5: #F87171;
 
-  --sidebar: #121110;
-  --sidebar-foreground: #F0EDEB;
-  --sidebar-primary: #FF6B35;
-  --sidebar-primary-foreground: #1A0C04;
-  --sidebar-accent: #1C1918;
-  --sidebar-accent-foreground: #F0EDEB;
-  --sidebar-border: #1C1918;
-  --sidebar-ring: #FF6B35;
+  --sidebar: #111113;
+  --sidebar-foreground: #EDEDEF;
+  --sidebar-primary: #5B9BD5;
+  --sidebar-primary-foreground: #0A0A0B;
+  --sidebar-accent: #1A1A1E;
+  --sidebar-accent-foreground: #EDEDEF;
+  --sidebar-border: #1A1A1E;
+  --sidebar-ring: #5B9BD5;
 }
 
 /* ═══════════════════════════════════════════
@@ -173,13 +173,13 @@
   }
   html:not(.dark) body {
     background-image:
-      radial-gradient(ellipse 70% 50% at 50% -5%, rgba(224, 65, 8, 0.04) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 40% at 85% 8%, rgba(240, 101, 48, 0.03) 0%, transparent 50%);
+      radial-gradient(ellipse 70% 50% at 50% -5%, rgba(30, 58, 95, 0.04) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 85% 8%, rgba(43, 82, 130, 0.03) 0%, transparent 50%);
   }
   html.dark body {
     background-image:
-      radial-gradient(ellipse 70% 50% at 50% -5%, rgba(255, 107, 53, 0.10) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 40% at 85% 8%, rgba(224, 65, 8, 0.05) 0%, transparent 50%);
+      radial-gradient(ellipse 70% 50% at 50% -5%, rgba(91, 155, 213, 0.10) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 85% 8%, rgba(30, 58, 95, 0.05) 0%, transparent 50%);
   }
   html {
     scroll-behavior: smooth;
@@ -525,7 +525,7 @@ hr,
 
 .card-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 20px 50px rgba(224, 65, 8, 0.10), 0 8px 20px rgba(224, 65, 8, 0.05);
+  box-shadow: 0 20px 50px rgba(30, 58, 95, 0.10), 0 8px 20px rgba(30, 58, 95, 0.05);
   border-color: color-mix(in srgb, var(--accent) 25%, var(--border));
 }
 
@@ -534,7 +534,7 @@ hr,
 }
 
 .dark .card-hover:hover {
-  box-shadow: 0 20px 50px rgba(255, 107, 53, 0.14), 0 8px 20px rgba(255, 107, 53, 0.07);
+  box-shadow: 0 20px 50px rgba(91, 155, 213, 0.14), 0 8px 20px rgba(91, 155, 213, 0.07);
   border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
 }
 
