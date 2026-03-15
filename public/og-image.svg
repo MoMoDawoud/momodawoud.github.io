@@ -1,10 +1,11 @@
 <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="630" fill="#0f172a"/>
-  <text x="80" y="240" fill="#e2e8f0" font-size="56" font-weight="700" font-family="system-ui, -apple-system, sans-serif">Mohamed Dawoud</text>
-  <text x="80" y="290" fill="#3b82f6" font-size="28" font-weight="500" font-family="system-ui, -apple-system, sans-serif">Security &amp; Privacy Researcher</text>
-  <text x="80" y="350" fill="#94a3b8" font-size="22" font-family="system-ui, -apple-system, sans-serif">PhD Student in Computer Science at UC Santa Cruz</text>
-  <text x="80" y="385" fill="#94a3b8" font-size="22" font-family="system-ui, -apple-system, sans-serif">Human-Centered Security · AI Governance · Privacy</text>
-  <text x="80" y="460" fill="#64748b" font-size="16" font-family="system-ui, -apple-system, sans-serif">momodawoud.github.io · mdawoud@ucsc.edu</text>
-  <circle cx="1080" cy="540" r="6" fill="#3b82f6"/>
-  <text x="1096" y="545" fill="#64748b" font-size="14" font-family="system-ui, -apple-system, sans-serif">UCSC</text>
+  <rect width="1200" height="630" fill="#0B0F1A"/>
+  <text x="80" y="250" fill="#E2E8F0" font-size="54" font-weight="700" font-family="system-ui, -apple-system, sans-serif">Mohamed Moustafa Dawoud</text>
+  <text x="80" y="310" fill="#5EEAD4" font-size="24" font-weight="500" font-family="system-ui, -apple-system, sans-serif">PhD Student in Computer Science &amp; Engineering</text>
+  <text x="80" y="350" fill="#94A3B8" font-size="22" font-family="system-ui, -apple-system, sans-serif">University of California, Santa Cruz</text>
+  <line x1="80" y1="390" x2="300" y2="390" stroke="#115E59" stroke-width="2"/>
+  <text x="80" y="430" fill="#64748B" font-size="18" font-family="system-ui, -apple-system, sans-serif">Human-Centered Security · AI Governance · Privacy</text>
+  <text x="80" y="530" fill="#52637A" font-size="16" font-family="system-ui, -apple-system, sans-serif">momodawoud.github.io</text>
+  <circle cx="1080" cy="540" r="6" fill="#115E59"/>
+  <text x="1096" y="545" fill="#52637A" font-size="14" font-family="system-ui, -apple-system, sans-serif">UCSC</text>
 </svg>
