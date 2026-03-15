@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     siteName: "Mohamed Moustafa Dawoud",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-card.png",
         width: 1200,
         height: 630,
         alt: "Mohamed Moustafa Dawoud - PhD Student at UC Santa Cruz",
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     description:
       "PhD Student in Computer Science & Engineering at UC Santa Cruz.",
     creator: "@mohameddawoud",
-    images: ["/og-image.png"],
+    images: ["/og-card.png"],
   },
   robots: {
     index: true,
