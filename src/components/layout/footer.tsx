@@ -60,8 +60,8 @@ export function Footer() {
               Mohamed Moustafa Dawoud
             </a>
             {" "}and{" "}
-            <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-foreground-tertiary hover:text-accent transition-colors duration-150">
-              Claude
+            <a href="https://claude.ai/claude-code" target="_blank" rel="noopener noreferrer" className="text-foreground-tertiary hover:text-accent transition-colors duration-150">
+              Claude Code
             </a>
             . Want to use this template?{" "}
             <a href="https://github.com/MoMoDawoud/momodawoud.github.io" target="_blank" rel="noopener noreferrer" className="text-foreground-tertiary hover:text-accent transition-colors duration-150">

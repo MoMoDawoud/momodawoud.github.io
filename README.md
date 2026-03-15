@@ -9,7 +9,7 @@ A clean, fast, and fully static academic portfolio for researchers and PhD stude
 
 **Live:** [momodawoud.github.io](https://momodawoud.github.io)
 
-Built by [Mohamed Moustafa Dawoud](https://momodawoud.github.io) and [Claude](https://claude.ai).
+Built by [Mohamed Moustafa Dawoud](https://momodawoud.github.io) and [Claude Code](https://claude.ai/claude-code).
 
 ---
 
@@ -248,7 +248,7 @@ If you use this template, a link back is appreciated but not required.
 ## Authors
 
 - [Mohamed Moustafa Dawoud](https://momodawoud.github.io)
-- [Claude](https://claude.ai) by Anthropic
+- [Claude Code](https://claude.ai/claude-code) by Anthropic
 
 ## License
 
