@@ -1,10 +1,9 @@
 <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="630" fill="#0B0F1A"/>
-  <text x="80" y="250" fill="#E2E8F0" font-size="54" font-weight="700" font-family="system-ui, -apple-system, sans-serif">Mohamed Moustafa Dawoud</text>
-  <text x="80" y="310" fill="#5EEAD4" font-size="24" font-weight="500" font-family="system-ui, -apple-system, sans-serif">PhD Student in Computer Science &amp; Engineering</text>
-  <text x="80" y="350" fill="#94A3B8" font-size="22" font-family="system-ui, -apple-system, sans-serif">University of California, Santa Cruz</text>
-  <line x1="80" y1="390" x2="300" y2="390" stroke="#115E59" stroke-width="2"/>
-  <text x="80" y="430" fill="#64748B" font-size="18" font-family="system-ui, -apple-system, sans-serif">Human-Centered Security · AI Governance · Privacy</text>
+  <text x="80" y="260" fill="#E2E8F0" font-size="54" font-weight="700" font-family="system-ui, -apple-system, sans-serif">Mohamed Moustafa Dawoud</text>
+  <text x="80" y="320" fill="#5EEAD4" font-size="24" font-weight="500" font-family="system-ui, -apple-system, sans-serif">PhD Student in Computer Science &amp; Engineering</text>
+  <text x="80" y="360" fill="#94A3B8" font-size="22" font-family="system-ui, -apple-system, sans-serif">University of California, Santa Cruz</text>
+  <line x1="80" y1="400" x2="300" y2="400" stroke="#115E59" stroke-width="2"/>
   <text x="80" y="530" fill="#52637A" font-size="16" font-family="system-ui, -apple-system, sans-serif">momodawoud.github.io</text>
   <circle cx="1080" cy="540" r="6" fill="#115E59"/>
   <text x="1096" y="545" fill="#52637A" font-size="14" font-family="system-ui, -apple-system, sans-serif">UCSC</text>
