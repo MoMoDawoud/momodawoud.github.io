@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     template: "%s | Mohamed Dawoud",
   },
   description:
-    "PhD Student in Computer Science at UC Santa Cruz, researching human-centered security and privacy. Exploring cybercrime ecosystems, Android malware, and security education.",
+    "PhD student in Computer Science at UC Santa Cruz, researching AI-enabled privacy threats and the sociotechnical failures that allow them to persist.",
   keywords: [
     "Mohamed Dawoud",
     "Mohamed Moustafa Dawoud",
@@ -60,9 +60,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://momodawoud.github.io",
-    title: "Mohamed Dawoud | PhD Student at UC Santa Cruz",
+    title: "Mohamed Dawoud — PhD Student at UC Santa Cruz",
     description:
-      "PhD Student in Computer Science at UC Santa Cruz, researching human-centered security and privacy.",
+      "Researching AI-enabled privacy threats and the sociotechnical failures that allow them to persist. Using internet measurements, interviews, and experiments.",
     siteName: "Mohamed Dawoud",
     images: [
       {
@@ -75,9 +75,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohamed Dawoud | PhD Student at UC Santa Cruz",
+    title: "Mohamed Dawoud — PhD Student at UC Santa Cruz",
     description:
-      "PhD Student in Computer Science at UC Santa Cruz, researching human-centered security and privacy.",
+      "Researching AI-enabled privacy threats and the sociotechnical failures that allow them to persist. Using internet measurements, interviews, and experiments.",
     creator: "@mohameddawoud",
     images: ["/og-image.png"],
   },
