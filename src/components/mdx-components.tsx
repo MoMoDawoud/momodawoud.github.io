@@ -17,6 +17,6 @@ export const mdxComponents: MDXComponents = {
   pre: (props) => <pre {...props} />,
   img: (props) => (
     // eslint-disable-next-line @next/next/no-img-element
-    <img alt={props.alt ?? ""} {...props} />
+    <img alt={props.alt ?? "Image"} {...props} />
   ),
 };

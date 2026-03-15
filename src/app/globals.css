@@ -122,7 +122,7 @@
   --foreground: #E2E8F0;
   --foreground-secondary: #94A3B8;
   --foreground-tertiary: #64748B;
-  --foreground-quaternary: #475569;
+  --foreground-quaternary: #52637A;
 
   --card-foreground: #E2E8F0;
   --popover-foreground: #E2E8F0;
@@ -176,8 +176,8 @@
   }
   html.dark body {
     background-image:
-      radial-gradient(ellipse 70% 50% at 50% -5%, rgba(94, 234, 212, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 40% at 85% 8%, rgba(17, 94, 89, 0.04) 0%, transparent 50%);
+      radial-gradient(ellipse 70% 50% at 50% -5%, color-mix(in srgb, var(--accent) 6%, transparent) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 85% 8%, color-mix(in srgb, var(--accent) 4%, transparent) 0%, transparent 50%);
   }
   html {
     scroll-behavior: smooth;
@@ -523,7 +523,7 @@ hr,
 
 .card-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 20px 50px rgba(17, 94, 89, 0.10), 0 8px 20px rgba(17, 94, 89, 0.05);
+  box-shadow: 0 20px 50px color-mix(in srgb, var(--accent) 10%, transparent), 0 8px 20px color-mix(in srgb, var(--accent) 5%, transparent);
   border-color: color-mix(in srgb, var(--accent) 25%, var(--border));
 }
 
@@ -532,7 +532,7 @@ hr,
 }
 
 .dark .card-hover:hover {
-  box-shadow: 0 20px 50px rgba(94, 234, 212, 0.14), 0 8px 20px rgba(94, 234, 212, 0.07);
+  box-shadow: 0 20px 50px color-mix(in srgb, var(--accent) 14%, transparent), 0 8px 20px color-mix(in srgb, var(--accent) 7%, transparent);
   border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
 }
 

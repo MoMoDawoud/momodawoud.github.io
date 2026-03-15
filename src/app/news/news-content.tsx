@@ -8,10 +8,21 @@ import { StaggerChildren, StaggerItem } from "@/components/animations/fade-in";
 const newsItems = [
   {
     date: "Mar 2026",
+    title: "Paper rejected from IMC '26",
+    description:
+      "Back to the drawing board.",
+  },
+  {
+    date: "Mar 2026",
+    title: "Completed M.S. in Computer Science & Engineering",
+    description:
+      "Earned a Master of Science in Computer Science & Engineering from UC Santa Cruz, en route to the PhD.",
+  },
+  {
+    date: "Mar 2026",
     title: "Attended the 4th Annual Bay Area HCI Gathering",
     description:
       "Connected with ~150 HCI researchers at Santa Clara University across topics in human-computer interaction, accessibility, and responsible AI.",
-    link: "/blog/hello-world",
   },
   {
     date: "Mar 2026",

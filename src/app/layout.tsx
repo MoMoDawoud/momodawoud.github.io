@@ -69,7 +69,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Mohamed Dawoud - PhD Student at UC Santa Cruz at UC Santa Cruz",
+        alt: "Mohamed Dawoud - PhD Student at UC Santa Cruz",
       },
     ],
   },

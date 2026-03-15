@@ -31,7 +31,7 @@ export function PersonJsonLd() {
       siteConfig.social.googleScholar,
     ],
     knowsAbout: siteConfig.researchInterests,
-    image: "https://momodawoud.github.io/profile.jpg",
+    image: "https://momodawoud.github.io/profile_pic.jpeg",
   };
 
   return (
