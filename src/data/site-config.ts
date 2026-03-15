@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Mohamed Moustafa Dawoud",
   shortName: "Mohamed Dawoud",
-  title: "Security & Privacy Researcher",
+  title: "PhD Student",
   role: "PhD Student",
   department: "Department of Computer Science and Engineering",
   school: "Baskin School of Engineering",

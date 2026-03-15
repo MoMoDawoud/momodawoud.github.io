@@ -33,7 +33,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Mohamed Dawoud | Security & Privacy Researcher",
+    default: "Mohamed Dawoud | PhD Student at UC Santa Cruz",
     template: "%s | Mohamed Dawoud",
   },
   description:
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://momodawoud.github.io",
-    title: "Mohamed Dawoud | Security & Privacy Researcher",
+    title: "Mohamed Dawoud | PhD Student at UC Santa Cruz",
     description:
       "PhD Student in Computer Science at UC Santa Cruz, researching human-centered security and privacy.",
     siteName: "Mohamed Dawoud",
@@ -69,13 +69,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Mohamed Dawoud - Security & Privacy Researcher at UC Santa Cruz",
+        alt: "Mohamed Dawoud - PhD Student at UC Santa Cruz at UC Santa Cruz",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohamed Dawoud | Security & Privacy Researcher",
+    title: "Mohamed Dawoud | PhD Student at UC Santa Cruz",
     description:
       "PhD Student in Computer Science at UC Santa Cruz, researching human-centered security and privacy.",
     creator: "@mohameddawoud",
