@@ -33,11 +33,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Mohamed Dawoud | PhD Student at UC Santa Cruz",
-    template: "%s | Mohamed Dawoud",
+    default: "Mohamed Moustafa Dawoud | PhD Student at UC Santa Cruz",
+    template: "%s | Mohamed Moustafa Dawoud",
   },
   description:
-    "PhD student in Computer Science at UC Santa Cruz, researching AI-enabled privacy threats and the sociotechnical failures that allow them to persist.",
+    "PhD Student in Computer Science & Engineering at UC Santa Cruz.",
   keywords: [
     "Mohamed Dawoud",
     "Mohamed Moustafa Dawoud",
@@ -60,24 +60,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://momodawoud.github.io",
-    title: "Mohamed Dawoud — PhD Student at UC Santa Cruz",
+    title: "Mohamed Moustafa Dawoud | PhD Student at UC Santa Cruz",
     description:
-      "Researching AI-enabled privacy threats and the sociotechnical failures that allow them to persist. Using internet measurements, interviews, and experiments.",
-    siteName: "Mohamed Dawoud",
+      "PhD Student in Computer Science & Engineering at UC Santa Cruz.",
+    siteName: "Mohamed Moustafa Dawoud",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Mohamed Dawoud - PhD Student at UC Santa Cruz",
+        alt: "Mohamed Moustafa Dawoud - PhD Student at UC Santa Cruz",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohamed Dawoud — PhD Student at UC Santa Cruz",
+    title: "Mohamed Moustafa Dawoud | PhD Student at UC Santa Cruz",
     description:
-      "Researching AI-enabled privacy threats and the sociotechnical failures that allow them to persist. Using internet measurements, interviews, and experiments.",
+      "PhD Student in Computer Science & Engineering at UC Santa Cruz.",
     creator: "@mohameddawoud",
     images: ["/og-image.png"],
   },
