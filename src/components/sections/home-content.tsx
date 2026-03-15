@@ -13,22 +13,23 @@ import { TiltCard } from "@/components/interactive/tilt-card";
    DATA
    ───────────────────────────────────────── */
 
-const news = [
-  { date: "Mar 2026", text: "Completed my Master of Science in Computer Science & Engineering at UC Santa Cruz, en route to the PhD" },
+const news: { date: string; text: string; mood?: "good" | "bad" }[] = [
+  { date: "Mar 2026", text: "Paper rejected from IMC '26 — back to the drawing board", mood: "bad" },
+  { date: "Mar 2026", text: "Completed my Master of Science in Computer Science & Engineering at UC Santa Cruz, en route to the PhD", mood: "good" },
   { date: "Mar 2026", text: "Attended the 4th Annual Bay Area HCI Gathering at Santa Clara University, connecting with ~150 researchers" },
   { date: "Mar 2026", text: "Now recruiting for the AI Privacy & Regulation Study with UC Santa Cruz and Stanford University — interviewing practitioners on privacy under emerging AI regulations" },
-  { date: "Feb 2026", text: "Presented at USEC 2026 (co-located with NDSS) in San Diego — our paper on AI-enabled NSFW deepfakes on Fiverr" },
-  { date: "Feb 2026", text: "Paper on AI-enabled deepfakes accepted at USEC 2026, co-located with NDSS (~32% acceptance rate)" },
-  { date: "Feb 2026", text: "Launched Egyptians in CS Research with Badr AlKhamissi — 262 researchers across 16 tracks worldwide" },
-  { date: "Dec 2025", text: "Released PaperClerk AI — a local, privacy-preserving assistant for managing research paper libraries" },
-  { date: "Jun 2025", text: "Joined UC Santa Cruz as a PhD student, advised by Prof. Ram Sundara Raman" },
-  { date: "Apr 2025", text: "Featured in Dartmouth Guarini School Student Spotlight — profiled on research, the journey from Zefta to Dartmouth, and STEM advocacy" },
-  { date: "Feb 2025", text: "Selected as AAAS CASE Workshop Delegate — representing Dartmouth in Washington, D.C." },
+  { date: "Feb 2026", text: "Presented at USEC 2026 (co-located with NDSS) in San Diego — our paper on AI-enabled NSFW deepfakes on Fiverr", mood: "good" },
+  { date: "Feb 2026", text: "Paper on AI-enabled deepfakes accepted at USEC 2026, co-located with NDSS (~32% acceptance rate)", mood: "good" },
+  { date: "Feb 2026", text: "Launched Egyptians in CS Research with Badr AlKhamissi — 262 researchers across 16 tracks worldwide", mood: "good" },
+  { date: "Dec 2025", text: "Released PaperClerk AI — a local, privacy-preserving assistant for managing research paper libraries", mood: "good" },
+  { date: "Jun 2025", text: "Joined UC Santa Cruz as a PhD student, advised by Prof. Ram Sundara Raman", mood: "good" },
+  { date: "Apr 2025", text: "Featured in Dartmouth Guarini School Student Spotlight — profiled on research, the journey from Zefta to Dartmouth, and STEM advocacy", mood: "good" },
+  { date: "Feb 2025", text: "Selected as AAAS CASE Workshop Delegate — representing Dartmouth in Washington, D.C.", mood: "good" },
   { date: "Feb 2025", text: "Attended NDSS 2025 and the USEC workshop on human factors of security in San Diego" },
-  { date: "Jan 2025", text: "RaaS paper published in Computers in Human Behavior — analyzing vendor communication themes in darknet ransomware advertisements" },
-  { date: "Jan 2025", text: "Started as Lead Graduate Teaching Assistant at Dartmouth for COSC 55: Security & Privacy" },
+  { date: "Jan 2025", text: "RaaS paper published in Computers in Human Behavior — analyzing vendor communication themes in darknet ransomware advertisements", mood: "good" },
+  { date: "Jan 2025", text: "Started as Lead Graduate Teaching Assistant at Dartmouth for COSC 55: Security & Privacy", mood: "good" },
   { date: "Sep 2024", text: "Joined MBZUAI as Research Associate — research on combating deepfakes and responsible AI" },
-  { date: "Aug 2024", text: "DVa paper published at the 33rd USENIX Security Symposium" },
+  { date: "Aug 2024", text: "DVa paper published at the 33rd USENIX Security Symposium", mood: "good" },
 ];
 
 const publications = [
@@ -244,11 +245,11 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                 >
                   <span className="flex items-center gap-2 text-foreground-quaternary flex-shrink-0 w-24">
                     <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-                      item.text.toLowerCase().includes("paper") || item.text.toLowerCase().includes("accepted") || item.text.toLowerCase().includes("published")
-                        ? "bg-accent"
-                        : item.text.toLowerCase().includes("talk") || item.text.toLowerCase().includes("attended") || item.text.toLowerCase().includes("gathering")
-                          ? "bg-foreground"
-                          : "bg-foreground-tertiary"
+                      item.mood === "bad"
+                        ? "bg-red-500"
+                        : item.mood === "good"
+                          ? "bg-emerald-500"
+                          : "bg-foreground-quaternary"
                     }`} />
                     <span className="font-mono text-xs tabular-nums">{item.date}</span>
                   </span>
