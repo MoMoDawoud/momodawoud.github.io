@@ -52,6 +52,23 @@ export function Footer() {
           <p className="font-mono text-[0.65rem] text-foreground-quaternary tracking-wider uppercase">
             Mohamed Dawoud · UC Santa Cruz · {year}
           </p>
+
+          {/* Template credit */}
+          <p className="text-xs text-foreground-quaternary leading-relaxed max-w-md">
+            Built by{" "}
+            <a href="https://momodawoud.github.io" className="text-foreground-tertiary hover:text-accent transition-colors duration-150">
+              Mohamed Moustafa Dawoud
+            </a>
+            {" "}and{" "}
+            <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-foreground-tertiary hover:text-accent transition-colors duration-150">
+              Claude
+            </a>
+            . Want to use this template?{" "}
+            <a href="https://github.com/MoMoDawoud/momodawoud.github.io" target="_blank" rel="noopener noreferrer" className="text-foreground-tertiary hover:text-accent transition-colors duration-150">
+              Fork it on GitHub
+            </a>
+            .
+          </p>
         </div>
       </div>
     </footer>
