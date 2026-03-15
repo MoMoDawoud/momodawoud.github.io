@@ -161,7 +161,7 @@ export function Navigation() {
                     wipe.className = "theme-wipe";
                     wipe.style.setProperty("--wipe-x", `${x}px`);
                     wipe.style.setProperty("--wipe-y", `${y}px`);
-                    wipe.style.backgroundColor = nextTheme === "dark" ? "#0A0A0B" : "#FFFFFF";
+                    wipe.style.backgroundColor = nextTheme === "dark" ? "#0B0F1A" : "#FFFFFF";
                     document.body.appendChild(wipe);
 
                     // Switch theme midway through animation
