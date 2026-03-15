@@ -449,8 +449,9 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
               Let&apos;s Collaborate
             </h2>
             <p className="text-sm text-foreground-secondary leading-relaxed mb-5 max-w-xl">
-              I&apos;m always open to collaborations on security, privacy, and AI research.
-              If you have an idea, a dataset, or just want to chat — reach out.
+              I am always interested in meeting new people and exploring ideas together.
+              Whether you&apos;re a researcher looking to collaborate, a student exploring
+              your path, or someone who just wants to talk — my inbox is open.
             </p>
             <a
               href={`mailto:${siteConfig.email}`}

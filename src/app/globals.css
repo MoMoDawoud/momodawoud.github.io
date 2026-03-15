@@ -58,26 +58,26 @@
 :root {
   --radius: 0.625rem;
 
-  /* Backgrounds — everything white, shadows create depth */
+  /* Backgrounds — pure white, clean grays */
   --background: #FFFFFF;
-  --card: #FFFFFF;
+  --card: #FAFAFA;
   --popover: #FFFFFF;
-  --muted: #FAF8F7;
+  --muted: #F4F4F5;
 
-  /* Four-level foreground — warm ink hierarchy */
-  --foreground: #1A1110;
-  --foreground-secondary: #443A38;
-  --foreground-tertiary: #7A706D;
-  --foreground-quaternary: #AEA6A3;
+  /* Four-level foreground — high-contrast cool neutrals */
+  --foreground: #0A0A0B;
+  --foreground-secondary: #3F3F46;
+  --foreground-tertiary: #71717A;
+  --foreground-quaternary: #A1A1AA;
 
   /* Semantic mappings */
-  --card-foreground: #1A1110;
-  --popover-foreground: #1A1110;
-  --primary: #1A1110;
+  --card-foreground: #0A0A0B;
+  --popover-foreground: #0A0A0B;
+  --primary: #0A0A0B;
   --primary-foreground: #FFFFFF;
-  --secondary: #FAF8F7;
-  --secondary-foreground: #1A1110;
-  --muted-foreground: #443A38;
+  --secondary: #F4F4F5;
+  --secondary-foreground: #0A0A0B;
+  --muted-foreground: #3F3F46;
 
   /* Accent — hot coral */
   --accent: #E04108;
@@ -86,8 +86,8 @@
 
   /* Utility */
   --destructive: #DC2626;
-  --border: #EDEBE9;
-  --input: #EDEBE9;
+  --border: #E4E4E7;
+  --input: #E4E4E7;
   --ring: #E04108;
 
   /* Charts — sunset progression */
@@ -98,13 +98,13 @@
   --chart-5: #DC2626;
 
   /* Sidebar */
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #1A1110;
-  --sidebar-primary: #1A1110;
+  --sidebar: #FAFAFA;
+  --sidebar-foreground: #0A0A0B;
+  --sidebar-primary: #0A0A0B;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #FAF8F7;
-  --sidebar-accent-foreground: #1A1110;
-  --sidebar-border: #EDEBE9;
+  --sidebar-accent: #F4F4F5;
+  --sidebar-accent-foreground: #0A0A0B;
+  --sidebar-border: #E4E4E7;
   --sidebar-ring: #E04108;
 }
 
