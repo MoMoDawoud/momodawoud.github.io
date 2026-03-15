@@ -53,7 +53,7 @@
 }
 
 /* ═══════════════════════════════════════════
-   LIGHT MODE — Pure white canvas + deep navy
+   LIGHT MODE — Pure white canvas + oxford blue
    ═══════════════════════════════════════════ */
 :root {
   --radius: 0.625rem;
@@ -79,22 +79,22 @@
   --secondary-foreground: #000000;
   --muted-foreground: #1A1A1A;
 
-  /* Accent — deep navy */
-  --accent: #1E3A5F;
+  /* Accent — oxford blue */
+  --accent: #14213D;
   --accent-foreground: #FFFFFF;
-  --accent-subtle: #1E3A5F0A;
+  --accent-subtle: #14213D08;
 
   /* Utility */
   --destructive: #DC2626;
   --border: #E5E5E5;
   --input: #E5E5E5;
-  --ring: #1E3A5F;
+  --ring: #14213D;
 
-  /* Charts — navy progression */
-  --chart-1: #1E3A5F;
-  --chart-2: #2B5282;
-  --chart-3: #3B6FA0;
-  --chart-4: #5B8DB8;
+  /* Charts — oxford blue progression */
+  --chart-1: #14213D;
+  --chart-2: #1B3054;
+  --chart-3: #264573;
+  --chart-4: #3A6298;
   --chart-5: #DC2626;
 
   /* Sidebar */
@@ -105,7 +105,7 @@
   --sidebar-accent: #F5F5F5;
   --sidebar-accent-foreground: #000000;
   --sidebar-border: #E5E5E5;
-  --sidebar-ring: #1E3A5F;
+  --sidebar-ring: #14213D;
 }
 
 /* ═══════════════════════════════════════════
@@ -132,31 +132,31 @@
   --secondary-foreground: #EDEDEF;
   --muted-foreground: #B0B0B8;
 
-  /* Accent — sky blue */
-  --accent: #5B9BD5;
+  /* Accent — soft steel */
+  --accent: #7B9ABF;
   --accent-foreground: #0A0A0B;
-  --accent-subtle: #5B9BD518;
+  --accent-subtle: #7B9ABF18;
 
   --destructive: #F87171;
   --border: #1A1A1E;
   --input: #1A1A1E;
-  --ring: #5B9BD5;
+  --ring: #7B9ABF;
 
-  /* Charts — blue progression */
-  --chart-1: #5B9BD5;
-  --chart-2: #3B6FA0;
-  --chart-3: #2B5282;
-  --chart-4: #1E3A5F;
+  /* Charts — steel progression */
+  --chart-1: #7B9ABF;
+  --chart-2: #5A7EA5;
+  --chart-3: #3A6298;
+  --chart-4: #264573;
   --chart-5: #F87171;
 
   --sidebar: #111113;
   --sidebar-foreground: #EDEDEF;
-  --sidebar-primary: #5B9BD5;
+  --sidebar-primary: #7B9ABF;
   --sidebar-primary-foreground: #0A0A0B;
   --sidebar-accent: #1A1A1E;
   --sidebar-accent-foreground: #EDEDEF;
   --sidebar-border: #1A1A1E;
-  --sidebar-ring: #5B9BD5;
+  --sidebar-ring: #7B9ABF;
 }
 
 /* ═══════════════════════════════════════════
@@ -176,8 +176,8 @@
   }
   html.dark body {
     background-image:
-      radial-gradient(ellipse 70% 50% at 50% -5%, rgba(91, 155, 213, 0.10) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 40% at 85% 8%, rgba(30, 58, 95, 0.05) 0%, transparent 50%);
+      radial-gradient(ellipse 70% 50% at 50% -5%, rgba(123, 154, 191, 0.10) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 85% 8%, rgba(20, 33, 61, 0.05) 0%, transparent 50%);
   }
   html {
     scroll-behavior: smooth;
@@ -523,7 +523,7 @@ hr,
 
 .card-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 20px 50px rgba(30, 58, 95, 0.10), 0 8px 20px rgba(30, 58, 95, 0.05);
+  box-shadow: 0 20px 50px rgba(20, 33, 61, 0.10), 0 8px 20px rgba(20, 33, 61, 0.05);
   border-color: color-mix(in srgb, var(--accent) 25%, var(--border));
 }
 
@@ -532,7 +532,7 @@ hr,
 }
 
 .dark .card-hover:hover {
-  box-shadow: 0 20px 50px rgba(91, 155, 213, 0.14), 0 8px 20px rgba(91, 155, 213, 0.07);
+  box-shadow: 0 20px 50px rgba(123, 154, 191, 0.14), 0 8px 20px rgba(123, 154, 191, 0.07);
   border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
 }
 
