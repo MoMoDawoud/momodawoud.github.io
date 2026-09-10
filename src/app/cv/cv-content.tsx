@@ -151,11 +151,17 @@ export function CVContent() {
   return (
     <div className="pt-20 pb-16">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <PageHeader title="Curriculum Vitae" description="Last updated: March 2026">
-          <div className="flex gap-2 mt-4 print:hidden">
-            <Button size="sm" onClick={() => window.print()}>
-              <Download className="mr-2 h-4 w-4" />
-              Print / Save as PDF
+        <PageHeader title="Curriculum Vitae" description="Last updated: September 2026">
+          <div className="flex flex-wrap gap-2 mt-4 print:hidden">
+            {/* Stable filename so a forwarded link survives future updates. */}
+            <Button size="sm" asChild>
+              <a href="/Mohamed_Dawoud_CV.pdf" download>
+                <Download className="mr-2 h-4 w-4" />
+                Download CV (PDF)
+              </a>
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => window.print()}>
+              Print this page
             </Button>
           </div>
         </PageHeader>

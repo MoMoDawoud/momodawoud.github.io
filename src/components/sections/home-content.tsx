@@ -90,24 +90,6 @@ const publications = [
   },
 ];
 
-const ongoingProjects = [
-  {
-    title: "AI Privacy & Regulation Study",
-    collaborators: ["RANDLab (UCSC)", "Stanford University"],
-    summary: "How do practitioners navigate privacy when building AI products under emerging regulations?",
-    highlights: [
-      "Confidential one-hour interviews with industry professionals",
-      "Covering the EU AI Act, CCPA, GDPR, and evolving US state laws",
-      "Participants span privacy, compliance, engineering, and risk roles",
-      "Centering practitioner experience to inform policy recommendations",
-    ],
-    status: "Recruiting Participants",
-    tags: ["AI Governance", "Privacy", "Regulation", "Practitioner Study"],
-    link: "https://randlab.engineering.ucsc.edu/aigov-study/",
-    irb: "UC Santa Cruz IRB HS-FY2026-108",
-  },
-];
-
 /* ─────────────────────────────────────────
    HELPERS
    ───────────────────────────────────────── */
@@ -279,79 +261,6 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                 {showAllNews ? "Show Less" : "See More"}
               </button>
             )}
-          </section>
-        </FadeIn>
-
-        {/* ── divider ── */}
-        <hr className="border-border mb-16" />
-
-        {/* ═══════════════════════════════════════
-            ONGOING PROJECTS
-            ═══════════════════════════════════════ */}
-        <FadeIn direction="none" delay={0.08}>
-          <section className="mb-16" aria-labelledby="section-projects">
-            <SectionHeading title="Ongoing Projects" id="section-projects" />
-
-            <div className="space-y-6">
-              {ongoingProjects.map((project) => (
-                <a
-                  key={project.title}
-                  href={project.link || "#"}
-                  target={project.link ? "_blank" : undefined}
-                  rel={project.link ? "noopener noreferrer" : undefined}
-                  className="group card-hover block rounded-xl border border-border hover:border-accent/30 hover:bg-accent-subtle overflow-hidden"
-                >
-                  {/* Header bar */}
-                  <div className="px-5 py-4 border-b border-border bg-muted/30">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="flex items-center gap-2.5">
-                        <span className="w-2 h-2 rounded-full bg-accent animate-pulse flex-shrink-0" />
-                        <h3 className="text-base font-semibold tracking-tight group-hover:text-accent transition-colors duration-150">
-                          {project.title}
-                        </h3>
-                      </div>
-                      <span className="font-mono text-xs text-accent font-medium tracking-wide uppercase">
-                        {project.status}
-                      </span>
-                    </div>
-                    <p className="text-sm text-foreground-secondary mt-2 leading-relaxed">
-                      {project.summary}
-                    </p>
-                  </div>
-
-                  {/* Body */}
-                  <div className="px-5 py-4 space-y-4">
-                    {/* Highlights */}
-                    <ul className="space-y-2">
-                      {project.highlights.map((h, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-sm text-foreground-secondary">
-                          <span className="w-1 h-1 rounded-full bg-foreground-quaternary mt-2 flex-shrink-0" />
-                          {h}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Footer: collaborators + tags */}
-                    <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-border">
-                      <div className="flex flex-wrap items-center gap-2">
-                        {project.collaborators.map((c, i) => (
-                          <span key={i} className="inline-flex items-center px-2 py-0.5 rounded-md bg-muted text-xs font-mono text-foreground-tertiary">
-                            {c}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.tags.map((tag) => (
-                          <span key={tag} className="text-xs text-foreground-quaternary">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              ))}
-            </div>
           </section>
         </FadeIn>
 
