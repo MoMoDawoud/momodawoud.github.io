@@ -17,6 +17,20 @@ import {
 
 function PublicationRow({ publication }: { publication: Publication }) {
   const [showAbstract, setShowAbstract] = useState(false);
+  const [showBibtex, setShowBibtex] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  async function copyBibtex() {
+    if (!publication.bibtex) return;
+    try {
+      await navigator.clipboard.writeText(publication.bibtex);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // Clipboard blocked (insecure context, denied permission) — the <pre>
+      // below is selectable, so there is still a way to copy.
+    }
+  }
 
   const typeBadgeColor = {
     conference: "bg-foreground/10 text-foreground",
@@ -154,6 +168,20 @@ function PublicationRow({ publication }: { publication: Publication }) {
               )}
               Abstract
             </button>
+            {publication.bibtex && (
+              <button
+                onClick={() => setShowBibtex(!showBibtex)}
+                className="text-foreground-quaternary hover:text-foreground transition-colors duration-150 inline-flex items-center gap-0.5"
+                aria-expanded={showBibtex}
+              >
+                {showBibtex ? (
+                  <ChevronUp className="h-3 w-3" />
+                ) : (
+                  <ChevronDown className="h-3 w-3" />
+                )}
+                BibTeX
+              </button>
+            )}
           </div>
         </div>
 
@@ -183,6 +211,26 @@ function PublicationRow({ publication }: { publication: Publication }) {
         <p className="text-sm text-foreground-secondary mt-3 pl-4 border-l-2 border-accent max-w-prose leading-relaxed">
           {publication.abstract}
         </p>
+      )}
+
+      {/* BibTeX expand */}
+      {showBibtex && publication.bibtex && (
+        <div className="mt-3">
+          <div className="flex items-center justify-between mb-1">
+            <span className="font-mono text-[0.65rem] uppercase tracking-wider text-foreground-quaternary">
+              BibTeX
+            </span>
+            <button
+              onClick={copyBibtex}
+              className="font-mono text-[0.65rem] text-foreground-quaternary hover:text-foreground transition-colors duration-150"
+            >
+              {copied ? "Copied" : "Copy"}
+            </button>
+          </div>
+          <pre className="font-mono text-[0.7rem] leading-relaxed bg-muted rounded-lg p-3 overflow-x-auto text-foreground-secondary">
+            {publication.bibtex}
+          </pre>
+        </div>
       )}
     </article>
   );

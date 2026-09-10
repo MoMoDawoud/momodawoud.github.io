@@ -169,7 +169,7 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
   const visibleNews = showAllNews ? news : news.slice(0, 4);
 
   return (
-    <div className="min-h-screen pt-16 pb-20">
+    <div className="pt-16 pb-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* ═══════════════════════════════════════
@@ -204,7 +204,7 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
               </p>
 
 
-              <div className="space-y-3 text-base text-foreground-secondary leading-relaxed">
+              <div className="space-y-3 max-w-[68ch] text-base text-foreground-secondary leading-relaxed">
                 <p>
                   I am a PhD student in Computer Science & Engineering at{" "}
                   <a href="https://www.ucsc.edu" target="_blank" rel="noopener noreferrer" className="gradient-link">

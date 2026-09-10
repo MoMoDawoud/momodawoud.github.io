@@ -1,9 +1,28 @@
-"use client";
+import { ReactNode, CSSProperties } from "react";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { ReactNode } from "react";
+/*
+ * CSS-driven entrance animations.
+ *
+ * These were framer-motion components. Under `output: "export"` framer
+ * serializes `initial` into the static HTML, so real content — including the
+ * hero and several page <h1>s — shipped as `style="opacity:0"` and stayed
+ * invisible until the JS bundle hydrated, or forever if it never did.
+ *
+ * The keyframes live in globals.css, where the existing
+ * prefers-reduced-motion block already collapses duration and delay. Same
+ * exported names and props, so no call site changes. No "use client" needed —
+ * these are now plain server-renderable elements.
+ */
 
-const EASE: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+const OFFSET = "12px";
+
+const directions: Record<string, CSSProperties> = {
+  up: { "--fade-y": OFFSET } as CSSProperties,
+  down: { "--fade-y": `-${OFFSET}` } as CSSProperties,
+  left: { "--fade-x": OFFSET } as CSSProperties,
+  right: { "--fade-x": `-${OFFSET}` } as CSSProperties,
+  none: {},
+};
 
 interface FadeInProps {
   children: ReactNode;
@@ -20,74 +39,32 @@ export function FadeIn({
   direction = "up",
   className = "",
 }: FadeInProps) {
-  const prefersReducedMotion = useReducedMotion();
-
-  if (prefersReducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
-  const directions = {
-    up: { y: 12 },
-    down: { y: -12 },
-    left: { x: 12 },
-    right: { x: -12 },
-    none: {},
-  };
-
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
+    <div
+      className={`anim-fade-in ${className}`}
+      style={{
         ...directions[direction],
+        animationDelay: delay ? `${delay}s` : undefined,
+        animationDuration: duration !== 0.35 ? `${duration}s` : undefined,
       }}
-      animate={{
-        opacity: 1,
-        x: 0,
-        y: 0,
-      }}
-      transition={{
-        duration,
-        delay,
-        ease: EASE,
-      }}
-      className={className}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 export function StaggerChildren({
   children,
   className = "",
-  staggerDelay = 0.08,
+  staggerDelay,
 }: {
   children: ReactNode;
   className?: string;
+  /** Kept for call-site compatibility; the cadence is set in CSS. */
   staggerDelay?: number;
 }) {
-  const prefersReducedMotion = useReducedMotion();
-
-  if (prefersReducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
-  return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{
-        visible: {
-          transition: {
-            staggerChildren: staggerDelay,
-          },
-        },
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+  void staggerDelay;
+  return <div className={`anim-stagger ${className}`}>{children}</div>;
 }
 
 export function StaggerItem({
@@ -97,28 +74,7 @@ export function StaggerItem({
   children: ReactNode;
   className?: string;
 }) {
-  const prefersReducedMotion = useReducedMotion();
-
-  if (prefersReducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
-  return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 10 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: {
-            duration: 0.35,
-            ease: EASE,
-          },
-        },
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+  // Delay comes from :nth-child on the .anim-stagger parent, so this needs no
+  // index prop — which is just as well, since no call site passes one.
+  return <div className={className}>{children}</div>;
 }

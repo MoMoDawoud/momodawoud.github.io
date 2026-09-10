@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/page-header";
 import { FadeIn, StaggerChildren, StaggerItem } from "@/components/animations/fade-in";
 import { siteConfig } from "@/data/site-config";
+import { publications, publicationYears } from "@/data/publications";
 
 const education = [
   {
@@ -140,6 +141,7 @@ const service = [
 const jumpLinks = [
   { id: "education", label: "Education" },
   { id: "ongoing", label: "Ongoing Projects" },
+  { id: "publications", label: "Publications" },
   { id: "experience", label: "Experience" },
   { id: "presentations", label: "Talks" },
   { id: "service", label: "Service" },
@@ -211,7 +213,7 @@ export function CVContent() {
                     )}
                     <p className="text-sm text-foreground-tertiary">Focus: {edu.focus}</p>
                   </div>
-                  <span className="font-mono text-xs text-foreground-quaternary shrink-0">
+                  <span className="font-mono text-xs text-foreground-quaternary shrink-0 order-first sm:order-none">
                     {edu.period}
                   </span>
                 </div>
@@ -250,6 +252,76 @@ export function CVContent() {
 
         <hr className="my-8" />
 
+        {/* Publications — sourced from the same typed array as /publications,
+            so the CV cannot drift from the publications page. Links render as
+            visible URLs when printing, since a printed CV loses its hrefs. */}
+        <section id="publications" className="mb-12 scroll-mt-20">
+          <h2 className="font-mono text-xs tracking-widest uppercase text-foreground-quaternary mb-6">
+            PUBLICATIONS
+          </h2>
+          <StaggerChildren className="space-y-6">
+            {publicationYears.map((year) => (
+              <StaggerItem key={year}>
+                <div className="flex flex-col sm:flex-row sm:gap-4">
+                  <span className="font-mono text-xs text-foreground-quaternary tabular-nums order-first sm:order-none sm:w-24 flex-shrink-0 sm:text-right sm:pt-0.5">
+                    {year}
+                  </span>
+                  <ul className="space-y-4 flex-1">
+                    {publications
+                      .filter((p) => p.year.toString() === year)
+                      .map((p) => (
+                        <li key={p.id}>
+                          <h3 className="text-sm font-medium leading-snug">
+                            {p.links.paper ? (
+                              <a
+                                href={p.links.paper}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="link-accent"
+                              >
+                                {p.title}
+                              </a>
+                            ) : (
+                              p.title
+                            )}
+                          </h3>
+                          <p className="text-sm text-foreground-secondary mt-0.5">
+                            {p.authors.map((author, i) => (
+                              <span key={author}>
+                                <span
+                                  className={
+                                    author.toLowerCase().includes("mohamed") &&
+                                    (author.toLowerCase().includes("dawoud") ||
+                                      author.toLowerCase().includes("moustafa"))
+                                      ? "text-foreground font-medium"
+                                      : ""
+                                  }
+                                >
+                                  {author}
+                                </span>
+                                {i < p.authors.length - 1 && ", "}
+                              </span>
+                            ))}
+                          </p>
+                          <p className="text-sm text-foreground-tertiary mt-0.5">
+                            {p.venue}
+                          </p>
+                          {p.links.doi && (
+                            <p className="hidden print:block font-mono text-xs text-foreground-tertiary mt-0.5">
+                              https://doi.org/{p.links.doi}
+                            </p>
+                          )}
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerChildren>
+        </section>
+
+        <hr className="my-8" />
+
         {/* Experience */}
         <section id="experience" className="mb-12 scroll-mt-20">
           <h2 className="font-mono text-xs tracking-widest uppercase text-foreground-quaternary mb-6">
@@ -267,7 +339,7 @@ export function CVContent() {
                     )}
                     <p className="text-sm text-foreground-tertiary mt-1">{exp.description}</p>
                   </div>
-                  <span className="font-mono text-xs text-foreground-quaternary shrink-0">
+                  <span className="font-mono text-xs text-foreground-quaternary shrink-0 order-first sm:order-none">
                     {exp.period}
                   </span>
                 </div>
@@ -294,7 +366,7 @@ export function CVContent() {
                       {talk.location} &middot; {talk.type}
                     </p>
                   </div>
-                  <span className="font-mono text-xs text-foreground-quaternary shrink-0">
+                  <span className="font-mono text-xs text-foreground-quaternary shrink-0 order-first sm:order-none">
                     {talk.year}
                   </span>
                 </div>
@@ -327,7 +399,7 @@ export function CVContent() {
                     <p className="text-sm text-foreground-secondary">{item.organization}</p>
                     <p className="text-sm text-foreground-tertiary">{item.description}</p>
                   </div>
-                  <span className="font-mono text-xs text-foreground-quaternary shrink-0">
+                  <span className="font-mono text-xs text-foreground-quaternary shrink-0 order-first sm:order-none">
                     {item.year}
                   </span>
                 </div>

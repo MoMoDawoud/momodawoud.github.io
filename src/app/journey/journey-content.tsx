@@ -165,7 +165,7 @@ export function JourneyContent() {
             <h2 className="font-serif text-2xl font-semibold tracking-tight mb-6">
               Beyond Research
             </h2>
-            <div className="space-y-4 font-serif text-foreground-secondary leading-relaxed">
+            <div className="space-y-4 max-w-[68ch] font-serif text-foreground-secondary leading-relaxed">
               <p>
                 When I&apos;m not buried in research, you&apos;ll probably catch
                 me at the gym, walking along the California coast, wandering
