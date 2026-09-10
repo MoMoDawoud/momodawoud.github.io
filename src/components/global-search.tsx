@@ -116,12 +116,14 @@ export function GlobalSearch({ mobile }: GlobalSearchProps) {
     }
   }, [activeIndex]);
 
-  // Mobile trigger: just an icon
-  if (mobile) {
+  // Mobile trigger: just an icon. Must fall through to the dialog below when
+  // open — returning here unconditionally left the button dead on mobile, since
+  // the desktop instance that renders the dialog sits inside a `hidden md:block`.
+  if (mobile && !isOpen) {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="md:hidden flex items-center justify-center h-9 w-9 rounded-md text-muted-foreground hover:text-foreground transition-colors"
+        className="flex items-center justify-center h-10 w-10 rounded-md text-muted-foreground hover:text-foreground transition-colors"
         aria-label="Search"
       >
         <Search className="h-4 w-4" />

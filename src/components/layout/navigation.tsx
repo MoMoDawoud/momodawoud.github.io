@@ -136,8 +136,12 @@ export function Navigation() {
               <div className="hidden md:block">
                 <GlobalSearch />
               </div>
-              {/* Mobile search icon */}
-              <GlobalSearch mobile />
+              {/* Mobile search icon. Wrapper (not the button) carries the
+                  breakpoint so the dialog this instance renders is hidden on
+                  desktop too — both instances listen for ⌘K. */}
+              <div className="md:hidden">
+                <GlobalSearch mobile />
+              </div>
 
               {/* Theme toggle with circular wipe */}
               {mounted && (

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { siteConfig } from "@/data/site-config";
+import { formatPostDate } from "@/lib/utils";
 import { FadeIn } from "@/components/animations/fade-in";
 import { motion, useReducedMotion } from "framer-motion";
 import { TiltCard } from "@/components/interactive/tilt-card";
@@ -111,14 +112,23 @@ const ongoingProjects = [
    HELPERS
    ───────────────────────────────────────── */
 
+// Bold only the site owner. Matching on "mohamed" alone bolds co-authors who
+// share the given name, so require a surname match too — same predicate as
+// publications-content.tsx. Splits on ", " because the homepage stores authors
+// as one string rather than the string[] in publications.ts.
+function isOwner(author: string) {
+  const a = author.toLowerCase();
+  return a.includes("mohamed") && (a.includes("dawoud") || a.includes("moustafa"));
+}
+
 function highlightName(authors: string) {
-  return authors.split(/(Mohamed\s+(?:Moustafa\s+)?(?:Dawoud)?)/i).map((part, i) =>
-    /mohamed/i.test(part) ? (
-      <span key={i} className="font-semibold">{part}</span>
-    ) : (
-      <span key={i}>{part}</span>
-    )
-  );
+  const parts = authors.split(", ");
+  return parts.map((author, i) => (
+    <span key={i}>
+      <span className={isOwner(author) ? "font-semibold" : ""}>{author}</span>
+      {i < parts.length - 1 && ", "}
+    </span>
+  ));
 }
 
 
@@ -392,7 +402,7 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                       {pub.description}
                     </p>
                     <span className="text-xs font-mono gradient-link">
-                      [PDF]
+                      [Paper]
                     </span>
                   </div>
                 </a>
@@ -419,7 +429,7 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                 >
                   <div className="flex items-center gap-3 mb-1">
                     <span className="font-mono text-xs text-foreground-quaternary tabular-nums">
-                      {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                      {formatPostDate(post.date, "short")}
                     </span>
                     <span className="text-foreground-quaternary">·</span>
                     <span className="font-mono text-xs text-foreground-quaternary">

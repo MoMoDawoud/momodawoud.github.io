@@ -60,7 +60,7 @@ function ScrollLine() {
 
 export function Timeline({ items, variant = "minimal" }: TimelineProps) {
   return (
-    <div className="relative pl-10 sm:pl-10">
+    <div className="relative pl-10">
       <ScrollLine />
 
       <StaggerChildren className="space-y-8">
@@ -68,9 +68,9 @@ export function Timeline({ items, variant = "minimal" }: TimelineProps) {
           <StaggerItem key={index}>
             <div className="relative">
               {/* Dot on the line */}
-              <div className="absolute -left-10 top-1.5 w-[7px] h-[7px] rounded-full bg-accent z-10" />
+              <div className="absolute -left-[30px] top-1.5 w-[7px] h-[7px] rounded-full bg-accent z-10" />
               {/* Year marker — inline on mobile, absolute on desktop */}
-              <div className="hidden sm:block absolute -left-[72px] top-0.5 w-[50px] text-right">
+              <div className="hidden sm:block absolute -left-[88px] top-0.5 w-[50px] text-right">
                 <span className="font-mono text-xs text-foreground-quaternary">
                   {item.date}
                 </span>

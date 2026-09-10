@@ -14,8 +14,7 @@ export function ScrollProgress() {
     <motion.div
       className="fixed top-0 left-0 right-0 h-px bg-accent origin-left z-[60] print:hidden"
       style={{ scaleX }}
-      role="progressbar"
-      aria-label="Reading progress"
+      aria-hidden="true"
     />
   );
 }

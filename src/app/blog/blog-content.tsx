@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { StaggerChildren, StaggerItem } from "@/components/animations/fade-in";
+import { formatPostDate } from "@/lib/utils";
 
 interface PostSummary {
   slug: string;
@@ -16,13 +17,6 @@ interface PostSummary {
 export function BlogContent({ posts }: { posts: PostSummary[] }) {
   const filtered = posts;
 
-  function formatDate(dateStr: string) {
-    return new Date(dateStr).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  }
 
   return (
     <div className="min-h-screen pt-24 pb-20">
@@ -41,7 +35,7 @@ export function BlogContent({ posts }: { posts: PostSummary[] }) {
               >
                 <div className="flex items-center gap-3 mb-1.5">
                   <span className="font-mono text-xs text-foreground-quaternary tabular-nums">
-                    {formatDate(post.date)}
+                    {formatPostDate(post.date, "short")}
                   </span>
                   <span className="text-foreground-quaternary">·</span>
                   <span className="font-mono text-xs text-foreground-quaternary">

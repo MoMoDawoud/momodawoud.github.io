@@ -131,7 +131,6 @@ export const publications: Publication[] = [
     image: "/publications/social-engineering.png",
     links: {
       paper: "https://ieeexplore.ieee.org/document/9855761",
-      pdf: "/publications/pdfs/social-engineering-2022.pdf",
       doi: "10.1109/ITC-Egypt55520.2022.9855761",
     },
     citations: 9,
@@ -163,7 +162,6 @@ export const publications: Publication[] = [
     image: "/publications/rossler-encryption.png",
     links: {
       paper: "https://ieeexplore.ieee.org/abstract/document/9720905",
-      pdf: "/publications/pdfs/rossler-encryption-2022.pdf",
       doi: "10.1109/CCWC54503.2022.9720905",
     },
     citations: 77,
@@ -195,7 +193,6 @@ export const publications: Publication[] = [
     image: "/publications/iomt-security.png",
     links: {
       paper: "https://ieeexplore.ieee.org/abstract/document/9701567",
-      pdf: "/publications/pdfs/iomt-security-2021.pdf",
       doi: "10.1109/NICS54270.2021.9701567",
     },
     citations: 32,

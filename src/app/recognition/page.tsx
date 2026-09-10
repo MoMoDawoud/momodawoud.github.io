@@ -7,9 +7,20 @@ export const metadata: Metadata = {
     "Fellowships, media coverage, and recognition for Mohamed Dawoud's work in security and privacy.",
   alternates: { canonical: "/recognition" },
   openGraph: {
-    title: "Recognition | Mohamed Dawoud",
+    title: "Recognition | Mohamed Moustafa Dawoud",
     description: "Fellowships, media coverage, and recognition for Mohamed Dawoud's work in security and privacy.",
     url: "/recognition",
+    siteName: "Mohamed Moustafa Dawoud",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/og-card.png",
+        width: 1200,
+        height: 630,
+        alt: "Mohamed Moustafa Dawoud - PhD Student at UC Santa Cruz",
+      },
+    ]
   },
 };
 

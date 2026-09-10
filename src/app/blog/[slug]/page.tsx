@@ -5,6 +5,7 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { mdxComponents } from "@/components/mdx-components";
+import { formatPostDate } from "@/lib/utils";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -29,11 +30,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: post.description,
       type: "article",
       url: `/blog/${slug}`,
+      siteName: "Mohamed Moustafa Dawoud",
+      locale: "en_US",
+      publishedTime: new Date(`${post.date}T00:00:00Z`).toISOString(),
+      authors: ["Mohamed Moustafa Dawoud"],
+      images: [
+        { url: "/og-card.png", width: 1200, height: 630, alt: post.title },
+      ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: post.title,
       description: post.description,
+      images: ["/og-card.png"],
     },
   };
 }
@@ -55,11 +64,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     },
   });
 
-  const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const formattedDate = formatPostDate(post.date);
 
   return (
     <div className="min-h-screen pt-24 pb-20">

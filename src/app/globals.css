@@ -121,8 +121,8 @@
   /* Cool slate foregrounds */
   --foreground: #E2E8F0;
   --foreground-secondary: #94A3B8;
-  --foreground-tertiary: #64748B;
-  --foreground-quaternary: #52637A;
+  --foreground-tertiary: #8B9AB1;
+  --foreground-quaternary: #7C8CA5;
 
   --card-foreground: #E2E8F0;
   --popover-foreground: #E2E8F0;
@@ -164,7 +164,12 @@
    ═══════════════════════════════════════════ */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
   body {
     @apply bg-background text-foreground transition-colors duration-200;

@@ -7,9 +7,20 @@ export const metadata: Metadata = {
     "Latest news and updates from Mohamed Dawoud's research in security, privacy, and AI governance.",
   alternates: { canonical: "/news" },
   openGraph: {
-    title: "News | Mohamed Dawoud",
+    title: "News | Mohamed Moustafa Dawoud",
     description: "Latest news and updates from Mohamed Dawoud's research in security, privacy, and AI governance.",
     url: "/news",
+    siteName: "Mohamed Moustafa Dawoud",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/og-card.png",
+        width: 1200,
+        height: 630,
+        alt: "Mohamed Moustafa Dawoud - PhD Student at UC Santa Cruz",
+      },
+    ]
   },
 };
 

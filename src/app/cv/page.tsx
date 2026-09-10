@@ -7,9 +7,20 @@ export const metadata: Metadata = {
     "Curriculum Vitae of Mohamed Dawoud - PhD Student in Computer Science at UC Santa Cruz.",
   alternates: { canonical: "/cv" },
   openGraph: {
-    title: "CV | Mohamed Dawoud",
+    title: "CV | Mohamed Moustafa Dawoud",
     description: "Curriculum Vitae of Mohamed Dawoud - PhD Student in Computer Science at UC Santa Cruz.",
     url: "/cv",
+    siteName: "Mohamed Moustafa Dawoud",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/og-card.png",
+        width: 1200,
+        height: 630,
+        alt: "Mohamed Moustafa Dawoud - PhD Student at UC Santa Cruz",
+      },
+    ]
   },
 };
 
