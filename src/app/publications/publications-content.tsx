@@ -186,6 +186,19 @@ function PublicationRow({ publication }: { publication: Publication }) {
               </button>
             )}
           </div>
+
+          {publication.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-2.5">
+              {publication.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="font-mono text-[0.6rem] text-foreground-quaternary bg-muted px-2 py-0.5 rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Right: type badge, year, citations */}

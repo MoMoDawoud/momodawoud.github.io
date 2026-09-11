@@ -65,9 +65,9 @@ const mentees: {
 }[] = [
   {
     name: "Faris H. Rizk",
-    role: "B.E. Electrical, Electronics and Communications Engineering",
-    institution: "Delta Higher Institute for Engineering and Technology (DHIET), Egypt",
-    now: "PhD student at Clemson University, 2026",
+    role: "B.E. Electrical & Communications Engineering",
+    institution: "DHIET, Egypt",
+    now: "PhD student at Clemson",
     links: [
       { label: "Website", href: "https://faris-hamdi.github.io" },
       { label: "LinkedIn", href: "https://www.linkedin.com/in/faris-hamdi-ibrahim/" },
@@ -76,7 +76,7 @@ const mentees: {
   {
     name: "Elisa Christina Simons",
     role: "M.S. Computer Science & Cybersecurity",
-    institution: "Georgia Institute of Technology",
+    institution: "Georgia Tech",
     links: [
       { label: "Website", href: "https://elisasimons.github.io" },
       { label: "LinkedIn", href: "https://www.linkedin.com/in/elisasimons/" },
@@ -85,19 +85,19 @@ const mentees: {
   {
     name: "Kelvin Chan",
     role: "B.S. Computer Science",
-    institution: "University of California, Santa Cruz",
+    institution: "UC Santa Cruz",
     links: [{ label: "LinkedIn", href: "https://www.linkedin.com/in/kelvinchan27/" }],
   },
   {
     name: "Anvie Swaroop",
     role: "B.S. Computer Science",
-    institution: "University of California, Santa Cruz",
+    institution: "UC Santa Cruz",
     links: [{ label: "LinkedIn", href: "https://www.linkedin.com/in/anvie-swaroop/" }],
   },
   {
     name: "Isa Abello",
     role: "Computer Science",
-    institution: "University of California, Santa Cruz (alum)",
+    institution: "UC Santa Cruz (alum)",
     links: [
       { label: "LinkedIn", href: "https://www.linkedin.com/in/isa-a-43a205279" },
     ],
@@ -222,40 +222,41 @@ export function ServiceContent() {
               </div>
             </div>
 
-            <div className="space-y-4 mt-10">
+            <ul className="grid sm:grid-cols-2 gap-x-10 mt-10">
               {mentees.map((mentee, i) => (
-                <div
+                <li
                   key={i}
-                  className="border border-border rounded-lg p-4"
+                  className="py-3 border-t border-border first:border-t-0 sm:[&:nth-child(2)]:border-t-0"
                 >
-                  <h4 className="text-sm font-medium text-foreground mb-1">{mentee.name}</h4>
-                  {mentee.role && (
-                    <p className="text-xs text-foreground-secondary">{mentee.role}</p>
-                  )}
-                  {mentee.institution && (
-                    <p className="text-xs text-foreground-tertiary">{mentee.institution}</p>
-                  )}
-                  {mentee.now && (
-                    <p className="text-xs text-accent mt-2 font-medium">Now: {mentee.now}</p>
-                  )}
-                  {mentee.links && mentee.links.length > 0 && (
-                    <div className="flex flex-wrap gap-x-3 mt-2 font-mono text-xs">
-                      {mentee.links.map((l) => (
-                        <a
-                          key={l.href}
-                          href={l.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="link-accent"
-                        >
-                          [{l.label}]
-                        </a>
-                      ))}
-                    </div>
-                  )}
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="text-sm font-medium text-foreground">
+                      {mentee.name}
+                    </span>
+                    {mentee.links && mentee.links.length > 0 && (
+                      <span className="flex gap-2 font-mono text-[0.65rem] flex-shrink-0">
+                        {mentee.links.map((l) => (
+                          <a
+                            key={l.href}
+                            href={l.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="link-accent"
+                          >
+                            {l.label}
+                          </a>
+                        ))}
+                      </span>
+                    )}
                   </div>
+                  <p className="text-xs text-foreground-tertiary mt-0.5">
+                    {[mentee.role, mentee.institution].filter(Boolean).join(", ")}
+                  </p>
+                  {mentee.now && (
+                    <p className="text-xs text-accent mt-0.5">Now: {mentee.now}</p>
+                  )}
+                </li>
               ))}
-            </div>
+            </ul>
           </section>
         </FadeIn>
         <FadeIn direction="none" delay={0.05}>

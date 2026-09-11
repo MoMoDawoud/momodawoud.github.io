@@ -8,6 +8,7 @@ import { siteConfig } from "@/data/site-config";
 import { formatPostDate } from "@/lib/utils";
 import { publications } from "@/data/publications";
 import { substackPosts } from "@/data/substack";
+import { projects } from "@/data/projects";
 import { FadeIn } from "@/components/animations/fade-in";
 
 /* ─────────────────────────────────────────
@@ -220,6 +221,48 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                 {showAllNews ? "Show Less" : "See More"}
               </button>
             )}
+          </section>
+        </FadeIn>
+
+        {/* ═══════════════════════════════════════
+            WORK IN PROGRESS
+            ═══════════════════════════════════════ */}
+        <FadeIn direction="none" delay={0.08}>
+          <section className="mb-16" aria-labelledby="section-wip">
+            <SectionHeading title="Work in Progress" id="section-wip" />
+            <div className="space-y-4">
+              {projects.map((project) => (
+                <div
+                  key={project.title}
+                  className="p-4 rounded-xl border border-border"
+                >
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 mb-1">
+                    <h3 className="text-base font-semibold leading-snug">
+                      {project.title}
+                    </h3>
+                    <span className="font-mono text-[0.6rem] uppercase tracking-wider text-accent border border-accent/40 rounded px-1.5 py-0.5 flex-shrink-0">
+                      {project.status}
+                    </span>
+                  </div>
+                  <p className="text-xs text-foreground-tertiary leading-relaxed mb-2">
+                    {highlightName(project.authors.join(", "))}
+                  </p>
+                  <p className="text-xs text-foreground-secondary leading-relaxed mb-3">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="font-mono text-[0.6rem] text-foreground-quaternary bg-muted px-2 py-0.5 rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
         </FadeIn>
 
