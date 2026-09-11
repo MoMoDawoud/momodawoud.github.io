@@ -2,11 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Geist_Mono, Source_Serif_4 } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/layout/navigation";
+import { getAllPosts } from "@/lib/blog";
 import { Footer } from "@/components/layout/footer";
 import { PersonJsonLd } from "@/components/structured-data";
 import { BackToTop } from "@/components/back-to-top";
 import { ScrollProgress } from "@/components/scroll-progress";
-import { CursorGlow } from "@/components/interactive/cursor-glow";
 import { KonamiConfetti } from "@/components/interactive/konami-confetti";
 import "./globals.css";
 
@@ -117,10 +117,9 @@ export default function RootLayout({
             Skip to main content
           </a>
           <ScrollProgress />
-          <CursorGlow />
           <KonamiConfetti />
           <div className="relative min-h-screen flex flex-col">
-            <Navigation />
+            <Navigation posts={getAllPosts().map(({ slug, title, description }) => ({ slug, title, description }))} />
             <main id="main-content" className="flex-1">
               {children}
             </main>

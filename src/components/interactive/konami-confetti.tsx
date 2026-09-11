@@ -16,6 +16,7 @@ interface Particle {
   angle: number;
   velocity: number;
   spin: number;
+  delay: number;
 }
 
 const COLORS = ["#E0B35B", "#96710E", "#1B2341", "#4A6FA5", "#E06060", "#9B7EC8"];
@@ -35,6 +36,7 @@ export function KonamiConfetti() {
         angle: Math.random() * Math.PI * 2,
         velocity: 4 + Math.random() * 8,
         spin: (Math.random() - 0.5) * 20,
+        delay: Math.random() * 0.15,
       });
     }
     setParticles(newParticles);
@@ -73,7 +75,7 @@ export function KonamiConfetti() {
             top: p.y,
             backgroundColor: p.color,
             animation: `confetti-fall 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`,
-            animationDelay: `${Math.random() * 0.15}s`,
+            animationDelay: `${p.delay}s`,
             // Use CSS custom properties for unique trajectories
             ["--confetti-x" as string]: `${Math.cos(p.angle) * p.velocity * 40}px`,
             ["--confetti-y" as string]: `${Math.sin(p.angle) * p.velocity * 20 - 200}px`,

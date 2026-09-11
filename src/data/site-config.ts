@@ -18,6 +18,7 @@ export const siteConfig = {
     github: "https://github.com/MoMoDawoud",
     linkedin: "https://linkedin.com/in/mohamedmostafadawod",
     twitter: "https://twitter.com/mohameddawoud",
+    substack: "https://momodawoud.substack.com",
     googleScholar: "https://scholar.google.com/citations?user=Xeo2-fIAAAAJ&hl=en",
   },
   advisor: {

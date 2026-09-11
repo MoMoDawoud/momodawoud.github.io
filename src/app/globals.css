@@ -570,6 +570,21 @@ hr,
     size: A4;
   }
 
+  /* Printing is theme-independent. Setting only `body { color }` left the 27
+     explicit text-foreground-* utilities in cv-content winning the cascade,
+     so printing from dark mode produced 2.56:1 text on white paper. */
+  :root,
+  .dark {
+    --background: #ffffff;
+    --foreground: #000000;
+    --foreground-secondary: #0f172a;
+    --foreground-tertiary: #334155;
+    --foreground-quaternary: #475569;
+    --accent: #115e59;
+    --muted: #ffffff;
+    --border: #cbd5e1;
+  }
+
   body {
     font-size: 11pt;
     line-height: 1.4;
@@ -584,7 +599,10 @@ hr,
     display: none !important;
   }
 
-  main {
+  /* The padding lives on the inner wrapper, so `main` alone missed it and
+     every printed page opened with 5rem of dead space. */
+  main,
+  main > div {
     padding-top: 0 !important;
   }
 
@@ -593,7 +611,20 @@ hr,
     text-decoration: underline;
   }
 
-  section {
+  /* A mid-animation Cmd-P must not print a faded page. */
+  main [style*="opacity"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .anim-fade-in,
+  .anim-stagger > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* EXPERIENCE is taller than a page; avoid breaks on entries, not sections. */
+  section > div > div {
     break-inside: avoid;
   }
 }

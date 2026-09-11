@@ -1,7 +1,16 @@
+import Link from "next/link";
 import { siteConfig } from "@/data/site-config";
+
+const siteLinks = [
+  { name: "About", href: "/about" },
+  { name: "Publications", href: "/publications" },
+  { name: "Blog", href: "/blog" },
+  { name: "Service", href: "/service" },
+];
 
 const socialLinks = [
   { name: "Scholar", href: siteConfig.social.googleScholar },
+  { name: "Substack", href: siteConfig.social.substack },
   { name: "GitHub", href: siteConfig.social.github },
   { name: "LinkedIn", href: siteConfig.social.linkedin },
   { name: "Email", href: `mailto:${siteConfig.email}` },
@@ -25,6 +34,27 @@ export function Footer() {
             </a>
             .
           </p>
+
+          {/* Site navigation — /cv and /service are otherwise only reachable
+              from the top bar. */}
+          <nav
+            className="flex flex-wrap justify-center gap-x-3 gap-y-1 font-mono text-xs"
+            aria-label="Site sections"
+          >
+            {siteLinks.map((link, i) => (
+              <span key={link.href} className="flex items-center gap-3">
+                <Link
+                  href={link.href}
+                  className="text-foreground-tertiary hover:text-accent transition-colors duration-150 py-2 flex items-center"
+                >
+                  {link.name}
+                </Link>
+                {i < siteLinks.length - 1 && (
+                  <span className="text-foreground-quaternary" aria-hidden>·</span>
+                )}
+              </span>
+            ))}
+          </nav>
 
           {/* Social links — text only */}
           <nav

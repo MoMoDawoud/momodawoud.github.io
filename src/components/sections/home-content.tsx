@@ -1,28 +1,29 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { siteConfig } from "@/data/site-config";
 import { formatPostDate } from "@/lib/utils";
+import { publications } from "@/data/publications";
+import { substackPosts } from "@/data/substack";
 import { FadeIn } from "@/components/animations/fade-in";
-import { motion, useReducedMotion } from "framer-motion";
-import { TiltCard } from "@/components/interactive/tilt-card";
 
 /* ─────────────────────────────────────────
    DATA
    ───────────────────────────────────────── */
 
 const news: { date: string; text: string; mood?: "good" | "bad" }[] = [
+  { date: "Aug 2026", text: "PrivAudit accepted at ACM CCS 2026: a dual-lens framework for auditing website privacy under the CCPA, pairing LLM analysis of privacy policies with automated measurement of real tracking behavior", mood: "good" },
+  { date: "Jun 2026", text: "Joined the California Privacy Protection Agency as a Research Technologist Intern in the Audits Division", mood: "good" },
   { date: "Mar 2026", text: "Paper rejected from IMC '26 — back to the drawing board", mood: "bad" },
   { date: "Mar 2026", text: "Completed my Master of Science in Computer Science & Engineering at UC Santa Cruz, en route to the PhD", mood: "good" },
   { date: "Mar 2026", text: "Attended the 4th Annual Bay Area HCI Gathering at Santa Clara University, connecting with ~150 researchers" },
-  { date: "Mar 2026", text: "Now recruiting for the AI Privacy & Regulation Study with UC Santa Cruz and Stanford University — interviewing practitioners on privacy under emerging AI regulations" },
   { date: "Feb 2026", text: "Presented at USEC 2026 (co-located with NDSS) in San Diego — our paper on AI-enabled NSFW deepfakes on Fiverr", mood: "good" },
   { date: "Feb 2026", text: "Paper on AI-enabled deepfakes accepted at USEC 2026, co-located with NDSS (~32% acceptance rate)", mood: "good" },
   { date: "Feb 2026", text: "Launched Egyptians in CS Research with Badr AlKhamissi — 262 researchers across 16 tracks worldwide", mood: "good" },
-  { date: "Dec 2025", text: "Released PaperClerk AI — a local, privacy-preserving assistant for managing research paper libraries", mood: "good" },
+  { date: "Nov 2025", text: "Paper rejected from PETS. Not this cycle; reviews went back into the next version", mood: "bad" },
   { date: "Jun 2025", text: "Joined UC Santa Cruz as a PhD student, advised by Prof. Ram Sundara Raman", mood: "good" },
   { date: "Apr 2025", text: "Featured in Dartmouth Guarini School Student Spotlight — profiled on research, the journey from Zefta to Dartmouth, and STEM advocacy", mood: "good" },
   { date: "Feb 2025", text: "Selected as AAAS CASE Workshop Delegate — representing Dartmouth in Washington, D.C.", mood: "good" },
@@ -33,62 +34,7 @@ const news: { date: string; text: string; mood?: "good" | "bad" }[] = [
   { date: "Aug 2024", text: "DVa paper published at the 33rd USENIX Security Symposium", mood: "good" },
 ];
 
-const publications = [
-  {
-    year: 2026,
-    title: "From Underground to Mainstream Marketplaces: Measuring AI-Enabled NSFW Deepfakes on Fiverr",
-    authors: "Mohamed Moustafa Dawoud, Alejandro Cuevas, Ram Sundara Raman",
-    venue: "USEC 2026, co-located with NDSS",
-    description: "We investigate whether AI-enabled NSFW services have moved into mainstream gig marketplaces. Through keyword searches, sitemap analysis, and snowball sampling, we identify 593 AI-enabled NSFW gigs on Fiverr — 82.8% expose deepfake-enabling features, 74.9% of sellers joined in 2025, and sellers disproportionately target platforms like OnlyFans and Instagram.",
-    link: "https://www.ndss-symposium.org/ndss-paper/from-underground-to-mainstream-marketplaces-measuring-ai-enabled-nsfw-deepfakes-on-fiverr/",
-    image: "/publications/fiverr-deepfakes.png",
-  },
-  {
-    year: 2025,
-    title: "Vendor Communication Themes in Darknet Ransomware-as-a-Service (RaaS) Advertisements",
-    authors: "Taylor Fisher, Zacharias Pieri, C. Jordan Howell, Roberta O'Malley, Lauren Tremblay, Mohamed Dawoud",
-    venue: "Computers in Human Behavior",
-    description: "A thematic analysis of RaaS advertisements on darknet markets. The most common theme was victimization, appearing in 70% of the dataset, revealing the strategic mechanisms vendors employ to attract both novice and experienced cybercriminals through the commodification of ransomware.",
-    link: "https://www.sciencedirect.com/science/article/abs/pii/S0747563225000184",
-    image: "/publications/raas-darknet.png",
-  },
-  {
-    year: 2024,
-    title: "DVa: Extracting Victims and Abuse Vectors from Android Accessibility Malware",
-    authors: "Haichuan Xu, Mingxuan Yao, Runze Zhang, Mohamed Moustafa Dawoud, Jeman Park, Brendan Saltaformaggio",
-    venue: "USENIX Security 2024",
-    description: "We developed DVa, a malware analysis pipeline using dynamic victim-guided execution and symbolic analysis, to uncover accessibility malware's targeted victims and abuse vectors. Deployed on 9,850 a11y malware samples, DVa uncovered 215 unique victims targeted with an average of 13.9 abuse routines.",
-    link: "https://www.usenix.org/conference/usenixsecurity24/presentation/xu-haichuan",
-    image: "/publications/dva-malware.png",
-  },
-  {
-    year: 2022,
-    title: "Social Engineering and Technical Security Fusion",
-    authors: "Wassim Alexan, Eyad Mamdouh, Mohamed ElBeltagy, Ahmed Ashraf, Mohamed Moustafa, Hashem Al-Qurashi",
-    venue: "ITC-Egypt 2022",
-    description: "A message security scheme fusing traditional cryptographic algorithms and LSB steganography with ideas from social engineering. The scheme ensures secure transmission of sensitive messages over unsecured networks, defending against advances in cryptanalysis and growing computing power.",
-    link: "https://ieeexplore.ieee.org/document/9855761",
-    image: "/publications/social-engineering.png",
-  },
-  {
-    year: 2022,
-    title: "Image Encryption Through Rössler System, PRNG S-Box and Recamán's Sequence",
-    authors: "Mohamed ElBeltagy, Wassim Alexan, Abdelrahman Elkhamry, Mohamed Moustafa, Hisham H. Hussein",
-    venue: "IEEE CCWC 2022",
-    description: "A lightweight three-stage image encryption scheme using the Rössler chaotic attractor, a PRNG-based S-Box, and Recamán's sequence. Performance metrics show comparable security to existing schemes at very low processing cost, making it suitable for real-time image security applications.",
-    link: "https://ieeexplore.ieee.org/abstract/document/9720905",
-    image: "/publications/rossler-encryption.png",
-  },
-  {
-    year: 2021,
-    title: "IoMT Security: SHA3-512, AES-256, RSA and LSB Steganography",
-    authors: "Wassim Alexan, Ahmed Ashraf, Eyad Mamdouh, Sarah Mohamed, Mohamed Moustafa",
-    venue: "NICS 2021",
-    description: "An information security scheme for the Internet of Medical Things utilizing AES-256, RSA, SHA3-512, and LSB embedding in medical scans. The scheme guarantees secure transmission of medical data while satisfying user authentication and confidentiality requirements.",
-    link: "https://ieeexplore.ieee.org/abstract/document/9701567",
-    image: "/publications/iomt-security.png",
-  },
-];
+const selectedPublications = publications.filter((p) => p.selected);
 
 /* ─────────────────────────────────────────
    HELPERS
@@ -160,7 +106,7 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
         <FadeIn direction="none">
           <section className="pb-12 flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
             {/* Profile photo with 3D tilt */}
-            <TiltCard className="flex-shrink-0" maxTilt={8}>
+            <div className="flex-shrink-0">
               <div className="w-52 h-52 sm:w-72 sm:h-72 rounded-2xl overflow-hidden border-2 border-border">
                 <Image
                   src="/profile_pic.jpeg"
@@ -171,7 +117,7 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                   priority
                 />
               </div>
-            </TiltCard>
+            </div>
 
             {/* Bio */}
             <div className="text-center sm:text-left">
@@ -206,12 +152,25 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                   Scholar
                 </a>
                 <span className="text-foreground-quaternary">&middot;</span>
+                <a href={siteConfig.social.substack} target="_blank" rel="noopener noreferrer" className="gradient-link text-foreground-tertiary">
+                  Substack
+                </a>
+                <span className="text-foreground-quaternary">&middot;</span>
                 <a href={siteConfig.social.github} target="_blank" rel="noopener noreferrer" className="gradient-link text-foreground-tertiary">
                   GitHub
                 </a>
                 <span className="text-foreground-quaternary">&middot;</span>
                 <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="gradient-link text-foreground-tertiary">
                   LinkedIn
+                </a>
+                <span className="text-foreground-quaternary">&middot;</span>
+                <a
+                  href="/Mohamed_Dawoud_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gradient-link text-foreground-tertiary"
+                >
+                  CV
                 </a>
                 <span className="text-foreground-quaternary">&middot;</span>
                 <a href={`mailto:${siteConfig.email}`} className="gradient-link text-foreground-tertiary">
@@ -228,7 +187,7 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
             ═══════════════════════════════════════ */}
         <FadeIn direction="none" delay={0.05}>
           <section className="mb-16" aria-labelledby="section-news">
-            <SectionHeading title="News" href="/news" id="section-news" />
+            <SectionHeading title="News" id="section-news" />
             <div className="space-y-1">
               {visibleNews.map((item, i) => (
                 <div
@@ -274,47 +233,80 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
           <SectionHeading title="Publications" href="/publications" id="section-publications" />
 
           <div className="space-y-4">
-            {publications.map((pub) => (
-              <FadeIn key={pub.title} direction="none" delay={0.02}>
-                <a
-                  href={pub.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group card-hover flex flex-col sm:flex-row gap-5 p-4 rounded-xl border border-border hover:border-accent/30 hover:bg-accent-subtle"
-                >
+            {selectedPublications.map((pub) => (
+              <FadeIn key={pub.id} direction="none" delay={0.02}>
+                {/* A div, not a wrapping <a>: the footer carries more than one
+                    link, and anchors cannot nest. */}
+                <div className="group card-hover flex flex-col sm:flex-row gap-5 p-4 rounded-xl border border-border hover:border-accent/30 hover:bg-accent-subtle">
                   {/* Thumbnail */}
-                  <div className="relative w-full sm:w-56 sm:flex-shrink-0 aspect-[16/10] rounded-lg overflow-hidden bg-muted border border-border">
+                  <a
+                    href={pub.links.paper}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className="relative block w-full sm:w-56 sm:flex-shrink-0 aspect-[16/10] rounded-lg overflow-hidden bg-muted border border-border"
+                  >
                     <Image
-                      src={pub.image}
-                      alt={pub.title}
+                      src={pub.image ?? ''}
+                      alt=""
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, 224px"
                     />
-                  </div>
+                  </a>
 
                   {/* Text content */}
                   <div className="flex-1 min-w-0">
                     <span className="font-mono text-xs text-foreground-quaternary tabular-nums">
                       {pub.year}
                     </span>
-                    <h3 className="text-base font-semibold leading-snug mb-1 group-hover:text-accent transition-colors duration-150">
-                      {pub.title}
+                    <h3 className="text-base font-semibold leading-snug mb-1">
+                      <a
+                        href={pub.links.paper}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group-hover:text-accent transition-colors duration-150"
+                      >
+                        {pub.title}
+                      </a>
                     </h3>
                     <p className="text-xs text-foreground-tertiary leading-relaxed mb-1">
-                      {highlightName(pub.authors)}
+                      {highlightName(pub.authors.join(', '))}
                     </p>
                     <p className="text-xs italic text-foreground-quaternary mb-2">
-                      {pub.venue}
+                      {pub.shortVenue ?? pub.venue}
+                      {pub.status && (
+                        <span className="not-italic font-mono uppercase tracking-wider text-[0.6rem] text-accent ml-2">
+                          {pub.status}
+                        </span>
+                      )}
                     </p>
                     <p className="text-xs text-foreground-secondary leading-relaxed mb-2">
-                      {pub.description}
+                      {pub.summary ?? pub.abstract}
                     </p>
-                    <span className="text-xs font-mono gradient-link">
-                      [Paper]
-                    </span>
+                    <div className="flex flex-wrap gap-x-3 text-xs font-mono">
+                      <a
+                        href={pub.links.paper}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="gradient-link"
+                      >
+                        [Paper]
+                      </a>
+                      {pub.links.code && (
+                        <a
+                          href={pub.links.code}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="gradient-link"
+                        >
+                          [Code]
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </a>
+                </div>
               </FadeIn>
             ))}
           </div>
@@ -330,29 +322,80 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
           <section className="mb-16" aria-labelledby="section-posts">
             <SectionHeading title="Recent Posts" href="/blog" id="section-posts" />
             <div className="space-y-2">
-              {recentPosts.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="group block -mx-3 px-3 py-3 rounded-lg hover:bg-accent-subtle transition-colors duration-150"
-                >
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className="font-mono text-xs text-foreground-quaternary tabular-nums">
-                      {formatPostDate(post.date, "short")}
-                    </span>
-                    <span className="text-foreground-quaternary">·</span>
-                    <span className="font-mono text-xs text-foreground-quaternary">
-                      {post.readingTime} min read
-                    </span>
-                  </div>
-                  <h3 className="text-sm font-semibold leading-snug group-hover:text-accent transition-colors duration-150">
-                    {post.title}
-                  </h3>
-                  <p className="text-xs text-foreground-tertiary leading-relaxed mt-1">
-                    {post.description}
-                  </p>
-                </Link>
-              ))}
+              {[
+                ...recentPosts.map((p) => ({
+                  key: p.slug,
+                  title: p.title,
+                  date: p.date,
+                  description: p.description,
+                  href: `/blog/${p.slug}`,
+                  external: false,
+                  readingTime: p.readingTime as number | undefined,
+                })),
+                ...substackPosts.map((p) => ({
+                  key: p.href,
+                  title: p.title,
+                  date: p.date,
+                  description: p.subtitle,
+                  href: p.href,
+                  external: true,
+                  readingTime: undefined as number | undefined,
+                })),
+              ]
+                .sort((a, b) => b.date.localeCompare(a.date))
+                .slice(0, 5)
+                .map((post) => {
+                  const body = (
+                    <>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1">
+                        <span className="font-mono text-xs text-foreground-quaternary tabular-nums">
+                          {formatPostDate(post.date, "short")}
+                        </span>
+                        {post.readingTime != null && (
+                          <>
+                            <span className="text-foreground-quaternary">·</span>
+                            <span className="font-mono text-xs text-foreground-quaternary">
+                              {post.readingTime} min read
+                            </span>
+                          </>
+                        )}
+                        {post.external && (
+                          <>
+                            <span className="text-foreground-quaternary">·</span>
+                            <span className="font-mono text-[0.6rem] uppercase tracking-wider text-accent">
+                              Substack
+                            </span>
+                          </>
+                        )}
+                      </div>
+                      <h3 className="text-sm font-semibold leading-snug group-hover:text-accent transition-colors duration-150">
+                        {post.title}
+                      </h3>
+                      {post.description && (
+                        <p className="text-xs text-foreground-tertiary leading-relaxed mt-1">
+                          {post.description}
+                        </p>
+                      )}
+                    </>
+                  );
+                  const cls =
+                    "group block -mx-3 px-3 py-3 rounded-lg hover:bg-accent-subtle transition-colors duration-150";
+                  return post.external ? (
+                    <a
+                      key={post.key}
+                      href={post.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cls}
+                    >
+                      {body}
+                    </a>
+                  ) : (
+                    <Link key={post.key} href={post.href} className={cls}>
+                      {body}
+                    </Link>
+                  );
+                })}
             </div>
           </section>
         </FadeIn>

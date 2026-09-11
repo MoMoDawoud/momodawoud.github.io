@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { compileMDX } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { mdxComponents } from "@/components/mdx-components";
 import { formatPostDate } from "@/lib/utils";
@@ -58,6 +59,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     options: {
       mdxOptions: {
         rehypePlugins: [
+          rehypeSlug,
           [rehypePrettyCode, { theme: "github-dark-dimmed", keepBackground: false }],
         ],
       },
@@ -65,6 +67,12 @@ export default async function BlogPostPage({ params }: PageProps) {
   });
 
   const formattedDate = formatPostDate(post.date);
+
+  // getAllPosts() is date-sorted, so neighbours are simply adjacent.
+  const all = getAllPosts();
+  const i = all.findIndex((x) => x.slug === slug);
+  const newer = i > 0 ? all[i - 1] : null;
+  const older = i >= 0 && i < all.length - 1 ? all[i + 1] : null;
 
   return (
     <div className="pt-24 pb-20">
@@ -105,6 +113,49 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Post content */}
         <article className="prose">{content}</article>
+
+        {/* Keep reading — every post used to dead-end here. */}
+        <nav
+          className="mt-16 pt-8 border-t border-border grid gap-4 sm:grid-cols-2"
+          aria-label="More posts"
+        >
+          {older ? (
+            <Link
+              href={`/blog/${older.slug}`}
+              className="group block p-4 rounded-lg border border-border hover:border-accent/30 hover:bg-accent-subtle transition-colors duration-150"
+            >
+              <span className="font-mono text-[0.65rem] uppercase tracking-wider text-foreground-quaternary">
+                Older
+              </span>
+              <span className="block text-sm font-medium mt-1 group-hover:text-accent transition-colors duration-150">
+                {older.title}
+              </span>
+            </Link>
+          ) : (
+            <span />
+          )}
+          {newer && (
+            <Link
+              href={`/blog/${newer.slug}`}
+              className="group block p-4 rounded-lg border border-border hover:border-accent/30 hover:bg-accent-subtle transition-colors duration-150 sm:text-right"
+            >
+              <span className="font-mono text-[0.65rem] uppercase tracking-wider text-foreground-quaternary">
+                Newer
+              </span>
+              <span className="block text-sm font-medium mt-1 group-hover:text-accent transition-colors duration-150">
+                {newer.title}
+              </span>
+            </Link>
+          )}
+        </nav>
+
+        <p className="mt-10 text-sm text-foreground-tertiary">
+          Applying to PhD programs, or thinking about it?{" "}
+          <Link href="/service#mentorship" className="link-accent">
+            I mentor a cohort each cycle
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );

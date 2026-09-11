@@ -4,7 +4,29 @@ import Image from "next/image";
 import { FadeIn } from "@/components/animations/fade-in";
 import { PageHeader } from "@/components/page-header";
 
-const courses = [
+const courses: {
+  semester: string;
+  role: string;
+  code: string;
+  title: string;
+  institution: string;
+  instructor?: string;
+  instructorLabel?: string;
+  highlights: string[];
+}[] = [
+  {
+    semester: "Spring 2026",
+    role: "Graduate Teaching Assistant",
+    code: "CSE 115C",
+    title: "Software Design Project II",
+    institution: "University of California, Santa Cruz",
+    instructor: "Richard Jullig",
+    instructorLabel: "Supervisor",
+    highlights: [
+      "Capstone software engineering course; support student teams through the design and implementation phases of their projects",
+      "Guide weekly check-ins, code reviews, and design feedback",
+    ],
+  },
   {
     semester: "Spring 2025",
     role: "Lead Graduate Teaching Assistant",
@@ -46,9 +68,11 @@ export function TeachingContent() {
                 <p className="text-sm text-foreground-secondary mb-1">
                   {course.role} — {course.institution}
                 </p>
-                <p className="font-mono text-xs text-foreground-quaternary mb-3">
-                  Instructor: {course.instructor}
-                </p>
+                {course.instructor && (
+                  <p className="font-mono text-xs text-foreground-quaternary mb-3">
+                    {course.instructorLabel ?? "Instructor"}: {course.instructor}
+                  </p>
+                )}
                 <ul className="space-y-1.5 text-sm text-foreground-secondary">
                   {course.highlights.map((h, i) => (
                     <li key={i} className="pl-4 relative before:content-['–'] before:absolute before:left-0 before:text-foreground-quaternary">
@@ -67,8 +91,8 @@ export function TeachingContent() {
             <Image
               src="/prof_sami.jpg"
               alt="Teaching session with Prof. Sami Saydjari at Dartmouth"
-              width={1200}
-              height={800}
+              width={900}
+              height={670}
               className="w-full h-auto"
               priority
             />
@@ -109,8 +133,8 @@ export function TeachingContent() {
               <Image
                 src="/teaching_2.jpg"
                 alt="Lab session with students at Dartmouth"
-                width={1200}
-                height={900}
+                width={1030}
+                height={1134}
                 className="w-full h-auto"
               />
             </div>
@@ -118,8 +142,8 @@ export function TeachingContent() {
               <Image
                 src="/teaching_1.jpg"
                 alt="Classroom discussion at Dartmouth"
-                width={1200}
-                height={900}
+                width={1400}
+                height={268}
                 className="w-full h-auto"
               />
             </div>

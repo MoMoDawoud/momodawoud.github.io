@@ -1,39 +1,43 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
-import { Menu, X, Sun, Moon, Search } from "lucide-react";
-import { GlobalSearch } from "@/components/global-search";
-import { Magnetic } from "@/components/interactive/magnetic";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { GlobalSearch, type BlogSearchItem } from "@/components/global-search";
 import { siteConfig } from "@/data/site-config";
 import { cn } from "@/lib/utils";
 
-const navItems = [
+const navItems: { name: string; href: string; external?: boolean }[] = [
   { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
   { name: "Publications", href: "/publications" },
   { name: "Teaching", href: "/teaching" },
-  { name: "Service & Outreach", href: "/service" },
-  { name: "Recognition", href: "/recognition" },
+  { name: "Mentorship & Service", href: "/service" },
   { name: "Blog", href: "/blog" },
-  { name: "My Journey", href: "/journey" },
-  { name: "CV", href: "/cv" },
 ];
 
 const mobileNavItems = navItems;
 
-export function Navigation() {
+// `false` during SSR and the first client render, `true` afterwards — the same
+// guard the `mounted` flag gave us, without setting state from an effect.
+const subscribeNoop = () => () => {};
+function useHydrated() {
+  return useSyncExternalStore(
+    subscribeNoop,
+    () => true,
+    () => false
+  );
+}
+
+export function Navigation({ posts = [] }: { posts?: BlogSearchItem[] }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydrated();
 
   // Track scroll for background opacity
   useEffect(() => {
@@ -44,10 +48,13 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
+  // Close the mobile menu on navigation, adjusted during render so the drawer
+  // never paints once on the new route before closing.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
     setIsMobileMenuOpen(false);
-  }, [pathname]);
+  }
 
   // Close mobile menu on Escape
   const handleKeyDown = useCallback(
@@ -96,18 +103,36 @@ export function Navigation() {
           aria-label="Main navigation"
         >
           <div className="flex items-center justify-between h-12">
-            {/* Logo spacer */}
-            <div />
+            {/* Mobile wordmark — landing on /publications from a link, the
+                header otherwise shows no identity at all. */}
+            <Link
+              href="/"
+              className="md:hidden font-mono text-sm text-foreground hover:text-accent transition-colors duration-150"
+            >
+              {siteConfig.shortName}
+            </Link>
+            <div className="hidden md:block" />
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1">
-              {navItems.map((item) => (
-                <Magnetic key={item.href} strength={0.25}>
-                  <Link
+              {navItems.map((item) =>
+                item.external ? (
+                  <a
+                    key={item.href}
                     href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative px-3 py-2 text-sm whitespace-nowrap block text-foreground-tertiary hover:text-foreground transition-colors duration-150"
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
                     aria-current={isActive(item.href) ? "page" : undefined}
                     className={cn(
-                      "relative px-3 py-2 text-sm transition-colors duration-150 block",
+                      "relative px-3 py-2 text-sm whitespace-nowrap transition-colors duration-150 block",
                       isActive(item.href)
                         ? "text-foreground"
                         : "text-foreground-tertiary hover:text-foreground"
@@ -126,21 +151,21 @@ export function Navigation() {
                       />
                     )}
                   </Link>
-                </Magnetic>
-              ))}
+                )
+              )}
             </div>
 
             {/* Right side */}
             <div className="flex items-center gap-1">
               {/* Desktop search */}
               <div className="hidden md:block">
-                <GlobalSearch />
+                <GlobalSearch posts={posts} />
               </div>
               {/* Mobile search icon. Wrapper (not the button) carries the
                   breakpoint so the dialog this instance renders is hidden on
                   desktop too — both instances listen for ⌘K. */}
               <div className="md:hidden">
-                <GlobalSearch mobile />
+                <GlobalSearch mobile posts={posts} />
               </div>
 
               {/* Theme toggle with circular wipe */}
@@ -178,7 +203,7 @@ export function Navigation() {
                       wipe.remove();
                     });
                   }}
-                  className="h-8 w-8 flex items-center justify-center rounded-md text-foreground-tertiary hover:text-foreground transition-colors duration-150"
+                  className="h-10 w-10 flex items-center justify-center rounded-md text-foreground-tertiary hover:text-foreground transition-colors duration-150"
                   aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                 >
                   {theme === "dark" ? (
@@ -191,7 +216,7 @@ export function Navigation() {
 
               {/* Mobile menu toggle */}
               <button
-                className="md:hidden h-8 w-8 flex items-center justify-center rounded-md text-foreground-tertiary hover:text-foreground transition-colors duration-150"
+                className="md:hidden h-10 w-10 flex items-center justify-center rounded-md text-foreground-tertiary hover:text-foreground transition-colors duration-150"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-menu"
@@ -225,11 +250,12 @@ export function Navigation() {
             {/* Panel */}
             <motion.div
               id="mobile-menu"
+              aria-modal="true"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-              className="fixed inset-y-0 right-0 z-50 w-72 md:hidden bg-background border-l border-border flex flex-col"
+              className="fixed inset-y-0 right-0 z-50 w-[min(18rem,80vw)] md:hidden bg-background border-l border-border flex flex-col overscroll-contain"
               role="dialog"
               aria-label="Mobile navigation"
             >
@@ -246,7 +272,19 @@ export function Navigation() {
 
               {/* Nav links */}
               <nav className="flex-1 px-4 py-2" aria-label="Mobile navigation">
-                {mobileNavItems.map((item) => (
+                {mobileNavItems.map((item) =>
+                  item.external ? (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-3 px-3 py-3 text-sm rounded-md text-foreground-secondary hover:text-foreground hover:bg-muted transition-colors duration-150"
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -264,7 +302,8 @@ export function Navigation() {
                     )}
                     {item.name}
                   </Link>
-                ))}
+                  )
+                )}
               </nav>
 
               {/* Social links at bottom */}

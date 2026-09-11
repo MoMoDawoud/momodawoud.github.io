@@ -2,9 +2,8 @@
 
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Search, X, FileText, GraduationCap, Newspaper, PenLine } from "lucide-react";
+import { Search, X, FileText, GraduationCap, PenLine } from "lucide-react";
 import { publications } from "@/data/publications";
-import { blogIndex } from "@/data/blog-index";
 
 interface SearchResult {
   title: string;
@@ -16,14 +15,12 @@ interface SearchResult {
 
 const staticPages: SearchResult[] = [
   { title: "Home", description: "Main page and bio", href: "/", type: "Page", icon: FileText },
+  { title: "About", description: "Background, research, and the path from Zefta to Santa Cruz", href: "/about", type: "Page", icon: FileText },
   { title: "Publications", description: "All peer-reviewed publications", href: "/publications", type: "Page", icon: FileText },
   { title: "Teaching", description: "Teaching experience at Dartmouth", href: "/teaching", type: "Page", icon: GraduationCap },
-  { title: "Service & Outreach", description: "Professional service and community contributions", href: "/service", type: "Page", icon: FileText },
-  { title: "Recognition", description: "Fellowships and media coverage", href: "/recognition", type: "Page", icon: FileText },
-  { title: "My Journey", description: "Timeline and personal story", href: "/journey", type: "Page", icon: FileText },
-  { title: "CV", description: "Curriculum Vitae", href: "/cv", type: "Page", icon: FileText },
+  { title: "Mentorship & Service", description: "Mentoring, community building, and professional service", href: "/service", type: "Page", icon: FileText },
+  { title: "CV", description: "Curriculum Vitae (PDF)", href: "/Mohamed_Dawoud_CV.pdf", type: "File", icon: FileText },
   { title: "Blog", description: "Research notes and tutorials", href: "/blog", type: "Page", icon: PenLine },
-  { title: "News", description: "Latest research updates", href: "/news", type: "Page", icon: Newspaper },
 ];
 
 const publicationResults: SearchResult[] = publications.map((pub) => ({
@@ -34,26 +31,51 @@ const publicationResults: SearchResult[] = publications.map((pub) => ({
   icon: FileText,
 }));
 
-const blogResults: SearchResult[] = blogIndex.map((post) => ({
-  title: post.title,
-  description: post.description,
-  href: `/blog/${post.slug}`,
-  type: "Blog",
-  icon: PenLine,
-}));
-
-const allSearchItems = [...staticPages, ...publicationResults, ...blogResults];
+export interface BlogSearchItem {
+  slug: string;
+  title: string;
+  description: string;
+}
 
 interface GlobalSearchProps {
   mobile?: boolean;
+  /** Derived from getAllPosts() in the server layout, so a new post can never
+      be missing from search the way the hand-maintained index allowed. */
+  posts?: BlogSearchItem[];
 }
 
-export function GlobalSearch({ mobile }: GlobalSearchProps) {
+export function GlobalSearch({ mobile, posts = [] }: GlobalSearchProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
   const router = useRouter();
   const resultsRef = useRef<HTMLDivElement>(null);
+  const restoreFocusRef = useRef<HTMLElement | null>(null);
+
+  const allSearchItems = useMemo(
+    () => [
+      ...staticPages,
+      ...publicationResults,
+      ...posts.map((post) => ({
+        title: post.title,
+        description: post.description,
+        href: `/blog/${post.slug}`,
+        type: "Blog",
+        icon: PenLine,
+      })),
+    ],
+    [posts]
+  );
+
+  // Return focus to whatever opened the dialog (WCAG 2.4.3).
+  useEffect(() => {
+    if (isOpen) {
+      restoreFocusRef.current = document.activeElement as HTMLElement;
+    } else {
+      restoreFocusRef.current?.focus?.();
+      restoreFocusRef.current = null;
+    }
+  }, [isOpen]);
 
   const results = useMemo(() => {
     if (!query.trim()) return staticPages;
@@ -63,12 +85,15 @@ export function GlobalSearch({ mobile }: GlobalSearchProps) {
         item.title.toLowerCase().includes(q) ||
         item.description.toLowerCase().includes(q)
     ).slice(0, 8);
-  }, [query]);
+  }, [query, allSearchItems]);
 
-  // Reset active index when results change
-  useEffect(() => {
+  // Adjust state during render rather than in an effect: resetting in an
+  // effect renders one frame with a stale highlight, then re-renders.
+  const [lastQuery, setLastQuery] = useState(query);
+  if (query !== lastQuery) {
+    setLastQuery(query);
     setActiveIndex(0);
-  }, [results]);
+  }
 
   const handleSelect = useCallback((href: string) => {
     setIsOpen(false);
@@ -117,7 +142,7 @@ export function GlobalSearch({ mobile }: GlobalSearchProps) {
   }, [activeIndex]);
 
   // Mobile trigger: just an icon. Must fall through to the dialog below when
-  // open — returning here unconditionally left the button dead on mobile, since
+  // open. Returning here unconditionally left the button dead on mobile, since
   // the desktop instance that renders the dialog sits inside a `hidden md:block`.
   if (mobile && !isOpen) {
     return (
@@ -162,6 +187,7 @@ export function GlobalSearch({ mobile }: GlobalSearchProps) {
       <div
         className="fixed top-[20%] left-1/2 -translate-x-1/2 z-[70] w-full max-w-lg"
         role="dialog"
+        aria-modal="true"
         aria-label="Global search"
       >
         <div className="bg-background border border-border rounded-lg shadow-lg overflow-hidden mx-4">
@@ -174,7 +200,7 @@ export function GlobalSearch({ mobile }: GlobalSearchProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleInputKeyDown}
-              className="flex-1 py-3 text-sm bg-transparent outline-none placeholder:text-foreground-quaternary font-mono"
+              className="flex-1 py-3 text-sm bg-transparent placeholder:text-foreground-quaternary font-mono"
               autoFocus
               aria-label="Search"
               aria-activedescendant={results.length > 0 ? `search-result-${activeIndex}` : undefined}

@@ -32,12 +32,9 @@ function PublicationRow({ publication }: { publication: Publication }) {
     }
   }
 
-  const typeBadgeColor = {
-    conference: "bg-foreground/10 text-foreground",
-    journal: "bg-accent/15 text-accent",
-    workshop: "bg-accent/10 text-foreground-secondary",
-    preprint: "bg-muted text-foreground-tertiary",
-  }[publication.type];
+  // One neutral chip for every type: the badge names the venue kind, it does
+  // not rank it.
+  const typeBadgeColor = "bg-muted text-foreground-secondary";
 
   return (
     <article className="py-4 px-3 -mx-3 rounded-lg hover:bg-muted/50 transition-colors duration-150">
@@ -92,6 +89,12 @@ function PublicationRow({ publication }: { publication: Publication }) {
                 {i < publication.authors.length - 1 && ", "}
               </span>
             ))}
+          </p>
+
+          {/* Venue — the one string a PC member scans for. It previously sat in
+              the dim right rail, and below the link row on mobile. */}
+          <p className="text-sm text-foreground-secondary font-medium mb-2">
+            {publication.shortVenue ?? publication.venue}
           </p>
 
           {/* Links row */}
@@ -185,15 +188,17 @@ function PublicationRow({ publication }: { publication: Publication }) {
           </div>
         </div>
 
-        {/* Right: venue + type badge */}
-        <div className="flex sm:flex-col items-start sm:items-end gap-2 sm:gap-1.5 mt-2 sm:mt-0 sm:w-44 flex-shrink-0">
-          <span className="text-xs text-foreground-tertiary">
-            {publication.venue}
-          </span>
+        {/* Right: type badge, year, citations */}
+        <div className="flex sm:flex-col items-start sm:items-end gap-2 sm:gap-1.5 mt-2 sm:mt-0 sm:w-28 flex-shrink-0">
           <div className="flex items-center gap-1.5 flex-wrap sm:justify-end">
             <span className={`inline-block px-1.5 py-0.5 rounded text-[0.6rem] font-mono font-medium uppercase tracking-wider ${typeBadgeColor}`}>
               {publication.type}
             </span>
+            {publication.status && (
+              <span className="inline-block px-1.5 py-0.5 rounded text-[0.6rem] font-mono font-medium uppercase tracking-wider border border-accent/40 text-accent">
+                {publication.status}
+              </span>
+            )}
             <span className="font-mono text-[0.65rem] text-foreground-quaternary">
               {publication.year}
             </span>
@@ -294,9 +299,7 @@ export function PublicationsContent() {
   return (
     <div className="pt-20 pb-16">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <PageHeader
-          title="Publications"
-        />
+        <PageHeader title="Publications" />
 
         {/* Toggle + count */}
         <FadeIn direction="none">
@@ -353,7 +356,7 @@ export function PublicationsContent() {
             <select
               value={selectedYear || ""}
               onChange={(e) => setSelectedYear(e.target.value || null)}
-              className="px-2 py-1.5 text-xs font-mono bg-transparent border border-border rounded text-foreground-secondary focus:ring-1 focus:ring-accent outline-none"
+              className="px-2 py-2 text-sm font-mono bg-transparent border border-border rounded text-foreground-secondary focus:ring-1 focus:ring-accent"
               aria-label="Filter by year"
             >
               <option value="">Year</option>
@@ -368,7 +371,7 @@ export function PublicationsContent() {
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="px-2 py-1.5 text-xs font-mono bg-transparent border border-border rounded text-foreground-secondary focus:ring-1 focus:ring-accent outline-none"
+              className="px-2 py-2 text-sm font-mono bg-transparent border border-border rounded text-foreground-secondary focus:ring-1 focus:ring-accent"
               aria-label="Filter by type"
             >
               <option value="all">Type</option>

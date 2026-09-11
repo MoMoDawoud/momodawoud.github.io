@@ -5,11 +5,11 @@ import { BlogContent } from "./blog-content";
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Research notes, technical tutorials, and reflections on security, privacy, and AI.",
+    "Research notes, field reports, and reflections on security, privacy, and the people affected by them.",
   alternates: { canonical: "/blog" },
   openGraph: {
     title: "Blog | Mohamed Moustafa Dawoud",
-    description: "Research notes, technical tutorials, and reflections on security, privacy, and AI.",
+    description: "Research notes, field reports, and reflections on security, privacy, and the people affected by them.",
     url: "/blog",
     siteName: "Mohamed Moustafa Dawoud",
     locale: "en_US",
