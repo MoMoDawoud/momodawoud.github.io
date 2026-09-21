@@ -139,9 +139,17 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                   <a href="https://www.ucsc.edu" target="_blank" rel="noopener noreferrer" className="gradient-link">
                     UC Santa Cruz
                   </a>
-                  , working with{" "}
+                  , co-advised by{" "}
                   <a href={siteConfig.advisor.url} target="_blank" rel="noopener noreferrer" className="gradient-link">
                     Prof. Ram Sundara Raman
+                  </a>{" "}
+                  and{" "}
+                  <a href="https://people.ucsc.edu/~lgilpin/" target="_blank" rel="noopener noreferrer" className="gradient-link">
+                    Prof. Leilani Gilpin
+                  </a>
+                  . I am also a Research Technologist Intern in the Audits Division at the{" "}
+                  <a href="https://cppa.ca.gov" target="_blank" rel="noopener noreferrer" className="gradient-link">
+                    California Privacy Protection Agency
                   </a>
                   . I study the sociotechnical dimensions of AI-enabled privacy risks and abuse, and how they impact people and society. I am particularly interested in how AI facilitates new forms of harm — such as non-consensual deepfakes, synthetic media generation, and the commodification of abuse services — and in how the stakeholders affected by these threats understand, misinterpret, and struggle to keep pace with them: how everyday users form mental models of digital protections, how engineers and practitioners weigh privacy trade-offs under regulatory pressure, and how policymakers interpret ambiguous or conflicting frameworks. I use large-scale internet measurements, qualitative interviews, and controlled experiments to surface these misalignments. I am equally driven by the complementary question: can AI itself be turned into a tool for defense? I explore how the same technology that enables harm can also empower users to recognize and resist threats, help practitioners build safer systems under regulatory uncertainty, and provide policymakers with the empirical grounding they need to act.
                 </p>
