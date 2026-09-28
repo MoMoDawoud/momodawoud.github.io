@@ -10,6 +10,7 @@ const siteLinks = [
 
 const socialLinks = [
   { name: "Scholar", href: siteConfig.social.googleScholar },
+  { name: "ORCID", href: siteConfig.social.orcid },
   { name: "Substack", href: siteConfig.social.substack },
   { name: "GitHub", href: siteConfig.social.github },
   { name: "LinkedIn", href: siteConfig.social.linkedin },

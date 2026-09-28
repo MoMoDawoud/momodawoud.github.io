@@ -34,9 +34,17 @@ export function PersonJsonLd() {
       siteConfig.social.substack,
       siteConfig.social.bluesky,
       siteConfig.social.medium,
-      siteConfig.social.acmDl,
+      siteConfig.social.orcid,
     ],
     knowsAbout: siteConfig.researchInterests,
+    // The persistent identifier: the strongest disambiguation signal there is,
+    // and unlike a name it cannot be confused with another researcher's record.
+    identifier: {
+      "@type": "PropertyValue",
+      propertyID: "ORCID",
+      value: "0009-0000-1631-7668",
+      url: siteConfig.social.orcid,
+    },
     image: "https://momodawoud.github.io/profile_pic.jpeg",
   };
 

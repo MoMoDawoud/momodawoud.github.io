@@ -161,6 +161,10 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                   Scholar
                 </a>
                 <span className="text-foreground-quaternary">&middot;</span>
+                <a href={siteConfig.social.orcid} target="_blank" rel="noopener noreferrer" className="gradient-link text-foreground-tertiary">
+                  ORCID
+                </a>
+                <span className="text-foreground-quaternary">&middot;</span>
                 <a href={siteConfig.social.substack} target="_blank" rel="noopener noreferrer" className="gradient-link text-foreground-tertiary">
                   Substack
                 </a>

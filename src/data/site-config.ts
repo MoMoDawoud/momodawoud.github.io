@@ -21,7 +21,7 @@ export const siteConfig = {
     substack: "https://momodawoud.substack.com",
     bluesky: "https://bsky.app/profile/mo-mo2025.bsky.social",
     medium: "https://medium.com/@mdawoud_2100",
-    acmDl: "https://dl.acm.org/profile/81325487839",
+    orcid: "https://orcid.org/0009-0000-1631-7668",
     googleScholar: "https://scholar.google.com/citations?user=Xeo2-fIAAAAJ&hl=en",
   },
   advisor: {
