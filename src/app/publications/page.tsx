@@ -5,11 +5,11 @@ import { PublicationsJsonLd } from "@/components/structured-data";
 export const metadata: Metadata = {
   title: "Publications",
   description:
-    "Peer-reviewed publications by Mohamed Dawoud on security, privacy, cybercrime, and AI governance.",
+    "Peer-reviewed publications by Mohamed Moustafa Dawoud on security, privacy, cybercrime, and AI governance.",
   alternates: { canonical: "/publications" },
   openGraph: {
     title: "Publications | Mohamed Moustafa Dawoud",
-    description: "Peer-reviewed publications by Mohamed Dawoud on security, privacy, cybercrime, and AI governance.",
+    description: "Peer-reviewed publications by Mohamed Moustafa Dawoud on security, privacy, cybercrime, and AI governance.",
     url: "/publications",
     siteName: "Mohamed Moustafa Dawoud",
     locale: "en_US",

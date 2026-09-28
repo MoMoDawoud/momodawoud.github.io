@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   description:
     "PhD Student in Computer Science & Engineering at UC Santa Cruz.",
   keywords: [
-    "Mohamed Dawoud",
+    "Mohamed Moustafa Dawoud",
     "Mohamed Moustafa Dawoud",
     "Security Research",
     "Privacy",

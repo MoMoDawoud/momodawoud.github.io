@@ -24,12 +24,19 @@ export function PersonJsonLd() {
         name: "German International University, Cairo",
       },
     ],
+    // sameAs is how search engines resolve scattered profiles into one entity,
+    // so it should claim every profile that already ranks for this name.
     sameAs: [
       siteConfig.social.github,
       siteConfig.social.linkedin,
       siteConfig.social.twitter,
       siteConfig.social.googleScholar,
+      siteConfig.social.substack,
+      siteConfig.social.bluesky,
+      siteConfig.social.medium,
+      siteConfig.social.acmDl,
     ],
+    knowsAbout: siteConfig.researchInterests,
     image: "https://momodawoud.github.io/profile_pic.jpeg",
   };
 
