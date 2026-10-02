@@ -15,8 +15,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title:
-      "The Impact of Age Verification Laws on the Consumption of Pornographic Content in the US",
+    title: "The Impact of US Age Verification Laws on Adult Content Consumption",
     authors: [
       "Alejandro Cuevas",
       "Mohamed Moustafa Dawoud",
@@ -24,7 +23,7 @@ export const projects: Project[] = [
       "Ram Sundara Raman",
       "Manoel Horta Ribeiro",
     ],
-    status: "In progress",
+    status: "Under Review",
     description:
       "We leverage individual-level panel data derived from mobile browsing activity to study the impact of age verification laws on adult content consumption, from both compliant and non-compliant sites, in the US.",
     tags: [
