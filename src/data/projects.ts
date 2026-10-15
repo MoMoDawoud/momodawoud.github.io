@@ -15,6 +15,19 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: "Governing the Open-Weight Ecosystem Behind Explicit Image Generation",
+    authors: ["Mohamed Moustafa Dawoud (lead author)"],
+    status: "In Preparation",
+    description:
+      "We study the open-weight model ecosystem supporting explicit and identity-specific image generation, including risks of non-consensual intimate imagery (NCII). We examine model-level interventions, their effects on shared model use, and cross-platform persistence to inform platform governance.",
+    tags: [
+      "Open-Weight Models",
+      "NCII",
+      "Platform Governance",
+      "Internet Measurement",
+    ],
+  },
+  {
     title: "The Impact of US Age Verification Laws on Adult Content Consumption",
     authors: [
       "Alejandro Cuevas",
