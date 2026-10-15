@@ -107,10 +107,10 @@ export function TeachingContent() {
             </h2>
             <div className="space-y-4 text-sm text-foreground-secondary leading-relaxed max-w-prose">
               <p>
-                I believe AI is reshaping how students learn — and our teaching must evolve with it. Instead of pretending students aren&apos;t using tools like ChatGPT and GitHub Copilot, I redesigned part of the course to embrace AI coding assistants while holding students to a higher standard of understanding.
+                I believe AI is reshaping how students learn, and teaching has to change with it. Instead of pretending students aren&apos;t using tools like ChatGPT and GitHub Copilot, I redesigned part of the course to allow AI coding assistants while holding students to a higher standard of understanding.
               </p>
               <p>
-                Students had full freedom in system design. AI tools were allowed — but used mindfully. Every week, I met each student or team for oral check-ins to probe real understanding. Each project ended with a final oral evaluation. If you used AI, great — but you had to explain, justify, and defend your choices.
+                Students had full freedom in system design, and AI tools were allowed. Every week, I met each student or team for an oral check-in to probe whether they understood what they had built. Each project ended with a final oral evaluation. If you used AI, fine, but you had to explain and defend your choices.
               </p>
             </div>
 

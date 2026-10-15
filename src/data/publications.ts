@@ -115,7 +115,7 @@ export const publications: Publication[] = [
     abstract:
       "In online illicit marketplaces, the Ransomware-as-a-Service (RaaS) industry is experiencing rapid growth. While traditionally ransomware was deployed by adept cybercriminals to lock or encrypt network assets, subsequently demanding a ransom for the decryption key, at present, RaaS is being marketed on darknet platforms as a pre-built, user-friendly form of ransomware. This study employs a thematic analysis of RaaS advertisements on darknet markets to discern patterns in vendor communication with potential customers. The most common theme identified was victimization, appearing in 70% of the dataset, underscoring the nature of RaaS products as instruments of criminal activity. Victimization was commonly combined with other themes to persuade users to make a purchase. These findings provide critical insights into the commodification of ransomware and reveal the strategic mechanisms employed by vendors to attract both novice and experienced cybercriminals.",
     summary:
-      "A thematic analysis of RaaS advertisements on darknet markets. The most common theme was victimization, appearing in 70% of the dataset, revealing the strategic mechanisms vendors employ to attract both novice and experienced cybercriminals through the commodification of ransomware.",
+      "A thematic analysis of RaaS advertisements on darknet markets. The most common theme was victimization, appearing in 70% of the dataset. The themes show how vendors pitch pre-built ransomware to both novice and experienced cybercriminals.",
     tags: ["Cybercrime Economies", "Darknet Markets", "Qualitative Analysis", "Threat Intelligence"],
     image: "/publications/raas-darknet.png",
     links: {
@@ -191,7 +191,7 @@ export const publications: Publication[] = [
     abstract:
       "Ensuring the secure transmission of sensitive messages over unsecured networks has been a staggering problem in the face of scientists and engineers in recent times. This is exaggerated by developments in cryptanalysis, steganalysis and computing powers at the disposal of hackers. In this paper, a message security scheme that is based on social engineering and technical security fusion is proposed. The proposed scheme makes use of traditional cryptographic algorithms and LSB steganography in addition to ideas pooling from the ever advancing field of social engineering. The provided discussion and numerical analysis showcase the ability of the proposed scheme to fend off cyber attacks.",
     summary:
-      "A message security scheme fusing traditional cryptographic algorithms and LSB steganography with ideas from social engineering. The scheme ensures secure transmission of sensitive messages over unsecured networks, defending against advances in cryptanalysis and growing computing power.",
+      "A message security scheme that combines traditional cryptographic algorithms and LSB steganography with ideas from social engineering, to keep sensitive messages secure over unsecured networks as cryptanalysis and computing power advance.",
     tags: ["Applied Cryptography", "Steganography", "Human Factors", "Secure Communication"],
     image: "/publications/social-engineering.png",
     links: {
@@ -225,7 +225,7 @@ export const publications: Publication[] = [
     abstract:
       "This paper proposes a lightweight image encryption scheme that is based on 3 stages. The first stage incorporates the use of the Rössler attractor for the Rössler system, the second stage incorporates the use of a PRNG S-Box, while the third stage makes use of the Recamán's sequence. Performance of the proposed encryption scheme is evaluated using a number of metrics. The computed values of the metrics indicate a comparable performance to counterpart schemes from the literature, at a very low cost of processing time. Such a trait indicates that the proposed image encryption scheme possesses potential for real-time image security applications.",
     summary:
-      "A lightweight three-stage image encryption scheme using the Rössler chaotic attractor, a PRNG-based S-Box, and Recamán's sequence. Performance metrics show comparable security to existing schemes at very low processing cost, making it suitable for real-time image security applications.",
+      "A lightweight three-stage image encryption scheme using the Rössler chaotic attractor, a PRNG-based S-Box, and Recamán's sequence. Performance metrics show security comparable to existing schemes at very low processing cost, which suits real-time image security applications.",
     tags: ["Applied Cryptography", "Chaos-Based Security", "Image Encryption", "Lightweight Systems"],
     image: "/publications/rossler-encryption.png",
     links: {

@@ -12,7 +12,7 @@ const communityBuilding = [
     year: "2026",
     link: "https://egyptians-in-cs.github.io",
     description:
-      "Community directory of 262 Egyptian computer science researchers across 16 research tracks worldwide. Originally created by Badr AlKhamissi as Egyptians in AI Research, I reached out and we started collaborating — expanding it beyond AI to include all of computer science: security, systems, theory, HCI, and more. The goal is simple: show students from non-traditional paths that frontier research is real, possible, and within reach.",
+      "Community directory of 262 Egyptian computer science researchers across 16 research tracks worldwide. Originally created by Badr AlKhamissi as Egyptians in AI Research, I reached out and we started collaborating, expanding it beyond AI to include all of computer science: security, systems, theory, HCI, and more. The goal is to show students from non-traditional paths that frontier research is possible for them.",
     blogLink: "/blog/egyptians-in-cs-research",
   },
 ];

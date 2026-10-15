@@ -91,13 +91,12 @@ export function AboutContent() {
             >
               Zefta Republic
             </a>{" "}
-            during the 1919 revolution, a bold act of defiance that continues to
-            inspire me with its legacy of resilience and independence. That
-            spirit shaped my own journey: as a high school student I ranked 18th
-            out of more than 600,000 students nationwide in Egypt&rsquo;s
-            Thanawya Amma mathematics exam, which earned me a full merit
-            scholarship to study Computer Science (Information Security) at the
-            German International University in Cairo.
+            during the 1919 revolution. I grew up on that story of defiance,
+            and it still shapes how I approach things. As a high school student
+            I ranked 18th out of more than 600,000 students nationwide in
+            Egypt&rsquo;s Thanawya Amma mathematics exam, which earned me a full
+            merit scholarship to study Computer Science (Information Security)
+            at the German International University in Cairo.
           </p>
           <p>{bio.journey}</p>
         </Section>

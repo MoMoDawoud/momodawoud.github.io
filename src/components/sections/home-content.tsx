@@ -18,20 +18,20 @@ import { FadeIn } from "@/components/animations/fade-in";
 const news: { date: string; text: string; mood?: "good" | "bad" }[] = [
   { date: "Aug 2026", text: "PrivAudit accepted at ACM CCS 2026: a dual-lens framework for auditing website privacy under the CCPA, pairing LLM analysis of privacy policies with automated measurement of real tracking behavior", mood: "good" },
   { date: "Jun 2026", text: "Joined the California Privacy Protection Agency as a Research Technologist Intern in the Audits Division", mood: "good" },
-  { date: "Mar 2026", text: "Paper rejected from IMC '26 — back to the drawing board", mood: "bad" },
+  { date: "Mar 2026", text: "Paper rejected from IMC '26. Back to the drawing board", mood: "bad" },
   { date: "Mar 2026", text: "Completed my Master of Science in Computer Science & Engineering at UC Santa Cruz, en route to the PhD", mood: "good" },
   { date: "Mar 2026", text: "Attended the 4th Annual Bay Area HCI Gathering at Santa Clara University, connecting with ~150 researchers" },
-  { date: "Feb 2026", text: "Presented at USEC 2026 (co-located with NDSS) in San Diego — our paper on AI-enabled NSFW deepfakes on Fiverr", mood: "good" },
+  { date: "Feb 2026", text: "Presented our paper on AI-enabled NSFW deepfakes on Fiverr at USEC 2026 (co-located with NDSS) in San Diego", mood: "good" },
   { date: "Feb 2026", text: "Paper on AI-enabled deepfakes accepted at USEC 2026, co-located with NDSS (~32% acceptance rate)", mood: "good" },
-  { date: "Feb 2026", text: "Launched Egyptians in CS Research with Badr AlKhamissi — 262 researchers across 16 tracks worldwide", mood: "good" },
+  { date: "Feb 2026", text: "Launched Egyptians in CS Research with Badr AlKhamissi: 262 researchers across 16 tracks worldwide", mood: "good" },
   { date: "Nov 2025", text: "Paper rejected from PETS. Not this cycle; reviews went back into the next version", mood: "bad" },
   { date: "Jun 2025", text: "Joined UC Santa Cruz as a PhD student, advised by Prof. Ram Sundara Raman", mood: "good" },
-  { date: "Apr 2025", text: "Featured in Dartmouth Guarini School Student Spotlight — profiled on research, the journey from Zefta to Dartmouth, and STEM advocacy", mood: "good" },
-  { date: "Feb 2025", text: "Selected as AAAS CASE Workshop Delegate — representing Dartmouth in Washington, D.C.", mood: "good" },
+  { date: "Apr 2025", text: "Featured in the Dartmouth Guarini School Student Spotlight, profiled on research, the journey from Zefta to Dartmouth, and STEM advocacy", mood: "good" },
+  { date: "Feb 2025", text: "Selected as AAAS CASE Workshop Delegate, representing Dartmouth in Washington, D.C.", mood: "good" },
   { date: "Feb 2025", text: "Attended NDSS 2025 and the USEC workshop on human factors of security in San Diego" },
-  { date: "Jan 2025", text: "RaaS paper published in Computers in Human Behavior — analyzing vendor communication themes in darknet ransomware advertisements", mood: "good" },
+  { date: "Jan 2025", text: "RaaS paper published in Computers in Human Behavior, analyzing vendor communication themes in darknet ransomware advertisements", mood: "good" },
   { date: "Jan 2025", text: "Started as Lead Graduate Teaching Assistant at Dartmouth for COSC 55: Security & Privacy", mood: "good" },
-  { date: "Sep 2024", text: "Joined MBZUAI as Research Associate — research on combating deepfakes and responsible AI" },
+  { date: "Sep 2024", text: "Joined MBZUAI as a Research Associate, working on combating deepfakes and responsible AI" },
   { date: "Aug 2024", text: "DVa paper published at the 33rd USENIX Security Symposium", mood: "good" },
 ];
 
@@ -151,7 +151,7 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                   <a href="https://cppa.ca.gov" target="_blank" rel="noopener noreferrer" className="gradient-link">
                     California Privacy Protection Agency
                   </a>
-                  . I study the sociotechnical dimensions of AI-enabled privacy risks and abuse, and how they impact people and society. I am particularly interested in how AI facilitates new forms of harm — such as non-consensual deepfakes, synthetic media generation, and the commodification of abuse services — and in how the stakeholders affected by these threats understand, misinterpret, and struggle to keep pace with them: how everyday users form mental models of digital protections, how engineers and practitioners weigh privacy trade-offs under regulatory pressure, and how policymakers interpret ambiguous or conflicting frameworks. I use large-scale internet measurements, qualitative interviews, and controlled experiments to surface these misalignments. I am equally driven by the complementary question: can AI itself be turned into a tool for defense? I explore how the same technology that enables harm can also empower users to recognize and resist threats, help practitioners build safer systems under regulatory uncertainty, and provide policymakers with the empirical grounding they need to act.
+                  . I study AI-enabled privacy risks and abuse as sociotechnical problems: how they affect people, and how the people affected keep up with them or fail to. On the harm side, that means new forms of abuse such as non-consensual deepfakes, synthetic media, and abuse sold as a service. On the human side, it means how everyday users form mental models of digital protections, how engineers and practitioners weigh privacy trade-offs under regulatory pressure, and how policymakers read ambiguous or conflicting frameworks. I use large-scale internet measurements, qualitative interviews, and controlled experiments to find where these groups are misaligned. I am also asking whether AI can be turned into a tool for defense: whether the same technology can help users recognize and resist threats, help practitioners build safer systems under regulatory uncertainty, and give policymakers the empirical grounding they need to act.
                 </p>
               </div>
 
