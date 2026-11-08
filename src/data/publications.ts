@@ -93,6 +93,7 @@ export const publications: Publication[] = [
     links: {
       paper: "https://www.ndss-symposium.org/ndss-paper/from-underground-to-mainstream-marketplaces-measuring-ai-enabled-nsfw-deepfakes-on-fiverr/",
       pdf: "https://www.ndss-symposium.org/wp-content/uploads/usec26-68.pdf",
+      doi: "10.14722/usec.2026.23068",
     },
     citations: 0,
     selected: true,
@@ -100,7 +101,8 @@ export const publications: Publication[] = [
   title={From Underground to Mainstream Marketplaces: Measuring AI-Enabled NSFW Deepfakes on Fiverr},
   author={Dawoud, Mohamed Moustafa and Cuevas, Alejandro and Raman, Ram Sundara},
   booktitle={Symposium on Usable Security and Privacy (USEC 2026), co-located with NDSS},
-  year={2026}
+  year={2026},
+  doi={10.14722/usec.2026.23068}
 }`,
   },
   {

@@ -19,7 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const files: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/Mohamed_Dawoud_CV.pdf`, lastModified: BUILT, changeFrequency: "monthly", priority: 0.6 },
   ];
 
   const posts = getAllPosts();

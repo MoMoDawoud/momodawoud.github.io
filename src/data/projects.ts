@@ -15,16 +15,17 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "Governing the Open-Weight Ecosystem Behind Explicit Image Generation",
+    title: "Measuring Model-Level Interventions Against AI-Generated Intimate-Image Abuse",
     authors: ["Mohamed Moustafa Dawoud (lead author)"],
-    status: "In Preparation",
+    status: "Under Review",
     description:
-      "We study the open-weight model ecosystem supporting explicit and identity-specific image generation, including risks of non-consensual intimate imagery (NCII). We examine model-level interventions, their effects on shared model use, and cross-platform persistence to inform platform governance.",
+      "Removing individual AI-generated intimate images leaves the reusable models behind them available. Using CivitAI as a case study, we simulate model-level restrictions at scale, measuring both the explicit requests involving particular people they would reach and the ordinary uses they would also affect. We also trace whether removed models persist on other hosting platforms, and we introduce a self-hostable toolkit for sharing model notices and evidence across platforms.",
     tags: [
-      "Open-Weight Models",
       "NCII",
+      "Open-Weight Models",
       "Platform Governance",
-      "Internet Measurement",
+      "Content Moderation",
+      "LLM-Assisted Measurement",
     ],
   },
   {

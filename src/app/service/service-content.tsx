@@ -29,6 +29,21 @@ const policyAndAdvocacy = [
 
 const academicService = [
   {
+    role: "Reviewer",
+    org: "ACM Conference on Fairness, Accountability, and Transparency (FAccT)",
+    year: "2027",
+  },
+  {
+    role: "Reviewer",
+    org: "International AAAI Conference on Web and Social Media (ICWSM)",
+    year: "2027",
+  },
+  {
+    role: "Sub-reviewer",
+    org: "ACM Internet Measurement Conference (IMC)",
+    year: "2026",
+  },
+  {
     role: "Conference Volunteer",
     org: "IEEE Secure Development Conference (SecDev)",
     year: "2023",

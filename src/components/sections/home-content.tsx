@@ -16,8 +16,9 @@ import { FadeIn } from "@/components/animations/fade-in";
    ───────────────────────────────────────── */
 
 const news: { date: string; text: string; mood?: "good" | "bad" }[] = [
+  { date: "Oct 2026", text: "Serving as a reviewer for ICWSM 2027 and ACM FAccT 2027", mood: "good" },
   { date: "Aug 2026", text: "PrivAudit accepted at ACM CCS 2026: a dual-lens framework for auditing website privacy under the CCPA, pairing LLM analysis of privacy policies with automated measurement of real tracking behavior", mood: "good" },
-  { date: "Jun 2026", text: "Joined the California Privacy Protection Agency as a Research Technologist Intern in the Audits Division", mood: "good" },
+  { date: "Jun 2026", text: "Joined the California Privacy Protection Agency as a part-time Research Technologist in the Audits Division", mood: "good" },
   { date: "Mar 2026", text: "Paper rejected from IMC '26. Back to the drawing board", mood: "bad" },
   { date: "Mar 2026", text: "Completed my Master of Science in Computer Science & Engineering at UC Santa Cruz, en route to the PhD", mood: "good" },
   { date: "Mar 2026", text: "Attended the 4th Annual Bay Area HCI Gathering at Santa Clara University, connecting with ~150 researchers" },
@@ -147,7 +148,7 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                   <a href="https://people.ucsc.edu/~lgilpin/" target="_blank" rel="noopener noreferrer" className="gradient-link">
                     Prof. Leilani Gilpin
                   </a>
-                  . I am also a Research Technologist Intern in the Audits Division at the{" "}
+                  . I am also a part-time Research Technologist in the Audits Division at the{" "}
                   <a href="https://cppa.ca.gov" target="_blank" rel="noopener noreferrer" className="gradient-link">
                     California Privacy Protection Agency
                   </a>
@@ -175,15 +176,6 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                 <span className="text-foreground-quaternary">&middot;</span>
                 <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="gradient-link text-foreground-tertiary">
                   LinkedIn
-                </a>
-                <span className="text-foreground-quaternary">&middot;</span>
-                <a
-                  href="/Mohamed_Dawoud_CV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="gradient-link text-foreground-tertiary"
-                >
-                  CV
                 </a>
                 <span className="text-foreground-quaternary">&middot;</span>
                 <a href={`mailto:${siteConfig.email}`} className="gradient-link text-foreground-tertiary">
