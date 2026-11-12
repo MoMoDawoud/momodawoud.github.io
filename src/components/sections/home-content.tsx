@@ -15,7 +15,8 @@ import { FadeIn } from "@/components/animations/fade-in";
    DATA
    ───────────────────────────────────────── */
 
-const news: { date: string; text: string; mood?: "good" | "bad" }[] = [
+const news: { date: string; text: string; mood?: "good" | "bad"; link?: { text: string; href: string } }[] = [
+  { date: "Nov 2026", text: "Presenting PrivAudit at IETF 127 in San Francisco, in the IRTF Measurement and Analysis for Protocols Research Group (MAPRG)", mood: "good", link: { text: "IETF 127", href: "https://datatracker.ietf.org/meeting/127/materials/agenda-127-maprg" } },
   { date: "Oct 2026", text: "Serving as a reviewer for ICWSM 2027 and ACM FAccT 2027", mood: "good" },
   { date: "Aug 2026", text: "PrivAudit accepted at ACM CCS 2026: a dual-lens framework for auditing website privacy under the CCPA, pairing LLM analysis of privacy policies with automated measurement of real tracking behavior", mood: "good" },
   { date: "Jun 2026", text: "Joined the California Privacy Protection Agency as a part-time Research Technologist in the Audits Division", mood: "good" },
@@ -210,7 +211,17 @@ export function HomeContent({ recentPosts = [] }: { recentPosts?: RecentPost[] }
                     <span className="font-mono text-xs tabular-nums">{item.date}</span>
                   </span>
                   <span className="text-foreground-secondary">
-                    {item.text}
+                    {item.link && item.text.includes(item.link.text) ? (
+                      <>
+                        {item.text.split(item.link.text)[0]}
+                        <a href={item.link.href} target="_blank" rel="noopener noreferrer" className="gradient-link">
+                          {item.link.text}
+                        </a>
+                        {item.text.split(item.link.text).slice(1).join(item.link.text)}
+                      </>
+                    ) : (
+                      item.text
+                    )}
                   </span>
                 </div>
               ))}
