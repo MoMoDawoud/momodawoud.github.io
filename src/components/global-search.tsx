@@ -17,6 +17,7 @@ const staticPages: SearchResult[] = [
   { title: "Home", description: "Main page and bio", href: "/", type: "Page", icon: FileText },
   { title: "About", description: "Background, research, and the path from Zefta to Santa Cruz", href: "/about", type: "Page", icon: FileText },
   { title: "Publications", description: "All peer-reviewed publications", href: "/publications", type: "Page", icon: FileText },
+  { title: "Talks", description: "Research talks and guest lectures", href: "/talks", type: "Page", icon: FileText },
   { title: "Teaching", description: "Teaching experience at Dartmouth", href: "/teaching", type: "Page", icon: GraduationCap },
   { title: "Mentorship & Service", description: "Mentoring, community building, and professional service", href: "/service", type: "Page", icon: FileText },
   { title: "Blog", description: "Research notes and tutorials", href: "/blog", type: "Page", icon: PenLine },
