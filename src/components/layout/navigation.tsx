@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 
 const navItems: { name: string; href: string; external?: boolean }[] = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
   { name: "Publications", href: "/publications" },
   { name: "Talks", href: "/talks" },
   { name: "Teaching", href: "/teaching" },

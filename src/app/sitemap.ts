@@ -11,7 +11,6 @@ const BASE_URL = "https://momodawoud.github.io";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/`, lastModified: BUILT, changeFrequency: "weekly", priority: 1.0 },
-    { url: `${BASE_URL}/about`, lastModified: BUILT, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE_URL}/publications`, lastModified: BUILT, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE_URL}/blog`, lastModified: BUILT, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/talks`, lastModified: BUILT, changeFrequency: "monthly", priority: 0.7 },

@@ -2,7 +2,6 @@ import Link from "next/link";
 import { siteConfig } from "@/data/site-config";
 
 const siteLinks = [
-  { name: "About", href: "/about" },
   { name: "Publications", href: "/publications" },
   { name: "Blog", href: "/blog" },
   { name: "Service", href: "/service" },
